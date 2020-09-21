@@ -5,12 +5,16 @@ import java.awt.Graphics2D;
 
 /**
  * @author Marco
+ * 
+ * Graphics pane class: draws the gameplay onto the graphics pane
  *
  */
 public class Renderer {
 
 	
 	/**
+	 * Checks for changes in the maze and draws them
+	 * 
 	 * @param g
 	 */
 	public void step(Graphics g) {
