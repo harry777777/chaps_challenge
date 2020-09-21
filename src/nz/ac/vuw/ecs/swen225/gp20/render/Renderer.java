@@ -57,13 +57,11 @@ public class Renderer {
 	    //need this class and method to be implemented in Application so I can start drawing things and testing
 	    
 		//access maze and draw
+	    drawChap(0,0);
 	}
 	
 	private void drawChap(int x, int y) {
 		
 	}
 	
-	private void drawActor(int x, int y) {
-		
-	}
 }
