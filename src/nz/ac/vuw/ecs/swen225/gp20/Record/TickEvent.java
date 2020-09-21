@@ -6,6 +6,10 @@ package nz.ac.vuw.ecs.swen225.gp20.Record;
  *
  */
 public class TickEvent {
+//@todo uncomment these and change them to correct fields when classes for the datatypes are created
+    // private direction move;
+    private int time; // the time the tick occured, may not need
+
 
 
 
