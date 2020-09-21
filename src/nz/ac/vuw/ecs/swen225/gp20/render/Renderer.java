@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 
@@ -43,6 +44,11 @@ public class Renderer {
 	 */
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
+		
+		//enable smooth edges
+		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		rh.put(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+	    g2.setRenderingHints(rh);
 		
 		//access maze and draw
 	}
