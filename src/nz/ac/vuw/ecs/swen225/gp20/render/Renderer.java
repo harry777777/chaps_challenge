@@ -18,7 +18,7 @@ public class Renderer {
 	int viewX, viewY, tileSize, viewWidth, viewHeight;
 	
 	/**
-	 * Initializes the renderer passing it the maze
+	 * Initializes the renderer passing it the maze and drawing parameters
 	 * 
 	 * @param m the simulation object
 	 * @param x the x position to draw the view on the graphics pane
@@ -38,7 +38,7 @@ public class Renderer {
 
 	
 	/**
-	 * Checks for changes in the maze and draws them
+	 * Redraws the maze and objects
 	 * 
 	 * @param g the graphics pane
 	 */
@@ -50,6 +50,20 @@ public class Renderer {
 		rh.put(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
 	    g2.setRenderingHints(rh);
 		
+	    
+	    //currently waiting on:
+	    //need access to the tiles in Maze, this is currently private and has not getter
+	    //need access to the Chap in Maze so I can draw him, as with the Maze tiles above
+	    //need this class and method to be implemented in Application so I can start drawing things and testing
+	    
 		//access maze and draw
+	}
+	
+	private void drawChap(int x, int y) {
+		
+	}
+	
+	private void drawActor(int x, int y) {
+		
 	}
 }
