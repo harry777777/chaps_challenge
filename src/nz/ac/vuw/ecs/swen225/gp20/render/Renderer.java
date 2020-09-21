@@ -76,6 +76,8 @@ public class Renderer {
 	    }
 	    
 	    drawChap(g2, 0, 0); //temp
+	    
+	    //TODO setup the moving viewport
 	}
 	
 	private void drawChap(Graphics2D g2, int x, int y) {
