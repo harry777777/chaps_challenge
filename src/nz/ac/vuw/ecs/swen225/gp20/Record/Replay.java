@@ -14,6 +14,10 @@ public class Replay {
         this.recording = recording;
     }
 
+    /**
+     * The method that runs through a recording of a game, can be paused and stepped through one game tick at a time,
+     * default behaviour is to automatically play at the speed of game ticks
+     */
     public void viewReplay() {
         for (TickEvent t : recording.getTickEvents()) {
             this.skip = false;
