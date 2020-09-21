@@ -8,40 +8,42 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 /**
  * @author Marco
  * 
- * Graphics pane class: draws the gameplay onto the graphics pane
+ * Graphics pane class: draws the maze and object locations onto the graphics pane
  *
  */
 public class Renderer {
 	
 	Maze maze;
-	//previous player location
-	private boolean busy = false; //tells the application if it can make changes to the maze
+	int viewX, viewY, tileSize, viewWidth, viewHeight;
 	
 	/**
 	 * Initializes the renderer passing it the maze
 	 * 
-	 * @param m
+	 * @param m the simulation object
+	 * @param x the x position to draw the view on the graphics pane
+	 * @param y the y position to draw the view on the graphics pane
+	 * @param tileSize the size of the tiles, determines overall size of view
+	 * @param width the number of tiles horizontally to draw the viewport
+	 * @param height the number of tiles vertically to draw the view
 	 */
-	public Renderer(Maze m) {
+	public Renderer(Maze m, int x, int y, int tileSize, int width, int height) {
 		this.maze = m;
-	}
-	
-	/**
-	 * @return player animation status
-	 */
-	public boolean getStatus() {
-		return busy;
+		this.viewX = x;
+		this.viewY = y;
+		this.tileSize = tileSize;
+		this.viewHeight = height;
+		this.viewWidth = width;
 	}
 
 	
 	/**
 	 * Checks for changes in the maze and draws them
 	 * 
-	 * @param g
+	 * @param g the graphics pane
 	 */
 	public void draw(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		
-		//access maze and check for player position change
+		//access maze and draw
 	}
 }
