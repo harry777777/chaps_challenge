@@ -67,7 +67,7 @@ public class Renderer {
 	    //need this class and method to be implemented in Application so I can start drawing things and testing
 	    
 	    
-	    //find player position in the Maze
+	    //find player position in the Maze and player offset
 	    
 		//access maze and draw
 	    //needs to be modified so it only access and draws the tiles around the player position as determined above
