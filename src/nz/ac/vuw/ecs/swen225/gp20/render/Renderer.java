@@ -66,7 +66,12 @@ public class Renderer {
 	    //need access to the Chap in Maze so I can draw him, as with the Maze tiles above
 	    //need this class and method to be implemented in Application so I can start drawing things and testing
 	    
+	    
+	    //find player position in the Maze
+	    
 		//access maze and draw
+	    //needs to be modified so it only access and draws the tiles around the player position as determined above
+	    //this is done using the viewHeight and viewWidth values as well as the position of the player
 	    Tile[][] tiles = new Tile[1][1]; //temp until I have access to the tiles in Maze
 	    for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
@@ -75,6 +80,7 @@ public class Renderer {
 	    	}
 	    }
 	    
+	    //draw the player on top of the view using information from the previous two stages
 	    drawChap(g2, 0, 0); //temp
 	    
 	    //TODO setup the moving viewport
