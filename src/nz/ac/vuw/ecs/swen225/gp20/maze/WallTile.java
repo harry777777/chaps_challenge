@@ -1,17 +1,29 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
+
 /**
  * Part of a wall, actors cannot move onto those tiles.
  */
 public class WallTile implements Tile {
 
-    @Override
-    public boolean isAccessible() {
-        return false;
-    }
+  Location location;
 
-    @Override
-    public char getCharRep() {
-        return 'W';
-    }
+  /**
+   * @param location Location of the WallTile
+   */
+  public WallTile(Location location) {
+    this.location = location;
+  }
+
+  @Override
+  public char getSymbolicRepresentation() {
+    return 'W';
+  }
+
+
+  @Override
+  public Location getLocation() {
+    return location;
+  }
 }
+
