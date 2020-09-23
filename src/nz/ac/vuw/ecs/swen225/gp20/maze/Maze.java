@@ -11,8 +11,8 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  */
 public class Maze {
 
-  private final int verticalBound;
-  private final int horizontalBound;
+  public final int verticalBound;
+  public final int horizontalBound;
   private final Tile[][] tiles;
   private final Player player;
 
@@ -28,6 +28,24 @@ public class Maze {
     this.horizontalBound = tiles[0].length;
     this.tiles = tiles;
     this.player = player;
+  }
+
+  /**
+   * Getter for tiles array.
+   *
+   * @return 2d array of tiles
+   */
+  public Tile[][] getTiles() {
+    return tiles;
+  }
+
+  /**
+   * Getter for the player.
+   *
+   * @return The player
+   */
+  public Player getPlayer() {
+    return player;
   }
 
   /**
