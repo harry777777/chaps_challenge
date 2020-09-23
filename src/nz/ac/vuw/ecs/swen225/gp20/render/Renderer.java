@@ -6,9 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
-
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 
 /**
  * @author Marco

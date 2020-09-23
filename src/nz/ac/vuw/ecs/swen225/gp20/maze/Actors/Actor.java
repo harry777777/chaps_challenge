@@ -1,4 +1,8 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze;
+package nz.ac.vuw.ecs.swen225.gp20.maze.Actors;
+
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * An Actor is a game element that may move between tile locations.

@@ -1,4 +1,9 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze;
+package nz.ac.vuw.ecs.swen225.gp20.maze.Actors;
+
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Access;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * The playable character.
@@ -6,7 +11,7 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 public class Player implements Actor {
 
   private final Location location;
-  //  private final Collectable[] inventory = new Collectable[8];
+  //  private final Item[] inventory = new Item[8];
   private Motion motion;
 
 
@@ -45,7 +50,7 @@ public class Player implements Actor {
     return motion;
   }
 
-//  public Collectable[] getInventory() {
+//  public Item[] getInventory() {
   //todo implement
 //    return inventory.clone();
 //  }
@@ -92,7 +97,7 @@ public class Player implements Actor {
     }
   }
 
-//  public void addToInventory(Collectable collectable) {
+//  public void addToInventory(Item collectable) {
 //    // TODO: 23/09/20 implement adding to inventory
 //  }
 

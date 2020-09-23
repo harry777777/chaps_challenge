@@ -1,6 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+
 /**
  * Maze holds the state of spatial objects in the game.
  */

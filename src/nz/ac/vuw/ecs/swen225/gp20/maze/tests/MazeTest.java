@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze;
+package nz.ac.vuw.ecs.swen225.gp20.maze.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -6,6 +6,13 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 import org.junit.jupiter.api.Test;
 
 

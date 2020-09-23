@@ -1,23 +1,27 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze;
+package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
+
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actors.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.items.Item;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
- * Actors can freely move onto these tiles. A Free tile may hold a collectable item.
+ * Actors can freely move onto these tiles. A Free tile may hold a item item.
  */
 public class FreeTile implements Tile, Access {
 
   Location location;
-  Collectable collectable;
+  Item item;
 
   /**
-   * Construct a tile with a Collectable.
+   * Construct a tile with a Item.
    *
-   * @param location    Location of tile.
-   * @param collectable Collectable held in the tile.
+   * @param location Location of tile.
+   * @param item     Item held in the tile.
    */
-  public FreeTile(Location location, Collectable collectable) {
+  public FreeTile(Location location, Item item) {
     this.location = location;
-    this.collectable = collectable;
+    this.item = item;
   }
 
   /**

@@ -1,4 +1,6 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze;
+package nz.ac.vuw.ecs.swen225.gp20.maze.Actors;
+
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 
 /**
  * An object's Motion component. This is similar to a vector, with a direction and magnitude, but
