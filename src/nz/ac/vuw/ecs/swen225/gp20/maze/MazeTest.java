@@ -1,6 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
