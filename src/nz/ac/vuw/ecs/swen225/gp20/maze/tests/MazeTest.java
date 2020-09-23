@@ -6,8 +6,8 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actors.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
+import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -16,6 +16,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 import org.junit.jupiter.api.Test;
 
 
+@SuppressWarnings("SpellCheckingInspection")
 class MazeTest {
 
   //this is just me learning how to use the logger instead of System.out for debugging.
@@ -30,6 +31,10 @@ class MazeTest {
     ch.setLevel(Level.SEVERE);
   }
 
+  /**
+   * Build a simple maze consisting of 9 FreeTiles surrounded by WallTiles. Assert that the correct
+   * Maze.toString is produced.
+   */
   @Test
   public void buildMaze() {
     char[][] initialState = {
@@ -51,8 +56,11 @@ class MazeTest {
     assertEquals(expected, actual);
   }
 
+  /**
+   * Player should be moved up one tile from the center location.
+   */
   @Test
-  public void moveChapDown() {
+  public void movePlayerUp() {
     char[][] initialState = {
         {'W', 'W', 'W', 'W', 'W'},
         {'W', 'F', 'F', 'F', 'W'},
@@ -61,10 +69,35 @@ class MazeTest {
         {'W', 'W', 'W', 'W', 'W'}
     };
     Maze maze = constructMaze(initialState);
-    maze.moveChap(Direction.DOWN);
-    for (int i = 0; i < 120; i++) {
-      maze.tick();
-    }
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
+    String actual = maze.toString();
+
+    String expected =
+        "WWWWW\n"
+            + "WFCFW\n"
+            + "WFFFW\n"
+            + "WFFFW\n"
+            + "WWWWW\n";
+
+    assertEquals(expected, actual);
+  }
+
+  /**
+   * Player should be moved down one tile from the center location.
+   */
+  @Test
+  public void movePlayerDown() {
+    char[][] initialState = {
+        {'W', 'W', 'W', 'W', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'F', 'C', 'F', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'W', 'W', 'W', 'W'}
+    };
+    Maze maze = constructMaze(initialState);
+    maze.movePlayer(Direction.DOWN);
+    simulate100Ticks(maze);
     String actual = maze.toString();
 
     String expected =
@@ -77,6 +110,9 @@ class MazeTest {
     assertEquals(expected, actual);
   }
 
+  /**
+   * Player should be moved left one tile from the center location.
+   */
   @Test
   public void movePlayerLeft() {
     char[][] initialState = {
@@ -87,10 +123,8 @@ class MazeTest {
         {'W', 'W', 'W', 'W', 'W'}
     };
     Maze maze = constructMaze(initialState);
-    maze.moveChap(Direction.LEFT);
-    for (int i = 0; i < 120; i++) {
-      maze.tick();
-    }
+    maze.movePlayer(Direction.LEFT);
+    simulate100Ticks(maze);
     String actual = maze.toString();
 
     String expected =
@@ -103,6 +137,9 @@ class MazeTest {
     assertEquals(expected, actual);
   }
 
+  /**
+   * Player should be moved right one tile from the center location.
+   */
   @Test
   public void movePlayerRight() {
     char[][] initialState = {
@@ -113,12 +150,9 @@ class MazeTest {
         {'W', 'W', 'W', 'W', 'W'}
     };
     Maze maze = constructMaze(initialState);
-    maze.moveChap(Direction.RIGHT);
-    for (int i = 0; i < 120; i++) {
-      maze.tick();
-    }
+    maze.movePlayer(Direction.RIGHT);
+    simulate100Ticks(maze);
     String actual = maze.toString();
-
     String expected =
         "WWWWW\n"
             + "WFFFW\n"
@@ -129,8 +163,12 @@ class MazeTest {
     assertEquals(expected, actual);
   }
 
+  /**
+   * Assert that a double call to set player in motion will not result in multiple moves being
+   * performed.
+   */
   @Test
-  public void movePlayerUp() {
+  public void noDoubleMovement() {
     char[][] initialState = {
         {'W', 'W', 'W', 'W', 'W'},
         {'W', 'F', 'F', 'F', 'W'},
@@ -139,10 +177,9 @@ class MazeTest {
         {'W', 'W', 'W', 'W', 'W'}
     };
     Maze maze = constructMaze(initialState);
-    maze.moveChap(Direction.UP);
-    for (int i = 0; i < 120; i++) {
-      maze.tick();
-    }
+    maze.movePlayer(Direction.UP);
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
     String actual = maze.toString();
 
     String expected =
@@ -156,6 +193,75 @@ class MazeTest {
   }
 
 
+  /**
+   * Assert that multiple moves can be made given enough ticks have been performed between.
+   */
+  @Test
+  public void multipleMovement() {
+    char[][] initialState = {
+        {'W', 'W', 'W', 'W', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'F', 'C', 'F', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'W', 'W', 'W', 'W'}
+    };
+    Maze maze = constructMaze(initialState);
+
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
+    maze.movePlayer(Direction.LEFT);
+    simulate100Ticks(maze);
+
+    String actual = maze.toString();
+
+    String expected =
+        "WWWWW\n"
+            + "WCFFW\n"
+            + "WFFFW\n"
+            + "WFFFW\n"
+            + "WWWWW\n";
+
+    assertEquals(expected, actual);
+  }
+
+  /**
+   * Assert that the player may not move into a WallTile.
+   */
+  @Test
+  public void movementIntoWall() {
+    char[][] initialState = {
+        {'W', 'W', 'W', 'W', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'F', 'C', 'F', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'W', 'W', 'W', 'W'}
+    };
+    Maze maze = constructMaze(initialState);
+
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
+
+    String actual = maze.toString();
+
+    String expected =
+        "WWWWW\n"
+            + "WFCFW\n"
+            + "WFFFW\n"
+            + "WFFFW\n"
+            + "WWWWW\n";
+
+    assertEquals(expected, actual);
+  }
+
+  private void simulate100Ticks(Maze maze) {
+    for (int i = 0; i < 100; i++) {
+      maze.tick();
+    }
+  }
+
+
   private Maze constructMaze(char[][] input) {
     int width = input.length;
     int height = input[0].length;
@@ -164,7 +270,7 @@ class MazeTest {
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         char c = input[i][j];
-        LOGGER.fine(String.format("(i: %d, j: %d) c = %c\n", i, j, c));
+        LOGGER.fine(String.format("(i: %d, j: %d) c = %c%n", i, j, c));
         switch (c) {
           case 'F':
             tiles[i][j] = new FreeTile(new Location(i, j));

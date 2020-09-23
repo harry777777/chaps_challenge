@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze.Actors;
+package nz.ac.vuw.ecs.swen225.gp20.maze.actors;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Access;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
@@ -32,7 +32,7 @@ public class Player implements Actor {
   }
 
   @Override
-  public Location getPosition() {
+  public Location getLocation() {
     return location;
   }
 

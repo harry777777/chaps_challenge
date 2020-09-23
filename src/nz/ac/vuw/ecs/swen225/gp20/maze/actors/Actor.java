@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze.Actors;
+package nz.ac.vuw.ecs.swen225.gp20.maze.actors;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
@@ -21,7 +21,7 @@ public interface Actor {
    *
    * @return The current Location of the actor
    */
-  Location getPosition();
+  Location getLocation();
 
   /**
    * Checks if it is possible to move the tile to a given destination tile.

@@ -1,7 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actors.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Actor;
 
 /**
  * Marks an area of the game that may be accessed by an Actor.

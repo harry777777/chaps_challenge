@@ -1,7 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.items;
 
 import java.awt.Color;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 
 /**

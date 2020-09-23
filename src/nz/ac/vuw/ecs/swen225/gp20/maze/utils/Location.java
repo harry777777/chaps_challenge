@@ -59,6 +59,26 @@ public class Location {
     this.vertical = vertical;
   }
 
+  /**
+   * Get the Location adjacent to the current location in a given direction.
+   *
+   * @param direction Direction from current Location
+   * @return The adjacent location
+   */
+  public Location getAdjacentLocation(Direction direction) {
+    switch (direction) {
+      case UP:
+        return new Location(horizontal, vertical - 1);
+      case DOWN:
+        return new Location(horizontal, vertical + 1);
+      case LEFT:
+        return new Location(horizontal - 1, vertical);
+      case RIGHT:
+        return new Location(horizontal + 1, vertical);
+    }
+    return null; // todo throw error?
+  }
+
 
   @Override
   public int hashCode() {

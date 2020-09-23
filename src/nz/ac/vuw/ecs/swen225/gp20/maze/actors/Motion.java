@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze.Actors;
+package nz.ac.vuw.ecs.swen225.gp20.maze.actors;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 
