@@ -86,7 +86,4 @@ public class Renderer {
 	    viewPort.draw(g2, tiles, player, viewX, viewY, tileSize, viewWidth, viewHeight);
 	    
 	}
-	
-	
-	
 }
