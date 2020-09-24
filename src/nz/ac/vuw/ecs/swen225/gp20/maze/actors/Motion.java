@@ -4,7 +4,9 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 
 /**
  * An object's Motion component. This is similar to a vector, with a direction and magnitude, but
- * limited to Directions enumerated.
+ * limited to the enumerated directions.
+ *
+ * @author Arie Bates-Hermans
  */
 public class Motion {
 

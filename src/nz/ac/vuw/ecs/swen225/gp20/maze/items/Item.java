@@ -5,6 +5,8 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 
 /**
  * An object that may be added to the player's inventory.
+ *
+ * @author Arie Bates-Hermans
  */
 public class Item {
 

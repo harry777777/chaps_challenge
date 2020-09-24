@@ -9,6 +9,8 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * Maze holds the state of spatial objects in the game.
+ *
+ * @author Arie Bates-Hermans
  */
 public class Maze {
 
