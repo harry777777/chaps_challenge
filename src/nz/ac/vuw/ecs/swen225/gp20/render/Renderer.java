@@ -24,7 +24,23 @@ public class Renderer {
 	Inventory inventory;
 	int viewX, viewY, tileSize, viewWidth, viewHeight;
 	
-	
+	/**
+	 * Initializes the renderer passing it the maze
+	 * 
+	 * This one gives the renderer control over sizing and placement, use it in early development
+	 * 
+	 * @param m
+	 */
+	public Renderer(Maze m) {
+		this.maze = m;
+		this.viewX = 20;
+		this.viewY = 20;
+		this.tileSize = 50;
+		this.viewHeight = 9;
+		this.viewWidth = 9;
+		this.viewPort = new ViewPort();
+		this.inventory = new Inventory();
+	}
 	
 	/**
 	 * Initializes the renderer passing it the maze and drawing parameters
