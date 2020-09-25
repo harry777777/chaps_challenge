@@ -6,7 +6,10 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
- * The playable character.
+ * The playable character 'chap'. The player may shift locations through the maze, collecting items
+ * and adding them to their inventory.
+ *
+ * @author Arie Bates-Hermans
  */
 public class Player implements Actor {
 

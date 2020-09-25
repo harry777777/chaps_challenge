@@ -6,6 +6,8 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.items.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
+ * A FreeTile is a Tile with no conditions for access. A FreeTile may hold a collectable Item.
+ * <p>
  * Actors can freely move onto these tiles. A Free tile may hold a item item.
  */
 public class FreeTile implements Tile, Access {

@@ -3,7 +3,9 @@ package nz.ac.vuw.ecs.swen225.gp20.maze.utils;
 import java.util.Objects;
 
 /**
- * Location for spatial orientation on a 2D plane.
+ * Location used for spatial orientation on a 2D plane.
+ *
+ * @author Arie Bates-Hermans
  */
 public class Location {
 

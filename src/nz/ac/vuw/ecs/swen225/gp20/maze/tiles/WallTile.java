@@ -5,6 +5,8 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * Part of a wall, actors cannot move onto those tiles.
+ *
+ * @author Arie Bates-Hermans
  */
 public class WallTile implements Tile {
 

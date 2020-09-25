@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tests;
 
+
+
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.logging.ConsoleHandler;
@@ -16,7 +19,11 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 import org.junit.jupiter.api.Test;
 
 
-@SuppressWarnings("SpellCheckingInspection")
+/**
+ * Tests for basic movement in the maze.
+ *
+ * @author Arie Bates-Hermans
+ */
 class MazeTest {
 
   //this is just me learning how to use the logger instead of System.out for debugging.
