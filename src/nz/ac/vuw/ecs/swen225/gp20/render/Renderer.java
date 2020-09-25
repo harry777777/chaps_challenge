@@ -62,6 +62,7 @@ public class Renderer {
 		this.viewPort = new ViewPort();
 		this.inventory = new Inventory();
 	}
+	
 
 	
 	/**
