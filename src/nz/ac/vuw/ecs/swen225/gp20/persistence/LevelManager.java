@@ -1,7 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.persistence;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
@@ -10,22 +9,27 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 import java.io.IOException;
 
+/**
+ * Class for handling the saving and loading of levels.
+ * Works with the JSONHandler class to save and load levels in JSON format.
+ */
 public class LevelManager {
 
-  Gson gson;
-  GsonBuilder builder;
+  Gson gson; // For testing purposes to use GSON in this class.
+  JSONHandler<Maze> handler; // Handles our JSON level files. Saves/loads Maze objects.
 
   public LevelManager(){
-    builder = new GsonBuilder();
-    gson = builder.create();
+    gson = new Gson();
+    handler = new JSONHandler<>();
   }
 
   /**
    * Saves a level as a JSON file.
    * Hardcoded for now to test saving a file.
+   * @param filepath
+   * @throws IOException
    */
-  public void saveLevel() throws IOException {
-
+  public void saveLevel(String filepath) throws IOException {
     // Maze tiles
     int verticalBound = 10;
     int horizontalBound = 10;
@@ -40,21 +44,23 @@ public class LevelManager {
     Player player = new Player(0,0);
     // Maze
     Maze maze = new Maze(tiles, player);
-
     // Writing object to JSON file
-    JSONParser<Maze> parser = new JSONParser<>();
-    parser.write("levels/level1.json", maze);
+    handler.write(filepath, maze);
   }
 
-  public void loadLevel() throws IOException {
-    JSONParser<Maze> parser = new JSONParser<>();
-    Maze JSONmaze = parser.read("levels/level1.json", Maze.class);
-    System.out.println(JSONmaze.horizontalBound);
+  /**
+   * Loads a level from a JSON file.
+   * @param filepath
+   * @throws IOException
+   */
+  public void loadLevel(String filepath) throws IOException {
+    Maze loadedMaze = handler.read("levels/level1.json", Maze.class);
+    System.out.println(loadedMaze.toString());
   }
 
   public static void main(String[] args) throws IOException {
     LevelManager lm = new LevelManager();
-//    lm.saveLevel();
-    lm.loadLevel();
+    lm.saveLevel("levels/level1.json");
+    lm.loadLevel("levels/level1.json");
   }
 }
