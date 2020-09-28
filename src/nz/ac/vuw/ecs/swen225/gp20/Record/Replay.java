@@ -1,5 +1,9 @@
 package nz.ac.vuw.ecs.swen225.gp20.Record;
 
+import nz.ac.vuw.ecs.swen225.gp20.persistence.JSONParser;
+
+import java.io.IOException;
+
 /**
  * @author Harry
  * class responsible for replaying a recording of a recorded game.
@@ -9,11 +13,28 @@ public class Replay {
     private int playSpeed = 1;
     private boolean paused = true; // paused == true causes the view replay loop to pause.
     private boolean skip = false;  // skip == true causes the view replay loop to proceed one step further through the replay
-    private int updateTimer =1000;
     private int sleepTime = 0;
 
-    public Replay(Recording recording) {
-        this.recording = recording;
+    /**
+     *
+     * @param fileName the name of the recording file the replay will be loading
+     * @throws IOException
+     */
+
+    public Replay(String fileName) throws IOException {
+        this.recording = loadRecording(fileName);
+    }
+
+    /**
+     *
+     * @param fileName name of the Json file in recordings folder to load
+     * @return Recording of a game object loaded from a JSON file
+     * @throws IOException
+     */
+    public Recording loadRecording(String fileName) throws IOException {
+        JSONParser<Recording> p = new JSONParser<Recording>();
+        Recording R = p.read("recordings/"+fileName+".json",Recording.class);
+        return R;
     }
 
     /**
@@ -36,9 +57,16 @@ public class Replay {
            //@todo  implement the meat of the viewReplay Method, ie the part that does shit
 
         }
+
+
     }
 
-
+    /**
+     * A test method that prints a recording object to the console
+     */
+    public void testRecording(){
+        this.recording.toString();
+    }
 
 
     /**
