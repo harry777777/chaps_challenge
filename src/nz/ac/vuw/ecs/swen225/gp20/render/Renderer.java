@@ -65,6 +65,7 @@ public class Renderer {
 	
 
 	
+	
 	/**
 	 * Redraws the maze and objects
 	 * 

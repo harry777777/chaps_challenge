@@ -60,6 +60,7 @@ public class ViewPort {
 	    			drawFloor(g2, x+row*tileSize, y+col*tileSize, tileSize);
 	    		}else {
 	    			
+	    			
 	    		}
 	    		//temp tile boarder draw
 	    		g2.setColor(new Color(0,0,0));
