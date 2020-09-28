@@ -54,7 +54,7 @@ public class LevelManager {
    * @throws IOException
    */
   public Maze loadLevel(String filepath) throws IOException {
-    Maze loadedMaze = handler.read("levels/level1.json", Maze.class);
+    Maze loadedMaze = handler.read(filepath, Maze.class);
     System.out.println(loadedMaze.toString());
     return loadedMaze;
   }
