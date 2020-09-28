@@ -1,6 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.actors;
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Access;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
@@ -41,9 +41,9 @@ public class Player implements Actor {
 
   @Override
   public boolean isValidMove(Tile destination) {
-    if (destination instanceof Access) {
-      Access accessibleTile = (Access) destination;
-      return accessibleTile.canAccess(this);
+    if (destination instanceof Accessible) {
+      Accessible accessibleTile = (Accessible) destination;
+      return accessibleTile.isAccessibleBy(this);
     }
     return false;
   }

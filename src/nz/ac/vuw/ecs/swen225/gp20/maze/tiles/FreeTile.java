@@ -10,7 +10,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  * <p>
  * Actors can freely move onto these tiles. A Free tile may hold a item item.
  */
-public class FreeTile implements Tile, Access {
+public class FreeTile implements Tile, Accessible {
 
   Location location;
   Item item;
@@ -48,12 +48,12 @@ public class FreeTile implements Tile, Access {
 
 
   @Override
-  public boolean canAccess(Actor actor) {
+  public boolean isAccessibleBy(Actor actor) {
     return true;
   }
 
   @Override
-  public void grantAccess(Actor actor) {
+  public void admit(Actor actor) {
 
   }
 

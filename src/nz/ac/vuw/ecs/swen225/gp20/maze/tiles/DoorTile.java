@@ -30,7 +30,7 @@ public class DoorTile extends FreeTile {
 
 
   @Override
-  public boolean canAccess(Actor actor) {
+  public boolean isAccessibleBy(Actor actor) {
     if (actor instanceof Player) {
       Player player = (Player) actor;
       return true; // fixme player.hasKeyOfColor(color);

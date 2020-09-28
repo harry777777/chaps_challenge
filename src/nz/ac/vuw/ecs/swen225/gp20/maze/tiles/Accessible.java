@@ -8,7 +8,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Actor;
  *
  * @author Arie Bates-Hermans
  */
-public interface Access {
+public interface Accessible {
 
 
   /**
@@ -17,7 +17,7 @@ public interface Access {
    * @param actor The Actor attempting to gain access
    * @return If the Actor is able to access this location.
    */
-  boolean canAccess(Actor actor);
+  boolean isAccessibleBy(Actor actor);
 
 
   /**
@@ -25,7 +25,7 @@ public interface Access {
    *
    * @param actor The Actor whom shall be granted access to the Location
    */
-  void grantAccess(Actor actor);
+  void admit(Actor actor);
 
 
 }
