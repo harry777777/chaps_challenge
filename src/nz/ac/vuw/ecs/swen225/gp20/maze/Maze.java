@@ -3,7 +3,9 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 import java.util.Arrays;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
@@ -31,6 +33,42 @@ public class Maze {
     this.horizontalBound = tiles[0].length;
     this.tiles = tiles; // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
+  }
+
+
+  /**
+   * Construct from char array.
+   *
+   * @param input char[][] of symbolic representations of the maze.
+   */
+  public Maze(char[][] input) {
+    int width = input.length;
+    int height = input[0].length;
+    Tile[][] tiles = new Tile[height][width];
+    Player player = null;
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        char c = input[i][j];
+        switch (c) {
+          case 'F':
+            tiles[i][j] = new FreeTile(new Location(i, j));
+            break;
+          case 'W':
+            tiles[i][j] = new WallTile(new Location(i, j));
+            break;
+          case 'C':
+            tiles[i][j] = new FreeTile(new Location(i, j));
+            player = new Player(i, j);
+            break;
+          default:
+            throw new IllegalStateException("Unexpected value: " + c);
+        }
+      }
+    }
+    this.player = player;
+    this.tiles = tiles;
+    this.verticalBound = input.length;
+    this.horizontalBound = input[0].length;
   }
 
   /**
