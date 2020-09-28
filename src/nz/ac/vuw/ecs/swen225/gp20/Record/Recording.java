@@ -1,10 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp20.Record;
 
-import nz.ac.vuw.ecs.swen225.gp20.persistence.JSONParser;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.JSONHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 /**
  * @author Harry
@@ -16,9 +16,10 @@ public class Recording {
 
     /**
      * constructor for a recording
+     *
      * @param name name of the recording
      */
-    public Recording(String name){
+    public Recording(String name) {
         this.name = name;
         this.tickEvents = new ArrayList<TickEvent>();
 
@@ -26,29 +27,36 @@ public class Recording {
 
     /**
      * add a TickEvent to a recording of a game.
+     *
      * @param t the tickEvent being added to the recording of the game
      */
-    public void addEvent(TickEvent t){
+    public void addEvent(TickEvent t) {
         this.tickEvents.add(t);
     }
 
     /**
      * getter for the tickEvents list
+     *
      * @return ArrayList<tickEvent> all the tick events that have occured in a recording.
      */
     public ArrayList<TickEvent> getTickEvents() {
         return tickEvents;
     }
 
- public String toString(){
+    public String toString() {
         StringBuilder s = new StringBuilder();
-        for(TickEvent t :this.tickEvents){
-            s.append(t.getMoveDir().toString());
-            s.append(" on tick number : " + t.getTick());
-            s.append("\n");
-        }
+        for (TickEvent t : this.tickEvents) {
+            if (t.idle()) {
+                s.append("Idle");
+            }
+            else {
+                s.append(t.getMoveDir().toString());
+            }
+                s.append(" on tick number : " + t.getTick());
+                s.append("\n");
+            }
         return s.toString();
- }
+    }
 
 }
 

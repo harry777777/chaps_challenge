@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.Record;
 
-import nz.ac.vuw.ecs.swen225.gp20.persistence.JSONParser;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.JSONHandler;
+
 
 import java.io.IOException;
 
@@ -32,7 +33,7 @@ public class Replay {
      * @throws IOException
      */
     public Recording loadRecording(String fileName) throws IOException {
-        JSONParser<Recording> p = new JSONParser<Recording>();
+        JSONHandler<Recording> p = new JSONHandler<Recording>();
         Recording R = p.read("recordings/"+fileName+".json",Recording.class);
         return R;
     }
@@ -65,7 +66,7 @@ public class Replay {
      * A test method that prints a recording object to the console
      */
     public void testRecording(){
-        this.recording.toString();
+        System.out.println(this.recording.toString());
     }
 
 
