@@ -9,6 +9,8 @@ public class Replay {
     private int playSpeed = 1;
     private boolean paused = true; // paused == true causes the view replay loop to pause.
     private boolean skip = false;  // skip == true causes the view replay loop to proceed one step further through the replay
+    private int updateTimer =1000;
+    private int sleepTime = 0;
 
     public Replay(Recording recording) {
         this.recording = recording;
@@ -26,15 +28,18 @@ public class Replay {
                     if (skip == true) { // check if the user has clicked the skip button
                         break;
                     }
-                    wait();
                 }
-                Thread.sleep(1000 * playSpeed); //@todo set the default sleep time to the tick rate of the game when its decided
+
+                Thread.sleep(sleepTime / playSpeed); //@todo set the default sleep time to the tick rate of the game when its decided
             } catch (InterruptedException ex) {
             }
            //@todo  implement the meat of the viewReplay Method, ie the part that does shit
 
         }
     }
+
+
+
 
     /**
      * Toggle the replay between paused and unpaused states.
