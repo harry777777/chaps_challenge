@@ -37,15 +37,20 @@ public class ViewPort {
 	 */
 	public void draw(Graphics2D g2, Tile[][] tiles, Player player, int x, int y, int tileSize, int viewWidth, int viewHeight) {
 		
+		
 		//find player position in the Maze and player offset
 		
 		//needs to be modified so it only access and draws the tiles around the player position as determined above
 	    //this is done using the viewHeight and viewWidth values as well as the position of the player
 		
 		//random testing
-		drawFloor(g2, 100, 100, 200); 
-		g2.setColor(new Color(0,0,0));
-		g2.drawString("Oh, yeah! We have rendering!", 120, 200);
+		//drawFloor(g2, 100, 100, 200); 
+		//g2.setColor(new Color(0,0,0));
+		//g2.drawString(Integer.toString(tiles.length), 120, 200);
+		
+		//draw background (temp)
+	    g2.setColor(new Color(86, 142, 115));
+	  	g2.fillRect(x, y, tiles[0].length*tileSize, tiles.length*tileSize);
 		
 		
 		for(int row = 0; row < tiles.length; row++) {
@@ -53,7 +58,12 @@ public class ViewPort {
 	    		Tile current = tiles[row][col];
 	    		if(current instanceof FreeTile) {
 	    			drawFloor(g2, x+row*tileSize, y+col*tileSize, tileSize);
+	    		}else {
+	    			
 	    		}
+	    		//temp tile boarder draw
+	    		g2.setColor(new Color(0,0,0));
+    			g2.drawRect(x+row*tileSize, y+col*tileSize, tileSize, tileSize);
 	    		
 	    	}
 	    }

@@ -33,9 +33,9 @@ public class Renderer {
 	 */
 	public Renderer(Maze m) {
 		this.maze = m;
-		this.viewX = 200;
-		this.viewY = 200;
-		this.tileSize = 50;
+		this.viewX = 20;
+		this.viewY = 40;
+		this.tileSize = 20;
 		this.viewHeight = 9;
 		this.viewWidth = 9;
 		this.viewPort = new ViewPort();
@@ -80,6 +80,8 @@ public class Renderer {
 		
 	    //currently waiting on:
 	    //need this class and method to be implemented in Application so I can start drawing things and testing
+	    
+	    
 	    
 		//access maze and draw
 	    Tile[][] tiles = maze.getTiles();
