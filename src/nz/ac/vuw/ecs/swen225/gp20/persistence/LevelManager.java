@@ -1,10 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp20.persistence;
 
 import com.google.gson.Gson;
+import java.awt.Color;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.items.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 import java.io.IOException;
@@ -40,6 +43,19 @@ public class LevelManager {
         tiles[i][j] = new FreeTile(new Location(i,j), null);
       }
     }
+
+    // Add some variation to the level
+    tiles[0][6] = new WallTile(new Location(0,6));
+    tiles[1][6] = new WallTile(new Location(1,6));
+    tiles[2][6] = new WallTile(new Location(2,6));
+    tiles[3][6] = new WallTile(new Location(3,6));
+    tiles[4][6] = new WallTile(new Location(4,6));
+    tiles[5][6] = new WallTile(new Location(5,6));
+    tiles[6][6] = new WallTile(new Location(6,6));
+    tiles[7][6] = new WallTile(new Location(7,6));
+    tiles[8][6] = new WallTile(new Location(8,6));
+    tiles[5][5] = new FreeTile(new Location(5,5), new Key(Color.RED));
+
     // Maze player
     Player player = new Player(0,0);
     // Maze
