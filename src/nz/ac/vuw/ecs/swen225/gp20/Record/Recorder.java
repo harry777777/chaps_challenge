@@ -27,6 +27,9 @@ public class Recorder {
         p.write("recordings/"+fileName+".json", this.recording);
 
     }
+    public void updateRecording(TickEvent t){
+        this.recording.addEvent(t);
+    }
 
     public static void main(String[] args) throws IOException {
         // this is for testing recordings
