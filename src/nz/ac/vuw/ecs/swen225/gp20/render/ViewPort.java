@@ -9,6 +9,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 
 /**
  * @author Marco
@@ -72,16 +73,48 @@ public class ViewPort {
 	    
 	    //draw the player on top of the view using information from the previous two stages
 		Location playerLocation = player.getLocation();
-	    drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize); //temp
+		Direction playerDirection = null;
+		if(player.getMotion() != null) {
+			playerDirection = player.getMotion().getDirection();
+		}
+	    drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //temp
 	    
 	    //TODO setup the moving viewport
 	}
 	
-	private void drawChap(Graphics2D g2, int x, int y, int tileSize) {
+	private void drawChap(Graphics2D g2, int x, int y, int tileSize, Direction d) {
 		//draw a rounded square as a temp representation of the chap
 		g2.setStroke(new BasicStroke(2));
 		g2.setColor(CHAP_BODY);
 		g2.fill(new RoundRectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2, 10, 10));
+		
+		
+		//temp player direction showing
+		int angle = 0;
+		if(d != null) {
+			if(d == Direction.UP) {
+				angle = 180;
+			}
+			if(d == Direction.LEFT) {
+				angle = 90;
+			}
+			if(d == Direction.RIGHT) {
+				angle = -90;
+			}
+		}
+		
+		//push matrix
+		Graphics2D gTemp = (Graphics2D) g2.create();
+		
+		g2.rotate(Math.toRadians(angle), x, y);
+		g2.setColor(new Color(0,0,0));
+		g2.drawString("Player", x, y);
+		
+		//pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
+		
+		
 	}
 	
 	private void drawFloor(Graphics2D g2, int x, int y, int tileSize) {
