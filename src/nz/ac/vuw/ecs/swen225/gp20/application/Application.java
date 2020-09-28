@@ -4,8 +4,11 @@ import nz.ac.vuw.ecs.swen225.gp20.Record.Recording;
 import nz.ac.vuw.ecs.swen225.gp20.Record.TickEvent;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 import nz.ac.vuw.ecs.swen225.gp20.render.Renderer;
 
 import javax.swing.*;
@@ -23,8 +26,8 @@ import java.awt.event.*;
 public class Application{
 
     private static JFrame frame;
-    private final Maze maze = new Maze(new Tile[1][1], new Player(1,1));   //Tile[][] tiles, Player player
-    private final Renderer renderer = new Renderer(maze);
+    private Maze maze;
+    private Renderer renderer;
     private Graphics g;
     private boolean moving = false;
     private Recording recordedFootage = new Recording(" ");
@@ -48,6 +51,15 @@ public class Application{
 
     public static void main(String[] args) {
         Application A = new Application();
+        char[][] initialState = {
+                {'W', 'W', 'W', 'W', 'W'},
+                {'W', 'F', 'F', 'F', 'W'},
+                {'W', 'F', 'C', 'F', 'W'},
+                {'W', 'F', 'F', 'F', 'W'},
+                {'W', 'W', 'W', 'W', 'W'}
+        };
+        A.maze = A.constructMaze(initialState);
+        A.renderer = new Renderer(A.maze);
         A.initialiseGui();
         A.runRender();
 
@@ -84,7 +96,7 @@ public class Application{
             public void keyReleased(KeyEvent e) {
                 if((e.getKeyCode() == 38) && !moving){
                     maze.movePlayer(Direction.UP);
-                    recordedFootage.addEvent(new TickEvent(System.currentTimeMillis(), Direction.UP),System.currentTimeMillis());
+                   // recordedFootage.addEvent(new TickEvent(System.currentTimeMillis(), Direction.UP),System.currentTimeMillis());
                     TSLM = System.currentTimeMillis();
                 }
                 if((e.getKeyCode() == 40) && !moving){
@@ -170,21 +182,55 @@ public class Application{
     private void redraw() {
     }
 
-   // private void run() {
-   //     running = true;
-    //    while(running){
-     //       if(!(timer <= 0)) {
-    //            update();
-    //            wait(1);
-    //            renderer.draw(g);
-   //         }
-   //     }
-    //}
+   /** private void run() {
+        running = true;
+        while(running){
+            if(!(timer <= 0)) {
+                update();
+                wait(1);
+                renderer.draw(g);
+            }
+        }
+    }*/
 
     private void input() {
     }
 
     private void update() {
-        recordedFootage.addEvent(new TickEvent(System.currentTimeMillis(), null), System.currentTimeMillis());
+       // recordedFootage.getTickEvents().add(new TickEvent(System.currentTimeMillis(), null), System.currentTimeMillis());
+    }
+
+    /**
+     *
+     *
+     * Temporary methods to create a maze for the renderer
+     *
+     */
+
+    private Maze constructMaze(char[][] input) {
+        int width = input.length;
+        int height = input[0].length;
+        Tile[][] tiles = new Tile[height][width];
+        Player player = null;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                char c = input[i][j];
+                switch (c) {
+                    case 'F':
+                        tiles[i][j] = new FreeTile(new Location(i, j));
+                        break;
+                    case 'W':
+                        tiles[i][j] = new WallTile(new Location(i, j));
+                        break;
+                    case 'C':
+                        tiles[i][j] = new FreeTile(new Location(i, j));
+                        player = new Player(i, j);
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + c);
+                }
+            }
+        }
+        return new Maze(tiles, player);
     }
 }
