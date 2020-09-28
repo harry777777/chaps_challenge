@@ -42,6 +42,12 @@ public class ViewPort {
 		//needs to be modified so it only access and draws the tiles around the player position as determined above
 	    //this is done using the viewHeight and viewWidth values as well as the position of the player
 		
+		//random testing
+		drawFloor(g2, 100, 100, 200); 
+		g2.setColor(new Color(0,0,0));
+		g2.drawString("Oh, yeah! We have rendering!", 120, 200);
+		
+		
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
 	    		Tile current = tiles[row][col];
@@ -53,7 +59,7 @@ public class ViewPort {
 	    }
 	    
 	    //draw the player on top of the view using information from the previous two stages
-	    drawChap(g2, 0, 0, tileSize); //temp
+	    drawChap(g2, 50, 50, tileSize); //temp
 	    
 	    //TODO setup the moving viewport
 	}
