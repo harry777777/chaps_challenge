@@ -8,6 +8,7 @@ import java.awt.geom.RoundRectangle2D;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * @author Marco
@@ -70,7 +71,8 @@ public class ViewPort {
 	    }
 	    
 	    //draw the player on top of the view using information from the previous two stages
-	    drawChap(g2, 50, 50, tileSize); //temp
+		Location playerLocation = player.getLocation();
+	    drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize); //temp
 	    
 	    //TODO setup the moving viewport
 	}
