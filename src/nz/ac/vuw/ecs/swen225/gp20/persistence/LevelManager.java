@@ -53,9 +53,10 @@ public class LevelManager {
    * @param filepath
    * @throws IOException
    */
-  public void loadLevel(String filepath) throws IOException {
+  public Maze loadLevel(String filepath) throws IOException {
     Maze loadedMaze = handler.read("levels/level1.json", Maze.class);
     System.out.println(loadedMaze.toString());
+    return loadedMaze;
   }
 
   public static void main(String[] args) throws IOException {
