@@ -22,11 +22,21 @@ public class Recorder {
         return recording;
     }
 
+    /**
+     * save a recording object as a JSON file
+     * @param fileName the name the file will be saved as
+     * @throws IOException
+     */
     public void saveRecording(String fileName) throws IOException {
         JSONParser<Recording> p = new JSONParser<Recording>();
         p.write("recordings/"+fileName+".json", this.recording);
 
     }
+
+    /**
+     *  Record a tickEvent that occurs in the game
+     * @param t The TickEvent that is being added to the recording
+     */
     public void updateRecording(TickEvent t){
         this.recording.addEvent(t);
     }
