@@ -1,10 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp20.Record;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
-import nz.ac.vuw.ecs.swen225.gp20.persistence.JSONParser;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.JSONHandler;
+
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * @author Harry
@@ -28,7 +28,7 @@ public class Recorder {
      * @throws IOException
      */
     public void saveRecording(String fileName) throws IOException {
-        JSONParser<Recording> p = new JSONParser<Recording>();
+        JSONHandler<Recording> p = new JSONHandler<Recording>();
         p.write("recordings/"+fileName+".json", this.recording);
 
     }
@@ -50,6 +50,7 @@ public class Recorder {
         R.getRecording().addEvent(new TickEvent(3, Direction.DOWN));
         R.getRecording().addEvent(new TickEvent(4, Direction.LEFT));
         R.getRecording().addEvent(new TickEvent(5,Direction.RIGHT));
+        R.getRecording().addEvent(new TickEvent(6,null));
         R.saveRecording("test2");
         Replay Re = new Replay("test2");
         Re.testRecording();
