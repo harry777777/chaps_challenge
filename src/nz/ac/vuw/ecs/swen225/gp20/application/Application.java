@@ -40,10 +40,17 @@ public class Application{
      *
      */
 
-    public Application() {
-       // Gui gui = new Gui
-        initialiseGui();
-        run();
+   // public Application() {
+    //   // Gui gui = new Gui
+    //    initialiseGui();
+     //   runRender();
+   // }
+
+    public static void main(String[] args) {
+        Application A = new Application();
+        A.initialiseGui();
+        A.runRender();
+
     }
 
     /**
@@ -102,7 +109,7 @@ public class Application{
         drawing = new JComponent() {
             @Override
             protected void paintComponent(Graphics g) {
-                renderer.draw(g);
+                renderer.draw(frame.getGraphics());
             }
         };
         drawing.setVisible(true);
@@ -115,7 +122,7 @@ public class Application{
      * Application class, this runs the game loop and creates the GUI
      *
      */
-    private void run() {
+    private void runRender() {
         final double GAME_HERTZ = 60.0;      //Used this tutorial to setup a 60hz tick rate https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
         final double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
@@ -134,8 +141,6 @@ public class Application{
             double now = System.nanoTime();
             int updateCount = 0;
             while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {
-                update();
-                input();
                 lastUpdateTime += TBU;
                 updateCount++;
             }
@@ -144,7 +149,7 @@ public class Application{
                 lastUpdateTime = now - TBU;
             }
 
-            redraw();
+            renderer.draw(frame.getGraphics());
             lastRenderTime = now;
             frameCount++;
 
@@ -165,20 +170,16 @@ public class Application{
     private void redraw() {
     }
 
-    /** private void run() {
-        running = true;
-        while(running){
-            if(!(timer <= 0)) {
-                update();
-               try{Thread.sleep(1000);}catch (Exception e){
-                    System.out.println("Error when sleeping");
-               }
-                renderer.draw(g);
-                Graphics2D
-                timer--;
-            }
-        }
-    }*/
+   // private void run() {
+   //     running = true;
+    //    while(running){
+     //       if(!(timer <= 0)) {
+    //            update();
+    //            wait(1);
+    //            renderer.draw(g);
+   //         }
+   //     }
+    //}
 
     private void input() {
     }
