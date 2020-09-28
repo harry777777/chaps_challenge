@@ -74,9 +74,9 @@ public class ViewPort {
 	    //draw the player on top of the view using information from the previous two stages
 		Location playerLocation = player.getLocation();
 		Direction playerDirection = null;
-		if(player.getMotion() != null) {
-			playerDirection = player.getMotion().getDirection();
-		}
+		//if(player.getMotion() != null) {
+			//playerDirection = player.getMotion().getDirection();
+		//}
 	    drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //temp
 	    
 	    //TODO setup the moving viewport
