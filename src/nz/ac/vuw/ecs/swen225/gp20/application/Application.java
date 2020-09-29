@@ -101,21 +101,23 @@ public class Application {
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if ((e.getKeyCode() == 38) && !moving) {
-                    maze.movePlayer(Direction.UP);
-                    tickEvent = new TickEvent(currentTick, Direction.UP);
-                }
-                if ((e.getKeyCode() == 40) && !moving) {
-                    maze.movePlayer(Direction.DOWN);
-                    tickEvent = new TickEvent(currentTick, Direction.DOWN);
-                }
-                if ((e.getKeyCode() == 37) && !moving) {
-                    maze.movePlayer(Direction.LEFT);
-                    tickEvent = new TickEvent(currentTick, Direction.LEFT);
-                }
-                if ((e.getKeyCode() == 39) && !moving) {
-                    maze.movePlayer(Direction.RIGHT);
-                    tickEvent = new TickEvent(currentTick, Direction.RIGHT);
+                if(!paused){
+                    if ((e.getKeyCode() == 38) && !moving) {
+                        maze.movePlayer(Direction.UP);
+                        tickEvent = new TickEvent(currentTick, Direction.UP);
+                    }
+                    if ((e.getKeyCode() == 40) && !moving) {
+                        maze.movePlayer(Direction.DOWN);
+                        tickEvent = new TickEvent(currentTick, Direction.DOWN);
+                    }
+                    if ((e.getKeyCode() == 37) && !moving) {
+                        maze.movePlayer(Direction.LEFT);
+                        tickEvent = new TickEvent(currentTick, Direction.LEFT);
+                    }
+                    if ((e.getKeyCode() == 39) && !moving) {
+                        maze.movePlayer(Direction.RIGHT);
+                        tickEvent = new TickEvent(currentTick, Direction.RIGHT);
+                    }
                 }
             }
         });
