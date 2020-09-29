@@ -1,6 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
 
+import java.util.ArrayList;
+import java.util.Optional;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.items.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
@@ -10,34 +12,28 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  * <p>
  * Actors can freely move onto these tiles. A Free tile may hold a item item.
  */
-public class FreeTile implements Tile, Accessible {
+public class FreeTile implements Tile, Accessible, Custodial {
 
-  Location location;
-  Item item;
+  private final Location location;
+  private final Item item;
 
   /**
-   * Construct a tile with a Item.
+
+
+  /**
+   * Basic FreeTile constructor.
    *
-   * @param location Location of tile.
-   * @param item     Item held in the tile.
+   * @param location Location of the tile.
+   * @param item
    */
   public FreeTile(Location location, Item item) {
     this.location = location;
     this.item = item;
   }
 
-  /**
-   * Basic FreeTile constructor.
-   *
-   * @param location Location of the tile.
-   */
-  public FreeTile(Location location) {
-    this.location = location;
-  }
-
 
   @Override
-  public char getSymbolicRepresentation() {
+  public char getCharRepresentation() {
     return 'F';
   }
 
@@ -54,7 +50,23 @@ public class FreeTile implements Tile, Accessible {
 
   @Override
   public void admit(Actor actor) {
+    if (isAccessibleBy(actor)) {
+
+    }
 
   }
 
+  @Override
+  public Item get() throws GameStateError {
+    if (item != null) {
+      return item;
+    } else {
+      throw new GameStateError("Tile does not hold item");
+    }
+  }
+
+
+  @Override
+  public void act(Actor actor) {
+  }
 }

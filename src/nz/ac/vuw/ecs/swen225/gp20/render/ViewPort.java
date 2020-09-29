@@ -64,7 +64,6 @@ public class ViewPort {
 	    		Tile current = tiles[row][col];
 	    		if(current instanceof FreeTile) {
 	    			drawFloor(g2, x+row*tileSize, y+col*tileSize, tileSize);
-	    			//drawFloor(g2, x+col*tileSize, y+row*tileSize, tileSize);
 	    		}else {
 	    			
 	    			
@@ -72,7 +71,6 @@ public class ViewPort {
 	    		//temp tile boarder draw
 	    		g2.setColor(new Color(0,0,0));
     			g2.drawRect(x+row*tileSize, y+col*tileSize, tileSize, tileSize);
-	    		//g2.drawRect(x+col*tileSize, y+row*tileSize, tileSize, tileSize);
 	    		
 	    	}
 	    }

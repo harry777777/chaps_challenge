@@ -101,21 +101,23 @@ public class Application {
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if ((e.getKeyCode() == 38) && !moving) {
-                    maze.movePlayer(Direction.UP);
-                    tickEvent = new TickEvent(currentTick, Direction.UP);
-                }
-                if ((e.getKeyCode() == 40) && !moving) {
-                    maze.movePlayer(Direction.DOWN);
-                    tickEvent = new TickEvent(currentTick, Direction.DOWN);
-                }
-                if ((e.getKeyCode() == 37) && !moving) {
-                    maze.movePlayer(Direction.LEFT);
-                    tickEvent = new TickEvent(currentTick, Direction.LEFT);
-                }
-                if ((e.getKeyCode() == 39) && !moving) {
-                    maze.movePlayer(Direction.RIGHT);
-                    tickEvent = new TickEvent(currentTick, Direction.RIGHT);
+                if(!paused){
+                    if ((e.getKeyCode() == 38) && !moving) {
+                        maze.movePlayer(Direction.UP);
+                        tickEvent = new TickEvent(currentTick, Direction.UP);
+                    }
+                    if ((e.getKeyCode() == 40) && !moving) {
+                        maze.movePlayer(Direction.DOWN);
+                        tickEvent = new TickEvent(currentTick, Direction.DOWN);
+                    }
+                    if ((e.getKeyCode() == 37) && !moving) {
+                        maze.movePlayer(Direction.LEFT);
+                        tickEvent = new TickEvent(currentTick, Direction.LEFT);
+                    }
+                    if ((e.getKeyCode() == 39) && !moving) {
+                        maze.movePlayer(Direction.RIGHT);
+                        tickEvent = new TickEvent(currentTick, Direction.RIGHT);
+                    }
                 }
             }
         });
@@ -148,6 +150,7 @@ public class Application {
                 paused = true;
             }
         });
+        pauseButton.setFocusable(false);
         JButton unPauseButton = new JButton("UnPause");
         unPauseButton.addActionListener(new ActionListener() {
             @Override
@@ -155,6 +158,7 @@ public class Application {
                 paused = false;
             }
         });
+        unPauseButton.setFocusable(false);
 
         buttons.add(exitButton);
         buttons.add(pauseButton);
@@ -189,30 +193,32 @@ public class Application {
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
         while (running) {
-            double now = System.nanoTime();
-            int updateCount = 0;
-            while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
-                lastUpdateTime += TBU;
-                update();
-                updateCount++;
-            }
-
-            if (now - lastUpdateTime > TBU) {
-                lastUpdateTime = now - TBU;
-            }
-            maze.tick();
-            redraw();
-            lastRenderTime = now;
-            currentTick++;
-
-            while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
-                Thread.yield();
-                try {
-                    Thread.sleep(1);
-                } catch (Exception e) {
-                    System.out.println("yield error: " + e.getMessage());
+            while(!paused) {
+                double now = System.nanoTime();
+                int updateCount = 0;
+                while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
+                    lastUpdateTime += TBU;
+                    update();
+                    updateCount++;
                 }
-                now = System.nanoTime();
+
+                if (now - lastUpdateTime > TBU) {
+                    lastUpdateTime = now - TBU;
+                }
+                maze.tick();
+                redraw();
+                lastRenderTime = now;
+                currentTick++;
+
+                while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
+                    Thread.yield();
+                    try {
+                        Thread.sleep(1);
+                    } catch (Exception e) {
+                        System.out.println("yield error: " + e.getMessage());
+                    }
+                    now = System.nanoTime();
+                }
             }
         }
     }

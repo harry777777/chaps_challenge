@@ -14,9 +14,10 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  *
  * @author Arie Bates-Hermans
  */
-public class DoorTile extends FreeTile {
+public class DoorTile implements Accessible, Tile {
 
-  Color color;
+  private Boolean isUnlocked;
+  public final Color color;
 
   /**
    * Constructor for a door tile.
@@ -25,7 +26,8 @@ public class DoorTile extends FreeTile {
    * @param color    The color of the door.
    */
   public DoorTile(Location location, Color color) {
-    super(location);
+    this.color = color;
+
   }
 
 
@@ -36,8 +38,22 @@ public class DoorTile extends FreeTile {
       return true; // fixme player.hasKeyOfColor(color);
 
     }
-    return false;
+    return false; //
+  }
+
+  @Override
+  public void admit(Actor actor) {
+
   }
 
 
+  @Override
+  public char getCharRepresentation() {
+    return 'D';
+  }
+
+  @Override
+  public Location getLocation() {
+    return getLocation();
+  }
 }

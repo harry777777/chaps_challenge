@@ -10,7 +10,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
  */
 public class Motion {
 
-  private static final int MAX_OFFSET = 100;
+  private static final int MAX_OFFSET = 1;
   private final Direction direction;
   private int tileOffset;
 

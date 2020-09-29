@@ -48,16 +48,16 @@ public class Maze {
     Player player = null;
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        char c = input[i][j];
+        char c = input[j][i];
         switch (c) {
           case 'F':
-            tiles[i][j] = new FreeTile(new Location(i, j));
+            tiles[i][j] = new FreeTile(new Location(i, j), null);
             break;
           case 'W':
             tiles[i][j] = new WallTile(new Location(i, j));
             break;
           case 'C':
-            tiles[i][j] = new FreeTile(new Location(i, j));
+            tiles[i][j] = new FreeTile(new Location(i, j), null);
             player = new Player(i, j);
             break;
           default:
@@ -143,9 +143,9 @@ public class Maze {
 
   private boolean isWithinBounds(Location location) {
     return location.getHorizontal() >= 0 &&
-        location.getHorizontal() <= horizontalBound &&
+        location.getHorizontal() < horizontalBound &&
         location.getVertical() >= 0 &&
-        location.getVertical() <= verticalBound;
+        location.getVertical() < verticalBound;
   }
 
 
@@ -155,12 +155,12 @@ public class Maze {
     int x = player.getLocation().getHorizontal();
     int y = player.getLocation().getVertical();
 
-    for (int i = 0; i < horizontalBound; i++) {
-      for (int j = 0; j < verticalBound; j++) {
+    for (int i = 0; i < verticalBound; i++) {
+      for (int j = 0; j < horizontalBound; j++) {
         if (j == x && i == y) {
           sb.append(player.getCharRep());
         } else {
-          sb.append(tiles[i][j].getSymbolicRepresentation());
+          sb.append(tiles[j][i].getCharRepresentation());
         }
       }
       sb.append("\n");
