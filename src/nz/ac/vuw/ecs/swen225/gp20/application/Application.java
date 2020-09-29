@@ -20,12 +20,11 @@ import java.awt.event.*;
 
 /**
  * @author Owen
- *
+ * <p>
  * Application class, this runs the game loop,creates the GUI and manages the key listeners
- *
  */
 
-public class Application{
+public class Application {
 
     private static JFrame frame;
     private Maze maze;
@@ -40,27 +39,30 @@ public class Application{
 
     /**
      * @author Owen
-     *
+     * <p>
      * Application class, this runs the game loop and creates the GUI
-     *
      */
 
     public static void main(String[] args) {
         Maze m = null;
         LevelManager l = new LevelManager();
-        try{m = l.loadLevel("levels/level1.json");}catch(Exception E){
-            System.out.println("Error loading level: "+E.getMessage());
+        try {
+            m = l.loadLevel("levels/level1.json");
+        } catch (Exception E) {
+            System.out.println("Error loading level: " + E.getMessage());
         }
-        if(m != null) {
+        if (m != null) {
             Application A = new Application(m);
         }
 
     }
+
     /**
      * initialise Application and run the loop
+     *
      * @param m the maze created by the LevelManagers loadLevel;
      */
-    public Application(Maze m){
+    public Application(Maze m) {
         this.maze = m;
         renderer = new Renderer(m);
         r = new Recorder();
@@ -73,7 +75,7 @@ public class Application{
      * Initialises the Gui and creates the key listener
      */
 
-    private void initialiseGui(){
+    private void initialiseGui() {
         frame = new JFrame("Chaps Challenge");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JMenuBar menuBar = new JMenuBar();
@@ -99,19 +101,19 @@ public class Application{
         frame.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if((e.getKeyCode() == 38) && !moving){
+                if ((e.getKeyCode() == 38) && !moving) {
                     maze.movePlayer(Direction.UP);
                     tickEvent = new TickEvent(currentTick, Direction.UP);
                 }
-                if((e.getKeyCode() == 40) && !moving){
+                if ((e.getKeyCode() == 40) && !moving) {
                     maze.movePlayer(Direction.DOWN);
                     tickEvent = new TickEvent(currentTick, Direction.DOWN);
                 }
-                if((e.getKeyCode() == 37) && !moving){
+                if ((e.getKeyCode() == 37) && !moving) {
                     maze.movePlayer(Direction.LEFT);
                     tickEvent = new TickEvent(currentTick, Direction.LEFT);
                 }
-                if((e.getKeyCode() == 39) && !moving){
+                if ((e.getKeyCode() == 39) && !moving) {
                     maze.movePlayer(Direction.RIGHT);
                     tickEvent = new TickEvent(currentTick, Direction.RIGHT);
                 }
@@ -132,21 +134,21 @@ public class Application{
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 paused = true;
             }
         });
         JButton unPauseButton = new JButton("UnPause");
         unPauseButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
+            public void actionPerformed(ActionEvent e) {
                 paused = false;
             }
         });
@@ -155,7 +157,7 @@ public class Application{
         buttons.add(pauseButton);
         buttons.add(unPauseButton);
         buttons.setVisible(true);
-        frame.add(buttons,BorderLayout.PAGE_END);
+        frame.add(buttons, BorderLayout.PAGE_END);
 
     }
 
@@ -163,7 +165,8 @@ public class Application{
         Graphics2D g2 = (Graphics2D) g;
         renderer.draw(g2);
     }
-    private void redraw(){
+
+    private void redraw() {
         frame.repaint();
     }
 
@@ -183,32 +186,30 @@ public class Application{
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
         while (running) {
-            while(!paused) {
-                double now = System.nanoTime();
-                int updateCount = 0;
-                while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
-                    lastUpdateTime += TBU;
-                    update();
-                    updateCount++;
-                }
+            double now = System.nanoTime();
+            int updateCount = 0;
+            while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
+                lastUpdateTime += TBU;
+                update();
+                updateCount++;
+            }
 
-                if (now - lastUpdateTime > TBU) {
-                    lastUpdateTime = now - TBU;
-                }
-                maze.tick();
-                redraw();
-                lastRenderTime = now;
-                currentTick++;
+            if (now - lastUpdateTime > TBU) {
+                lastUpdateTime = now - TBU;
+            }
+            maze.tick();
+            redraw();
+            lastRenderTime = now;
+            currentTick++;
 
-                while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
-                    Thread.yield();
-                    try {
-                        Thread.sleep(1);
-                    } catch (Exception e) {
-                        System.out.println("yield error: " + e.getMessage());
-                    }
-                    now = System.nanoTime();
+            while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
+                Thread.yield();
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    System.out.println("yield error: " + e.getMessage());
                 }
+                now = System.nanoTime();
             }
         }
     }
@@ -217,7 +218,8 @@ public class Application{
      * Updates every tick to move the player and at the tickEvent to the recording, but only if something occurred that tick
      */
     private void update() {
-        if(tickEvent != null) {
+        if (tickEvent != null) {
+            System.out.println("a");
             maze.movePlayer(tickEvent.getMoveDir());
             r.updateRecording(tickEvent);
             tickEvent = null;
