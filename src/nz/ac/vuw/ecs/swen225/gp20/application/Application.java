@@ -148,6 +148,7 @@ public class Application {
                 paused = true;
             }
         });
+        pauseButton.setFocusable(false);
         JButton unPauseButton = new JButton("UnPause");
         unPauseButton.addActionListener(new ActionListener() {
             @Override
@@ -155,6 +156,7 @@ public class Application {
                 paused = false;
             }
         });
+        unPauseButton.setFocusable(false);
 
         buttons.add(exitButton);
         buttons.add(pauseButton);
@@ -189,30 +191,32 @@ public class Application {
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
         while (running) {
-            double now = System.nanoTime();
-            int updateCount = 0;
-            while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
-                lastUpdateTime += TBU;
-                update();
-                updateCount++;
-            }
-
-            if (now - lastUpdateTime > TBU) {
-                lastUpdateTime = now - TBU;
-            }
-            maze.tick();
-            redraw();
-            lastRenderTime = now;
-            currentTick++;
-
-            while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
-                Thread.yield();
-                try {
-                    Thread.sleep(1);
-                } catch (Exception e) {
-                    System.out.println("yield error: " + e.getMessage());
+            while(!paused) {
+                double now = System.nanoTime();
+                int updateCount = 0;
+                while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
+                    lastUpdateTime += TBU;
+                    update();
+                    updateCount++;
                 }
-                now = System.nanoTime();
+
+                if (now - lastUpdateTime > TBU) {
+                    lastUpdateTime = now - TBU;
+                }
+                maze.tick();
+                redraw();
+                lastRenderTime = now;
+                currentTick++;
+
+                while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
+                    Thread.yield();
+                    try {
+                        Thread.sleep(1);
+                    } catch (Exception e) {
+                        System.out.println("yield error: " + e.getMessage());
+                    }
+                    now = System.nanoTime();
+                }
             }
         }
     }
