@@ -48,17 +48,14 @@ class MazeTest {
         {'W', 'W', 'W', 'W', 'W'},
         {'W', 'F', 'F', 'F', 'W'},
         {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
+
     };
     String actual = new Maze(initialState).toString();
 
     String expected =
         "WWWWW\n"
             + "WFFFW\n"
-            + "WFCFW\n"
-            + "WFFFW\n"
-            + "WWWWW\n";
+            + "WFCFW\n";
 
     assertEquals(expected, actual);
   }
@@ -213,6 +210,62 @@ class MazeTest {
     assertEquals(expected, actual);
   }
 
+  @Test
+  public void cannotMoveOutBoundsRight() {
+
+    char[][] initState = {{'C'}};
+    Maze maze = new Maze(initState);
+    maze.movePlayer(Direction.RIGHT);
+    simulate100Ticks(maze);
+    String actual = maze.toString();
+
+    String expected = "C\n";
+
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void cannotMoveOutBoundsUp() {
+
+    char[][] initState = {{'C'}};
+    Maze maze = new Maze(initState);
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
+    String actual = maze.toString();
+
+    String expected = "C\n";
+
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void cannotMoveOutBoundsDown() {
+
+    char[][] initState = {{'C'}};
+    Maze maze = new Maze(initState);
+    maze.movePlayer(Direction.DOWN);
+    simulate100Ticks(maze);
+    String actual = maze.toString();
+
+    String expected = "C\n";
+
+    assertEquals(expected, actual);
+  }
+
+  @Test
+  public void cannotMoveOutBoundsLeft() {
+
+    char[][] initState = {{'C'}};
+    Maze maze = new Maze(initState);
+    maze.movePlayer(Direction.LEFT);
+    simulate100Ticks(maze);
+    String actual = maze.toString();
+
+    String expected = "C\n";
+
+    assertEquals(expected, actual);
+  }
+
   private Maze createStandardMaze() {
     char[][] initialState = {
         {'W', 'W', 'W', 'W', 'W'},
@@ -229,6 +282,8 @@ class MazeTest {
       maze.tick();
     }
   }
+
+
 
 
 

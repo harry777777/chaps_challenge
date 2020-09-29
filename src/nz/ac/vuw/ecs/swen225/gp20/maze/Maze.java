@@ -48,7 +48,7 @@ public class Maze {
     Player player = null;
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        char c = input[i][j];
+        char c = input[j][i];
         switch (c) {
           case 'F':
             tiles[i][j] = new FreeTile(new Location(i, j), null);
@@ -155,12 +155,12 @@ public class Maze {
     int x = player.getLocation().getHorizontal();
     int y = player.getLocation().getVertical();
 
-    for (int i = 0; i < horizontalBound; i++) {
-      for (int j = 0; j < verticalBound; j++) {
+    for (int i = 0; i < verticalBound; i++) {
+      for (int j = 0; j < horizontalBound; j++) {
         if (j == x && i == y) {
           sb.append(player.getCharRep());
         } else {
-          sb.append(tiles[i][j].getCharRepresentation());
+          sb.append(tiles[j][i].getCharRepresentation());
         }
       }
       sb.append("\n");
