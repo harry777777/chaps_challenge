@@ -21,7 +21,7 @@ import java.awt.event.*;
 /**
  * @author Owen
  *
- * Application class, this runs the game loop and creates the GUI
+ * Application class, this runs the game loop,creates the GUI and manages the key listeners
  *
  */
 
@@ -35,6 +35,7 @@ public class Application{
     private TickEvent tickEvent;
     private final int timer = 60;
     private int currentTick = 0;
+    private boolean running = true;
 
     /**
      * @author Owen
@@ -54,6 +55,10 @@ public class Application{
         }
 
     }
+    /**
+     * initialise Application and run the loop
+     * @param m the maze created by the LevelManagers loadLevel;
+     */
     public Application(Maze m){
         this.maze = m;
         renderer = new Renderer(m);
@@ -64,10 +69,7 @@ public class Application{
     }
 
     /**
-     * @author Owen
-     *
-     * Application class, this runs the game loop and creates the GUI
-     *
+     * Initialises the Gui and creates the key listener
      */
 
     private void initialiseGui(){
@@ -84,10 +86,14 @@ public class Application{
 
         File.add(exit);
         Game.add(start);
+        menuBar.add(File);
+        menuBar.add(Game);
 
         frame.pack();
         frame.setVisible(true);
         frame.setSize(new Dimension(700, 700));
+        frame.setLayout(new BorderLayout());
+
 
         frame.addKeyListener(new KeyAdapter() {
             @Override
@@ -115,21 +121,39 @@ public class Application{
         JComponent drawing = new JComponent() {
             @Override
             protected void paintComponent(Graphics g) {
-                renderer.draw(frame.getGraphics());
+                redraw(g);
             }
         };
         drawing.setVisible(true);
+        frame.add(drawing, BorderLayout.CENTER);
+
+        JPanel buttons = new JPanel();
+        JButton exitButton = new JButton("Exit");
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+
+            }
+        });
+        buttons.setVisible(true);
+        buttons.add(exitButton);
+        frame.add(buttons,BorderLayout.PAGE_END);
 
     }
 
+    private void redraw(Graphics g) {
+        Graphics2D g2 = (Graphics2D) g;
+        renderer.draw(g2);
+    }
+    private void redraw(){
+        frame.repaint();
+    }
+
     /**
-     * @author Owen
-     *
-     * Application class, this runs the game loop and creates the GUI
-     *
+     * Runs the game loop, its runs at 60hz and is created from a tutorial I followed here https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
      */
     private void run() {
-        final double GAME_HERTZ = 60;      //Used this tutorial to setup a 60hz tick rate https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
+        final double GAME_HERTZ = 60;
         final double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
         final double MUBR = 1; //Most update before render
@@ -140,10 +164,10 @@ public class Application{
         final double TARGET_FPS = 60;
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
-        while (true) {
+        while (running) {
             double now = System.nanoTime();
             int updateCount = 0;
-            while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {
+            while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
                 lastUpdateTime += TBU;
                 update();
                 updateCount++;
@@ -152,22 +176,25 @@ public class Application{
             if (now - lastUpdateTime > TBU) {
                 lastUpdateTime = now - TBU;
             }
-
-            renderer.draw(frame.getGraphics());
+            redraw();
             lastRenderTime = now;
             currentTick++;
 
-            while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {
+            while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
                 Thread.yield();
                 try {
                     Thread.sleep(1);
                 } catch (Exception e) {
-                    System.out.println("yield error");
+                    System.out.println("yield error: " + e.getMessage());
                 }
                 now = System.nanoTime();
             }
         }
     }
+
+    /**
+     * Updates every tick to move the player and at the tickEvent to the recording, but only if something occurred that tick
+     */
     private void update() {
         if(tickEvent != null) {
             maze.movePlayer(tickEvent.getMoveDir());
