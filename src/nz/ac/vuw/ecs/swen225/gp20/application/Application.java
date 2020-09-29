@@ -135,6 +135,9 @@ public class Application {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try{r.saveRecording("Recording");}catch (Exception E){
+                     System.out.println("Error saving recording:"+ E.getMessage());
+                }
                 System.exit(0);
             }
         });
@@ -219,13 +222,9 @@ public class Application {
      */
     private void update() {
         if (tickEvent != null) {
-            System.out.println("a");
             maze.movePlayer(tickEvent.getMoveDir());
             r.updateRecording(tickEvent);
             tickEvent = null;
         }
-        //try{r.saveRecording("Recording");}catch (Exception E){
-        //     System.out.println("Error saving recording:"+ E.getMessage());
-        //}
     }
 }
