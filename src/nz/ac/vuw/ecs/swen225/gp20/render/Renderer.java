@@ -34,7 +34,7 @@ public class Renderer {
 	public Renderer(Maze m) {
 		this.maze = m;
 		this.viewX = 20;
-		this.viewY = 40;
+		this.viewY = 20;
 		this.tileSize = 40;
 		this.viewHeight = 9;
 		this.viewWidth = 9;
