@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.application;
 
+import nz.ac.vuw.ecs.swen225.gp20.Record.Recorder;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Recording;
 import nz.ac.vuw.ecs.swen225.gp20.Record.TickEvent;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
@@ -9,6 +10,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.LevelManager;
 import nz.ac.vuw.ecs.swen225.gp20.render.Renderer;
 
 import javax.swing.*;
@@ -27,14 +29,12 @@ public class Application{
 
     private static JFrame frame;
     private Maze maze;
-    private Renderer renderer;
-    private Graphics g;
-    private boolean moving = false;
-    private Recording recordedFootage = new Recording(" ");
-    private int timer = 60;
-    private long TSLM = 0; // Time Since Last Move
-    private boolean running;
-    private JComponent drawing;
+    private final Renderer renderer;
+    private final boolean moving = false;
+    private final Recorder r;
+    private TickEvent tickEvent;
+    private final int timer = 60;
+    private int currentTick = 0;
 
     /**
      * @author Owen
@@ -43,25 +43,23 @@ public class Application{
      *
      */
 
-   // public Application() {
-    //   // Gui gui = new Gui
-    //    initialiseGui();
-     //   runRender();
-   // }
-
     public static void main(String[] args) {
-        Application A = new Application();
-        char[][] initialState = {
-                {'W', 'W', 'W', 'W', 'W'},
-                {'W', 'F', 'F', 'F', 'W'},
-                {'W', 'F', 'C', 'F', 'W'},
-                {'W', 'F', 'F', 'F', 'W'},
-                {'W', 'W', 'W', 'W', 'W'}
-        };
-        A.maze = A.constructMaze(initialState);
-        A.renderer = new Renderer(A.maze);
-        A.initialiseGui();
-        A.runRender();
+        Maze m = null;
+        LevelManager l = new LevelManager();
+        try{m = l.loadLevel("levels/level1.json");}catch(Exception E){
+            System.out.println("Error loading level: "+E.getMessage());
+        }
+        if(m != null) {
+            Application A = new Application(m);
+        }
+
+    }
+    public Application(Maze m){
+        this.maze = m;
+        renderer = new Renderer(m);
+        r = new Recorder();
+        initialiseGui();
+        run();
 
     }
 
@@ -96,29 +94,25 @@ public class Application{
             public void keyReleased(KeyEvent e) {
                 if((e.getKeyCode() == 38) && !moving){
                     maze.movePlayer(Direction.UP);
-                   // recordedFootage.addEvent(new TickEvent(System.currentTimeMillis(), Direction.UP),System.currentTimeMillis());
-                    TSLM = System.currentTimeMillis();
+                    tickEvent = new TickEvent(currentTick, Direction.UP);
                 }
                 if((e.getKeyCode() == 40) && !moving){
                     maze.movePlayer(Direction.DOWN);
-                   // recordedFootage.update(Direction.DOWN,(System.currentTimeMillis() - TSLM));
-                    TSLM = System.currentTimeMillis();
+                    tickEvent = new TickEvent(currentTick, Direction.DOWN);
                 }
                 if((e.getKeyCode() == 37) && !moving){
                     maze.movePlayer(Direction.LEFT);
-                  //  recordedFootage.update(Direction.LEFT,(System.currentTimeMillis() - TSLM));
-                    TSLM = System.currentTimeMillis();
+                    tickEvent = new TickEvent(currentTick, Direction.LEFT);
                 }
                 if((e.getKeyCode() == 39) && !moving){
                     maze.movePlayer(Direction.RIGHT);
-                   // recordedFootage.update(Direction.RIGHT,(System.currentTimeMillis() - TSLM));
-                    TSLM = System.currentTimeMillis();
+                    tickEvent = new TickEvent(currentTick, Direction.RIGHT);
                 }
             }
         });
 
         // Set up drawing panel
-        drawing = new JComponent() {
+        JComponent drawing = new JComponent() {
             @Override
             protected void paintComponent(Graphics g) {
                 renderer.draw(frame.getGraphics());
@@ -134,8 +128,8 @@ public class Application{
      * Application class, this runs the game loop and creates the GUI
      *
      */
-    private void runRender() {
-        final double GAME_HERTZ = 60.0;      //Used this tutorial to setup a 60hz tick rate https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
+    private void run() {
+        final double GAME_HERTZ = 60;      //Used this tutorial to setup a 60hz tick rate https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
         final double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
         final double MUBR = 1; //Most update before render
@@ -146,14 +140,12 @@ public class Application{
         final double TARGET_FPS = 60;
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
-        int frameCount = 0;
-        int i = 0;
-
         while (true) {
             double now = System.nanoTime();
             int updateCount = 0;
             while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {
                 lastUpdateTime += TBU;
+                update();
                 updateCount++;
             }
 
@@ -163,9 +155,7 @@ public class Application{
 
             renderer.draw(frame.getGraphics());
             lastRenderTime = now;
-            frameCount++;
-
-            System.out.println(frameCount);
+            currentTick++;
 
             while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {
                 Thread.yield();
@@ -178,59 +168,14 @@ public class Application{
             }
         }
     }
-
-    private void redraw() {
-    }
-
-   /** private void run() {
-        running = true;
-        while(running){
-            if(!(timer <= 0)) {
-                update();
-                wait(1);
-                renderer.draw(g);
-            }
-        }
-    }*/
-
-    private void input() {
-    }
-
     private void update() {
-       // recordedFootage.getTickEvents().add(new TickEvent(System.currentTimeMillis(), null), System.currentTimeMillis());
-    }
-
-    /**
-     *
-     *
-     * Temporary methods to create a maze for the renderer
-     *
-     */
-
-    private Maze constructMaze(char[][] input) {
-        int width = input.length;
-        int height = input[0].length;
-        Tile[][] tiles = new Tile[height][width];
-        Player player = null;
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                char c = input[i][j];
-                switch (c) {
-                    case 'F':
-                        tiles[i][j] = new FreeTile(new Location(i, j));
-                        break;
-                    case 'W':
-                        tiles[i][j] = new WallTile(new Location(i, j));
-                        break;
-                    case 'C':
-                        tiles[i][j] = new FreeTile(new Location(i, j));
-                        player = new Player(i, j);
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value: " + c);
-                }
-            }
+        if(tickEvent != null) {
+            maze.movePlayer(tickEvent.getMoveDir());
+            r.updateRecording(tickEvent);
+            tickEvent = null;
         }
-        return new Maze(tiles, player);
+        //try{r.saveRecording("Recording");}catch (Exception E){
+        //     System.out.println("Error saving recording:"+ E.getMessage());
+        //}
     }
 }
