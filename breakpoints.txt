@@ -4,3 +4,5 @@ Persistence:
 src/nz/ac/vuw/ecs/swen225/gp20/persistence/LevelManager [line:73]
 
 src/nz/ac/vuw/ecs/swen225/gp20/Record/Recorder [line:30]
+
+src/nz/ac/vuw/ecs/swen225/gp20/application/Application [line:50]
