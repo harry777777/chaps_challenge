@@ -51,7 +51,7 @@ class MazeTest {
         {'W', 'F', 'F', 'F', 'W'},
         {'W', 'W', 'W', 'W', 'W'}
     };
-    String actual = constructMaze(initialState).toString();
+    String actual = new Maze(initialState).toString();
 
     String expected =
         "WWWWW\n"
@@ -68,14 +68,7 @@ class MazeTest {
    */
   @Test
   public void movePlayerUp() {
-    char[][] initialState = {
-        {'W', 'W', 'W', 'W', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
-    };
-    Maze maze = constructMaze(initialState);
+    Maze maze = createStandardMaze();
     maze.movePlayer(Direction.UP);
     simulate100Ticks(maze);
     String actual = maze.toString();
@@ -95,14 +88,7 @@ class MazeTest {
    */
   @Test
   public void movePlayerDown() {
-    char[][] initialState = {
-        {'W', 'W', 'W', 'W', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
-    };
-    Maze maze = constructMaze(initialState);
+    Maze maze = createStandardMaze();
     maze.movePlayer(Direction.DOWN);
     simulate100Ticks(maze);
     String actual = maze.toString();
@@ -120,16 +106,10 @@ class MazeTest {
   /**
    * Player should be moved left one tile from the center location.
    */
+
   @Test
   public void movePlayerLeft() {
-    char[][] initialState = {
-        {'W', 'W', 'W', 'W', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
-    };
-    Maze maze = constructMaze(initialState);
+    Maze maze = createStandardMaze();
     maze.movePlayer(Direction.LEFT);
     simulate100Ticks(maze);
     String actual = maze.toString();
@@ -149,14 +129,7 @@ class MazeTest {
    */
   @Test
   public void movePlayerRight() {
-    char[][] initialState = {
-        {'W', 'W', 'W', 'W', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
-    };
-    Maze maze = constructMaze(initialState);
+    Maze maze = createStandardMaze();
     maze.movePlayer(Direction.RIGHT);
     simulate100Ticks(maze);
     String actual = maze.toString();
@@ -176,14 +149,7 @@ class MazeTest {
    */
   @Test
   public void noDoubleMovement() {
-    char[][] initialState = {
-        {'W', 'W', 'W', 'W', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
-    };
-    Maze maze = constructMaze(initialState);
+    Maze maze = createStandardMaze();
     maze.movePlayer(Direction.UP);
     maze.movePlayer(Direction.UP);
     simulate100Ticks(maze);
@@ -205,14 +171,7 @@ class MazeTest {
    */
   @Test
   public void multipleMovement() {
-    char[][] initialState = {
-        {'W', 'W', 'W', 'W', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
-    };
-    Maze maze = constructMaze(initialState);
+    Maze maze = createStandardMaze();
 
     maze.movePlayer(Direction.UP);
     simulate100Ticks(maze);
@@ -236,19 +195,11 @@ class MazeTest {
    */
   @Test
   public void movementIntoWall() {
-    char[][] initialState = {
-        {'W', 'W', 'W', 'W', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'F', 'C', 'F', 'W'},
-        {'W', 'F', 'F', 'F', 'W'},
-        {'W', 'W', 'W', 'W', 'W'}
-    };
-    Maze maze = constructMaze(initialState);
+    Maze maze = createStandardMaze();
 
     maze.movePlayer(Direction.UP);
     simulate100Ticks(maze);
-    maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
+
 
     String actual = maze.toString();
 
@@ -262,6 +213,17 @@ class MazeTest {
     assertEquals(expected, actual);
   }
 
+  private Maze createStandardMaze() {
+    char[][] initialState = {
+        {'W', 'W', 'W', 'W', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'F', 'C', 'F', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'W', 'W', 'W', 'W'}
+    };
+    return new Maze(initialState);
+  }
+
   private void simulate100Ticks(Maze maze) {
     for (int i = 0; i < 100; i++) {
       maze.tick();
@@ -269,32 +231,5 @@ class MazeTest {
   }
 
 
-  private Maze constructMaze(char[][] input) {
-    int width = input.length;
-    int height = input[0].length;
-    Tile[][] tiles = new Tile[height][width];
-    Player player = null;
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        char c = input[i][j];
-        LOGGER.fine(String.format("(i: %d, j: %d) c = %c%n", i, j, c));
-        switch (c) {
-          case 'F':
-            tiles[i][j] = new FreeTile(new Location(i, j));
-            break;
-          case 'W':
-            tiles[i][j] = new WallTile(new Location(i, j));
-            break;
-          case 'C':
-            tiles[i][j] = new FreeTile(new Location(i, j));
-            player = new Player(i, j);
-            break;
-          default:
-            throw new IllegalStateException("Unexpected value: " + c);
-        }
-      }
-    }
-    return new Maze(tiles, player);
-  }
 
 }

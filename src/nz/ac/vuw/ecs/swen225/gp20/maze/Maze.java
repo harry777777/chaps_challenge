@@ -51,13 +51,13 @@ public class Maze {
         char c = input[i][j];
         switch (c) {
           case 'F':
-            tiles[i][j] = new FreeTile(new Location(i, j));
+            tiles[i][j] = new FreeTile(new Location(i, j), null);
             break;
           case 'W':
             tiles[i][j] = new WallTile(new Location(i, j));
             break;
           case 'C':
-            tiles[i][j] = new FreeTile(new Location(i, j));
+            tiles[i][j] = new FreeTile(new Location(i, j), null);
             player = new Player(i, j);
             break;
           default:
@@ -143,9 +143,9 @@ public class Maze {
 
   private boolean isWithinBounds(Location location) {
     return location.getHorizontal() >= 0 &&
-        location.getHorizontal() <= horizontalBound &&
+        location.getHorizontal() < horizontalBound &&
         location.getVertical() >= 0 &&
-        location.getVertical() <= verticalBound;
+        location.getVertical() < verticalBound;
   }
 
 
@@ -160,7 +160,7 @@ public class Maze {
         if (j == x && i == y) {
           sb.append(player.getCharRep());
         } else {
-          sb.append(tiles[i][j].getSymbolicRepresentation());
+          sb.append(tiles[i][j].getCharRepresentation());
         }
       }
       sb.append("\n");
