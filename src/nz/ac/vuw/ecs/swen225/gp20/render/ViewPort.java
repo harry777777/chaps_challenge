@@ -26,6 +26,8 @@ public class ViewPort {
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(164, 149, 126);
 	
+	private int count = 0;
+	
 	/**
 	 * Draws the view port
 	 * @param g2 
@@ -54,6 +56,8 @@ public class ViewPort {
 	    g2.setColor(new Color(86, 142, 115));
 	  	g2.fillRect(x, y, tiles[0].length*tileSize, tiles.length*tileSize);
 		
+	  	
+	  	
 		
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
@@ -80,6 +84,8 @@ public class ViewPort {
 			//playerDirection = player.getMotion().getDirection();
 		//}
 	    drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //temp
+	    
+		
 	    
 	    //TODO setup the moving viewport
 	}
@@ -116,6 +122,10 @@ public class ViewPort {
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 		
+		//janky frame counter
+		g2.setColor(new Color(0,0,0));
+		g2.drawString("FrameCount: " + Integer.toString(count), x-20, y+50);
+		count++;
 		
 	}
 	
