@@ -36,6 +36,7 @@ public class Application{
     private final int timer = 60;
     private int currentTick = 0;
     private boolean running = true;
+    private boolean paused = false;
 
     /**
      * @author Owen
@@ -132,11 +133,28 @@ public class Application{
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-
+                System.exit(0);
             }
         });
-        buttons.setVisible(true);
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                paused = true;
+            }
+        });
+        JButton unPauseButton = new JButton("UnPause");
+        unPauseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                paused = false;
+            }
+        });
+
         buttons.add(exitButton);
+        buttons.add(pauseButton);
+        buttons.add(unPauseButton);
+        buttons.setVisible(true);
         frame.add(buttons,BorderLayout.PAGE_END);
 
     }
@@ -165,29 +183,32 @@ public class Application{
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
         while (running) {
-            double now = System.nanoTime();
-            int updateCount = 0;
-            while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
-                lastUpdateTime += TBU;
-                update();
-                updateCount++;
-            }
-
-            if (now - lastUpdateTime > TBU) {
-                lastUpdateTime = now - TBU;
-            }
-            redraw();
-            lastRenderTime = now;
-            currentTick++;
-
-            while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
-                Thread.yield();
-                try {
-                    Thread.sleep(1);
-                } catch (Exception e) {
-                    System.out.println("yield error: " + e.getMessage());
+            while(!paused) {
+                double now = System.nanoTime();
+                int updateCount = 0;
+                while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
+                    lastUpdateTime += TBU;
+                    update();
+                    updateCount++;
                 }
-                now = System.nanoTime();
+
+                if (now - lastUpdateTime > TBU) {
+                    lastUpdateTime = now - TBU;
+                }
+                maze.tick();
+                redraw();
+                lastRenderTime = now;
+                currentTick++;
+
+                while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
+                    Thread.yield();
+                    try {
+                        Thread.sleep(1);
+                    } catch (Exception e) {
+                        System.out.println("yield error: " + e.getMessage());
+                    }
+                    now = System.nanoTime();
+                }
             }
         }
     }
