@@ -49,7 +49,7 @@ public class Location {
    * @param direction Direction from current Location
    * @return The adjacent location
    */
-  public Location getAdjacentLocation(Direction direction) {
+  public Location getAdjacent(Direction direction) {
     switch (direction) {
       case UP:
         return new Location(horizontal, vertical - 1);
