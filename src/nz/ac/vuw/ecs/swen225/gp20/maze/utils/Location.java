@@ -9,8 +9,8 @@ import java.util.Objects;
  */
 public class Location {
 
-  private int horizontal;
-  private int vertical;
+  private final int horizontal;
+  private final int vertical;
 
   /**
    * Location from x-y integers.
@@ -34,16 +34,6 @@ public class Location {
 
 
   /**
-   * Set the horizontal component of the location.
-   *
-   * @param horizontal Horizontal component
-   */
-  public void setHorizontal(int horizontal) {
-    this.horizontal = horizontal;
-  }
-
-
-  /**
    * Get the vertical component of the location.
    *
    * @return Vertical location
@@ -52,14 +42,6 @@ public class Location {
     return vertical;
   }
 
-  /**
-   * Setter for vertical component of the location.
-   *
-   * @param vertical Vertical location
-   */
-  public void setVertical(int vertical) {
-    this.vertical = vertical;
-  }
 
   /**
    * Get the Location adjacent to the current location in a given direction.
