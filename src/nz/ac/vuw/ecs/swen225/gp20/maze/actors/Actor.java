@@ -31,7 +31,7 @@ public interface Actor {
    * @param destination destination of the move.
    * @return if it is possible to move the actor to the destination tile
    */
-  boolean isValidMove(Tile destination);
+  boolean canMoveTo(Tile destination);
 
   /**
    * Getter for the Actor's current motion.
@@ -52,6 +52,6 @@ public interface Actor {
    * Finalise a Motion by moving the an Actor's location coordinate. Should only be called if Motion
    * not null.
    */
-  void move();
+  void completeMove();
 }
 

@@ -13,7 +13,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  */
 public class Player implements Actor {
 
-  private final Location location;
+  private Location location;
   //  private final Item[] inventory = new Item[8];
   private Motion motion;
 
@@ -40,11 +40,13 @@ public class Player implements Actor {
   }
 
   @Override
-  public boolean isValidMove(Tile destination) {
+  public boolean canMoveTo(Tile destination) {
     if (destination instanceof Accessible) {
       Accessible accessibleTile = (Accessible) destination;
+      System.out.printf("Player can move from %s to %s%n", location, destination.getLocation());
       return accessibleTile.isAccessibleBy(this);
     }
+    System.out.println("Player cannot move");
     return false;
   }
 
@@ -53,37 +55,19 @@ public class Player implements Actor {
     return motion;
   }
 
-//  public Item[] getInventory() {
-  //todo implement
-//    return inventory.clone();
-//  }
-
-
   @Override
   public void setInMotion(Direction direction) {
     if (motion == null) {
       motion = new Motion(direction);
+    } else {
+      System.out.println("Player already in motion");
     }
   }
 
   @Override
-  public void move() {
-    switch (motion.getDirection()) {
-      case UP:
-        location.setVertical(location.getVertical() - 1);
-        break;
-      case DOWN:
-        location.setVertical(location.getVertical() + 1);
-        break;
-      case LEFT:
-        location.setHorizontal(location.getHorizontal() - 1);
-        break;
-      case RIGHT:
-        location.setHorizontal(location.getHorizontal() + 1);
-        break;
-      default:
-        throw new IllegalStateException("Unexpected value: " + motion.getDirection());
-    }
+  public void completeMove() {
+    this.location = new Location(motion.getDirection(), this.location);
+    System.out.println("Moved player " + motion.getDirection());
     motion = null;
   }
 
@@ -95,7 +79,7 @@ public class Player implements Actor {
     if (motion != null) {
       motion.increaseTileOffset();
       if (motion.isAtMaxOffset()) {
-        move();
+        completeMove();
       }
     }
   }

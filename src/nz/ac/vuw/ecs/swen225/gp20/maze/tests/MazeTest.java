@@ -1,8 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tests;
 
 
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.logging.ConsoleHandler;
@@ -10,12 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
-import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 import org.junit.jupiter.api.Test;
 
 
@@ -55,7 +48,7 @@ class MazeTest {
     String expected =
         "WWWWW\n"
             + "WFFFW\n"
-            + "WFCFW\n";
+            + "WFCFW";
 
     assertEquals(expected, actual);
   }
@@ -75,7 +68,7 @@ class MazeTest {
             + "WFCFW\n"
             + "WFFFW\n"
             + "WFFFW\n"
-            + "WWWWW\n";
+            + "WWWWW";
 
     assertEquals(expected, actual);
   }
@@ -95,7 +88,7 @@ class MazeTest {
             + "WFFFW\n"
             + "WFFFW\n"
             + "WFCFW\n"
-            + "WWWWW\n";
+            + "WWWWW";
 
     assertEquals(expected, actual);
   }
@@ -116,7 +109,7 @@ class MazeTest {
             + "WFFFW\n"
             + "WCFFW\n"
             + "WFFFW\n"
-            + "WWWWW\n";
+            + "WWWWW";
 
     assertEquals(expected, actual);
   }
@@ -135,7 +128,7 @@ class MazeTest {
             + "WFFFW\n"
             + "WFFCW\n"
             + "WFFFW\n"
-            + "WWWWW\n";
+            + "WWWWW";
 
     assertEquals(expected, actual);
   }
@@ -157,7 +150,7 @@ class MazeTest {
             + "WFCFW\n"
             + "WFFFW\n"
             + "WFFFW\n"
-            + "WWWWW\n";
+            + "WWWWW";
 
     assertEquals(expected, actual);
   }
@@ -182,7 +175,7 @@ class MazeTest {
             + "WCFFW\n"
             + "WFFFW\n"
             + "WFFFW\n"
-            + "WWWWW\n";
+            + "WWWWW";
 
     assertEquals(expected, actual);
   }
@@ -205,7 +198,7 @@ class MazeTest {
             + "WFCFW\n"
             + "WFFFW\n"
             + "WFFFW\n"
-            + "WWWWW\n";
+            + "WWWWW";
 
     assertEquals(expected, actual);
   }
@@ -219,7 +212,7 @@ class MazeTest {
     simulate100Ticks(maze);
     String actual = maze.toString();
 
-    String expected = "C\n";
+    String expected = "C";
 
     assertEquals(expected, actual);
   }
@@ -233,7 +226,7 @@ class MazeTest {
     simulate100Ticks(maze);
     String actual = maze.toString();
 
-    String expected = "C\n";
+    String expected = "C";
 
     assertEquals(expected, actual);
   }
@@ -247,7 +240,7 @@ class MazeTest {
     simulate100Ticks(maze);
     String actual = maze.toString();
 
-    String expected = "C\n";
+    String expected = "C";
 
     assertEquals(expected, actual);
   }
@@ -261,7 +254,7 @@ class MazeTest {
     simulate100Ticks(maze);
     String actual = maze.toString();
 
-    String expected = "C\n";
+    String expected = "C";
 
     assertEquals(expected, actual);
   }

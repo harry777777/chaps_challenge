@@ -121,22 +121,24 @@ public class Maze {
    * @param direction Direction of movement
    */
   public void movePlayer(Direction direction) {
+    System.out.printf("Attempting to move player %s%n", direction);
     Location currentLocation = player.getLocation();
-    Tile destination = getTileFromDirection(currentLocation, direction);
+    Tile destination = getTileAdjacentTo(currentLocation, direction);
 
-    if (player.isValidMove(destination)) {
+    if (player.canMoveTo(destination)) {
       player.setInMotion(direction);
     }
+    System.out.println(this.toString());
   }
 
-  private Tile getTileFromLocation(Location location) {
+  private Tile getTileAt(Location location) {
     return tiles[location.getHorizontal()][location.getVertical()];
   }
 
-  private Tile getTileFromDirection(Location from, Direction direction) {
-    Location adjacentLocation = from.getAdjacentLocation(direction);
+  private Tile getTileAdjacentTo(Location from, Direction direction) {
+    Location adjacentLocation = from.getAdjacent(direction);
     if (isWithinBounds(adjacentLocation)) {
-      return getTileFromLocation(adjacentLocation);
+      return getTileAt(adjacentLocation);
     }
     return null;// todo throw error
   }
@@ -165,6 +167,7 @@ public class Maze {
       }
       sb.append("\n");
     }
+    sb.setLength(sb.length() - 1);
     return sb.toString();
   }
 
