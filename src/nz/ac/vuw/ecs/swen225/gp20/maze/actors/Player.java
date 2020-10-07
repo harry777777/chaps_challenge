@@ -16,7 +16,6 @@ public class Player implements Actor {
   private Location location;
   private Motion motion;
 
-
   /**
    * Constructs a new Player object at given horizontal and vertical components of location.
    *
@@ -41,10 +40,8 @@ public class Player implements Actor {
   public boolean canMoveTo(Tile destination) {
     if (destination instanceof Accessible) {
       Accessible accessibleTile = (Accessible) destination;
-      System.out.printf("Player can move from %s to %s%n", location, destination.getLocation());
       return accessibleTile.isAccessibleBy(this);
     }
-    System.out.println("Player cannot move");
     return false;
   }
 
@@ -57,15 +54,12 @@ public class Player implements Actor {
   public void setInMotion(Direction direction) {
     if (motion == null) {
       motion = new Motion(direction);
-    } else {
-      System.out.println("Player already in motion");
     }
   }
 
   @Override
   public void completeMove() {
     this.location = new Location(motion.getDirection(), this.location);
-    System.out.println("Player moved " + motion.getDirection());
     motion = null;
   }
 

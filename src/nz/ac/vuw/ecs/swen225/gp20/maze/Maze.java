@@ -89,23 +89,6 @@ public class Maze {
     return player;
   }
 
-  /**
-   * Get the vertical bound.
-   *
-   * @return Vertical bound
-   */
-  public int getVerticalBound() {
-    return verticalBound;
-  }
-
-  /**
-   * Get the horizontal bound.
-   *
-   * @return Horizontal bound
-   */
-  public int getHorizontalBound() {
-    return horizontalBound;
-  }
 
   /**
    * Advance the maze simulation by one tick.
