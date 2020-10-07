@@ -51,13 +51,13 @@ public class Maze {
         char c = input[j][i];
         switch (c) {
           case 'F':
-            tiles[i][j] = new FreeTile(new Location(i, j), null);
+            tiles[i][j] = new FreeTile(new Location(i, j));
             break;
           case 'W':
             tiles[i][j] = new WallTile(new Location(i, j));
             break;
           case 'C':
-            tiles[i][j] = new FreeTile(new Location(i, j), null);
+            tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i, j);
             break;
           default:

@@ -14,7 +14,6 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 public class Player implements Actor {
 
   private Location location;
-  //  private final Item[] inventory = new Item[8];
   private Motion motion;
 
 
@@ -27,12 +26,6 @@ public class Player implements Actor {
   public Player(int horizontalDimension, int verticalDimension) {
     location = new Location(horizontalDimension, verticalDimension);
   }
-
-
-  public Player(Location location) {
-    this.location = location;
-  }
-
 
   @Override
   public char getCharRep() {
@@ -88,13 +81,4 @@ public class Player implements Actor {
       }
     }
   }
-
-//  public void addToInventory(Item collectable) {
-//    // TODO: 23/09/20 implement adding to inventory
-//  }
-
-//  public boolean hasKeyOfColor(Color color) {
-//    // todo: return if holding correct key
-//    return true;
-//  }
 }

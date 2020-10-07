@@ -1,16 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp20.persistence;
 
 import com.google.gson.Gson;
-import java.awt.Color;
+import java.io.IOException;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.items.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
-
-import java.io.IOException;
 
 /**
  * Class for handling the saving and loading of levels.
@@ -40,7 +37,7 @@ public class LevelManager {
     for(int i = 0; i < verticalBound; i++){
       for(int j = 0; j < horizontalBound; j++){
         // Create a free tile at the space with nothing in it.
-        tiles[i][j] = new FreeTile(new Location(i,j), null);
+        tiles[i][j] = new FreeTile(new Location(i, j));
       }
     }
 
@@ -53,8 +50,8 @@ public class LevelManager {
     tiles[5][6] = new WallTile(new Location(5,6));
     tiles[6][6] = new WallTile(new Location(6,6));
     tiles[7][6] = new WallTile(new Location(7,6));
-    tiles[8][6] = new WallTile(new Location(8,6));
-    tiles[5][5] = new FreeTile(new Location(5,5), new Key(Color.RED));
+    tiles[8][6] = new WallTile(new Location(8, 6));
+    tiles[5][5] = new FreeTile(new Location(5, 5));
 
     // Maze player
     Player player = new Player(0,0);

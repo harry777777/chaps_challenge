@@ -8,7 +8,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.*;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 
 /**
  * Adapter to deserialise Tile objects from JSON (since tile is an interface).
@@ -32,8 +34,6 @@ public class TileAdapter implements JsonSerializer<Tile>, JsonDeserializer<Tile>
       switch(type.getAsString()){
         case "FreeTile":
           return context.deserialize(jsonObject.get("data"), FreeTile.class);
-        case "DoorTile":
-          return context.deserialize(jsonObject.get("data"), DoorTile.class);
         case "WallTile":
           return context.deserialize(jsonObject.get("data"), WallTile.class);
       }

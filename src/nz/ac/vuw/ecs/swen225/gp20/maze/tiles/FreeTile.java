@@ -1,10 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
 
-import java.util.ArrayList;
-import java.util.Optional;
 import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Actor;
-import nz.ac.vuw.ecs.swen225.gp20.maze.items.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
@@ -12,23 +9,17 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  * <p>
  * Actors can freely move onto these tiles. A Free tile may hold a item item.
  */
-public class FreeTile implements Tile, Accessible, Custodial {
+public class FreeTile implements Tile, Accessible {
 
   private final Location location;
-  private final Item item;
 
   /**
-
-
-  /**
-   * Basic FreeTile constructor.
+   * /** Basic FreeTile constructor.
    *
    * @param location Location of the tile.
-   * @param item
    */
-  public FreeTile(Location location, Item item) {
+  public FreeTile(Location location) {
     this.location = location;
-    this.item = item;
   }
 
 
@@ -56,17 +47,4 @@ public class FreeTile implements Tile, Accessible, Custodial {
 
   }
 
-  @Override
-  public Item get() throws GameStateError {
-    if (item != null) {
-      return item;
-    } else {
-      throw new GameStateError("Tile does not hold item");
-    }
-  }
-
-
-  @Override
-  public void act(Actor actor) {
-  }
 }
