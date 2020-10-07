@@ -19,13 +19,18 @@ public class Player implements Actor {
 
 
   /**
-   * Constructs a new Player object at given a given location.
+   * Constructs a new Player object at given horizontal and vertical components of location.
    *
    * @param verticalDimension   The Y location of the chap
    * @param horizontalDimension The X location of the chap
    */
   public Player(int horizontalDimension, int verticalDimension) {
     location = new Location(horizontalDimension, verticalDimension);
+  }
+
+
+  public Player(Location location) {
+    this.location = location;
   }
 
 
@@ -67,7 +72,7 @@ public class Player implements Actor {
   @Override
   public void completeMove() {
     this.location = new Location(motion.getDirection(), this.location);
-    System.out.println("Moved player " + motion.getDirection());
+    System.out.println("Player moved " + motion.getDirection());
     motion = null;
   }
 
