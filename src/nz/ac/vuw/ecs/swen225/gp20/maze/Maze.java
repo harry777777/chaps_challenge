@@ -1,8 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
+import java.util.List;
+import java.util.logging.Logger;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -16,10 +18,13 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  */
 public class Maze {
 
-  public final int verticalBound;
-  public final int horizontalBound;
+  private static final Logger LOGGER = Logger.getLogger(Maze.class.getName());
+
+  public final int height;
+  public final int width;
   private final Tile[][] tiles;
   private final Player player;
+  public List<Move> moves = new ArrayList<>();
 
   /**
    * Most Constructs a new Maze with a Player Actor and Tiles.
@@ -28,13 +33,12 @@ public class Maze {
    * @param player the player
    */
   public Maze(Tile[][] tiles, Player player) {
-
-    this.verticalBound = tiles.length;
-    this.horizontalBound = tiles[0].length;
+    this.height = tiles.length;
+    this.width = tiles[0].length;
     this.tiles = tiles; // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
-  }
 
+  }
 
   /**
    * Construct from char array.
@@ -67,8 +71,8 @@ public class Maze {
     }
     this.player = player;
     this.tiles = tiles;
-    this.verticalBound = input.length;
-    this.horizontalBound = input[0].length;
+    this.height = input.length;
+    this.width = input[0].length;
   }
 
   /**
@@ -89,14 +93,22 @@ public class Maze {
     return player;
   }
 
-
   /**
-   * Advance the maze simulation by one tick.
+   * Advance the maze simulation by one tick. Advance each move currently in process. If possible,
+   * complete the move.
    */
   public void tick() {
-    player.tick();
+    List<Move> forRemoval = new ArrayList<>();
+    for (Move move : moves) {
+      if (move.isAtThreshold()) {
+        move.executeMove();
+        forRemoval.add(move);
+      } else {
+        move.incrementDistance();
+      }
+    }
+    moves.removeAll(forRemoval);
   }
-
 
   /**
    * Move the player in a specified direction.
@@ -104,48 +116,47 @@ public class Maze {
    * @param direction Direction of movement
    */
   public void movePlayer(Direction direction) {
-    System.out.printf("Attempting to move player %s%n", direction);
+    LOGGER.info(String.format("Attempting to move %s", direction));
     Location currentLocation = player.getLocation();
     Tile destination = getTileAdjacentTo(currentLocation, direction);
-
-    if (player.canMoveTo(destination)) {
-      player.setInMotion(direction);
+    if (player.canAccess(destination) && player.isStationary()) {
+      player.startMove(direction);
+      Move move = new Move(player, destination);
+      moves.add(move);
     }
-    System.out.println(this.toString());
+    //todo post-condition?
   }
 
   private Tile getTileAt(Location location) {
-    return tiles[location.getHorizontal()][location.getVertical()];
+    return tiles[location.x][location.y];
   }
 
-  private Tile getTileAdjacentTo(Location from, Direction direction) {
-    Location adjacentLocation = from.getAdjacent(direction);
+  private Tile getTileAdjacentTo(Location location, Direction direction) {
+    Location adjacentLocation = location.getAdjacent(direction);
     if (isWithinBounds(adjacentLocation)) {
       return getTileAt(adjacentLocation);
     }
-    return null;// todo throw error
+    return null; // todo throw error
   }
 
   private boolean isWithinBounds(Location location) {
-    return location.getHorizontal() >= 0 &&
-        location.getHorizontal() < horizontalBound &&
-        location.getVertical() >= 0 &&
-        location.getVertical() < verticalBound;
+    return location.x >= 0
+        && location.x < width
+        && location.y >= 0
+        && location.y < height;
   }
-
-
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    int x = player.getLocation().getHorizontal();
-    int y = player.getLocation().getVertical();
+    int x = player.getLocation().x;
+    int y = player.getLocation().y;
 
-    for (int i = 0; i < verticalBound; i++) {
-      for (int j = 0; j < horizontalBound; j++) {
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
         if (j == x && i == y) {
-          sb.append(player.getCharRep());
+          sb.append(player.getSymbol());
         } else {
-          sb.append(tiles[j][i].getCharRepresentation());
+          sb.append(tiles[j][i].getSymbol());
         }
       }
       sb.append("\n");

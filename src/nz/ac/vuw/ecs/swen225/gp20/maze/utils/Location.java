@@ -9,18 +9,18 @@ import java.util.Objects;
  */
 public class Location {
 
-  private final int horizontal;
-  private final int vertical;
+  public final int x;
+  public final int y;
 
   /**
    * Location from x-y integers.
    *
-   * @param horizontal x dimension
-   * @param vertical   y dimension
+   * @param x x dimension
+   * @param y y dimension
    */
-  public Location(int horizontal, int vertical) {
-    this.horizontal = horizontal;
-    this.vertical = vertical;
+  public Location(int x, int y) {
+    this.x = x;
+    this.y = y;
   }
 
   /**
@@ -30,48 +30,28 @@ public class Location {
    * @param location  the location adjacent to which the new location will be constructed.
    */
   public Location(Direction direction, Location location) {
-    int tempHorizontal = location.horizontal;
-    int tempVertical = location.vertical;
+    int tempX = location.x;
+    int tempY = location.y;
 
     switch (direction) {
       case UP:
-        tempVertical = location.vertical - 1;
+        tempY = location.y - 1;
         break;
       case DOWN:
-        tempVertical = location.vertical + 1;
+        tempY = location.y + 1;
         break;
       case LEFT:
-        tempHorizontal = location.horizontal - 1;
+        tempX = location.x - 1;
         break;
       case RIGHT:
-        tempHorizontal = location.horizontal + 1;
+        tempX = location.x + 1;
         break;
       default:
         throw new IllegalStateException("Unexpected value: " + direction);
     }
-    this.vertical = tempVertical;
-    this.horizontal = tempHorizontal;
+    this.y = tempY;
+    this.x = tempX;
   }
-
-  /**
-   * Getter for x dimension.
-   *
-   * @return x
-   */
-  public int getHorizontal() {
-    return horizontal;
-  }
-
-
-  /**
-   * Get the vertical component of the location.
-   *
-   * @return Vertical location
-   */
-  public int getVertical() {
-    return vertical;
-  }
-
 
   /**
    * Get the Location adjacent to the current location in a given direction.
@@ -82,21 +62,21 @@ public class Location {
   public Location getAdjacent(Direction direction) {
     switch (direction) {
       case UP:
-        return new Location(horizontal, vertical - 1);
+        return new Location(x, y - 1);
       case DOWN:
-        return new Location(horizontal, vertical + 1);
+        return new Location(x, y + 1);
       case LEFT:
-        return new Location(horizontal - 1, vertical);
+        return new Location(x - 1, y);
       case RIGHT:
-        return new Location(horizontal + 1, vertical);
+        return new Location(x + 1, y);
+      default:
+        throw new IllegalStateException("Unexpected value: " + direction);
     }
-    return null; // todo throw error?
   }
-
 
   @Override
   public int hashCode() {
-    return Objects.hash(horizontal, vertical);
+    return Objects.hash(x, y);
   }
 
   @Override
@@ -106,13 +86,13 @@ public class Location {
     }
     if (obj instanceof Location) {
       Location other = (Location) obj;
-      return (other.horizontal == horizontal && other.vertical == vertical);
+      return (other.x == x && other.y == y);
     }
     return false;
   }
 
   @Override
   public String toString() {
-    return String.format("(%d,%d)", horizontal, vertical);
+    return String.format("(%d,%d)", x, y);
   }
 }

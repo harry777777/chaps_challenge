@@ -20,10 +20,9 @@ public class WallTile implements Tile {
   }
 
   @Override
-  public char getCharRepresentation() {
+  public char getSymbol() {
     return 'W';
   }
-
 
   @Override
   public Location getLocation() {

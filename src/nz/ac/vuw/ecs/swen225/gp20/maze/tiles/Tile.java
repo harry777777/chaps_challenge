@@ -12,7 +12,7 @@ public interface Tile {
   /**
    * @return a character representation of the tile. Used for .toString() output.
    */
-  char getCharRepresentation();
+  char getSymbol();
 
   /**
    * @return The location of the tile.

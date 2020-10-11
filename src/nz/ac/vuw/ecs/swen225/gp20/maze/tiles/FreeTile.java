@@ -1,12 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * A FreeTile is a Tile with no conditions for access. A FreeTile may hold a collectable Item.
- *
  * Actors can freely move onto these tiles. A Free tile may hold a item item.
  */
 public class FreeTile implements Tile, Accessible {
@@ -14,7 +13,7 @@ public class FreeTile implements Tile, Accessible {
   private final Location location;
 
   /**
-   * /** Basic FreeTile constructor.
+   * Construct a FreeTile at a given location.
    *
    * @param location Location of the tile.
    */
@@ -22,9 +21,8 @@ public class FreeTile implements Tile, Accessible {
     this.location = location;
   }
 
-
   @Override
-  public char getCharRepresentation() {
+  public char getSymbol() {
     return 'F';
   }
 
@@ -33,14 +31,10 @@ public class FreeTile implements Tile, Accessible {
     return location;
   }
 
-
   @Override
-  public boolean isAccessibleBy(Actor actor) {
-    return true;
+  public void admit(Player player) {
+    player.setLocation(this.location);
   }
 
-  @Override
-  public void admit(Actor actor) {
 
-  }
 }

@@ -1,7 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
-
-import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 
 /**
  * Marks an area of the game that may be accessed by an Actor.
@@ -10,22 +9,11 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Actor;
  */
 public interface Accessible {
 
-
   /**
-   * Check if a given Actor can access.
+   * Perform the required operations to move the player into the accessible area.
    *
-   * @param actor The Actor attempting to gain access
-   * @return If the Actor is able to access this location.
+   * @param player The Actor whom shall be granted access
    */
-  boolean isAccessibleBy(Actor actor);
-
-
-  /**
-   * Perform the required operations to move an actor into the accessible area.
-   *
-   * @param actor The Actor whom shall be granted access to the Location
-   */
-  void admit(Actor actor);
-
+  void admit(Player player);
 
 }
