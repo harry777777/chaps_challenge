@@ -113,4 +113,13 @@ public class Player {
   public void setLocation(Location location) {
     this.location = location;
   }
+
+  /**
+   * Getter for direction.
+   *
+   * @return direction the player is currently facing
+   */
+  public Direction getFacing() {
+    return facing;
+  }
 }
