@@ -4,7 +4,7 @@ import nz.ac.vuw.ecs.swen225.gp20.Record.Recorder;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Recording;
 import nz.ac.vuw.ecs.swen225.gp20.Record.TickEvent;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
-import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -103,19 +103,15 @@ public class Application {
             public void keyReleased(KeyEvent e) {
                 if(!paused){
                     if ((e.getKeyCode() == 38) && !moving) {
-                        maze.movePlayer(Direction.UP);
                         tickEvent = new TickEvent(currentTick, Direction.UP);
                     }
                     if ((e.getKeyCode() == 40) && !moving) {
-                        maze.movePlayer(Direction.DOWN);
                         tickEvent = new TickEvent(currentTick, Direction.DOWN);
                     }
                     if ((e.getKeyCode() == 37) && !moving) {
-                        maze.movePlayer(Direction.LEFT);
                         tickEvent = new TickEvent(currentTick, Direction.LEFT);
                     }
                     if ((e.getKeyCode() == 39) && !moving) {
-                        maze.movePlayer(Direction.RIGHT);
                         tickEvent = new TickEvent(currentTick, Direction.RIGHT);
                     }
                 }
