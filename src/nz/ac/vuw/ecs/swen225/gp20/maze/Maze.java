@@ -35,7 +35,7 @@ public class Maze {
   public Maze(Tile[][] tiles, Player player) {
     this.height = tiles.length;
     this.width = tiles[0].length;
-    this.tiles = tiles; // fixme: look at error on spotBugs
+    this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
 
   }
