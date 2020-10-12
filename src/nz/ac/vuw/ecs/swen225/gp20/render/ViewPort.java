@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.actors.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
@@ -81,9 +81,9 @@ public class ViewPort {
 		//if(player.getMotion() != null) {
 			//playerDirection = player.getMotion().getDirection();
 		//}
-	    drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //temp
+	    drawChap(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, playerDirection); //temp
 	    
-		
+	    //drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //old
 	    
 	    //TODO setup the moving viewport
 	}
