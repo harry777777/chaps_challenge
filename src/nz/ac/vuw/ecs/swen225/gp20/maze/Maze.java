@@ -100,11 +100,10 @@ public class Maze {
   public void tick() {
     List<Move> forRemoval = new ArrayList<>();
     for (Move move : moves) {
+      move.incrementDistance();
       if (move.isAtThreshold()) {
         move.executeMove();
         forRemoval.add(move);
-      } else {
-        move.incrementDistance();
       }
     }
     moves.removeAll(forRemoval);
