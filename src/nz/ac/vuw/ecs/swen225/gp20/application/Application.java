@@ -139,6 +139,8 @@ public class Application {
                 System.exit(0);
             }
         });
+        exitButton.setFocusable(false);
+
         JButton pauseButton = new JButton("Pause");
         pauseButton.addActionListener(new ActionListener() {
             @Override
