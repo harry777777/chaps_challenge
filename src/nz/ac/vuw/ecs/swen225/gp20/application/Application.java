@@ -39,6 +39,7 @@ public class Application {
     private boolean running = true;
     private boolean paused = false;
     private Replay replay;
+    private boolean replaying = false;
 
     /**
      * @author Owen
@@ -174,6 +175,9 @@ public class Application {
             public void actionPerformed(ActionEvent e) {
                 try {
                     replay = new Replay("Recording");
+                    replaying = true;
+                    currentTick = 0;
+                    tickEvent = replay.getNextTick();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -220,7 +224,15 @@ public class Application {
                 int updateCount = 0;
                 while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
                     lastUpdateTime += TBU;
-                    update();
+                    if(tickEvent != null) {
+                        if (tickEvent.getTick() == currentTick && replaying) {
+                            update();
+                            tickEvent = replay.getNextTick();
+                        }
+                    }
+                    else{
+                        update();
+                    }
                     updateCount++;
                 }
 
