@@ -1,15 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.RoundRectangle2D;
-
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 
 /**
  * @author Marco
@@ -21,12 +17,10 @@ public class ViewPort {
 	
 	private RenderPlayer rPlayer = new RenderPlayer();
 	
-	
-		
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(164, 149, 126);
 	
-	private int count = 0;
+	private int count = 0; //frame counter
 	
 	/**
 	 * Draws the view port
@@ -91,13 +85,11 @@ public class ViewPort {
 	
 	private void drawFrame(Graphics2D g2, int x, int y) {
 
-		
 		//janky frame counter
 		g2.setColor(new Color(0,0,0));
 		g2.drawString("FrameCount: " + Integer.toString(count), x, y);
 		count++;
 
-		
 	}
 	
 	private void drawFloor(Graphics2D g2, int x, int y, int tileSize) {

@@ -8,6 +8,12 @@ import java.awt.geom.RoundRectangle2D;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 
+/**
+ * @author Marco
+ * 
+ * Holds the logic for drawing the player onto the view plane
+ *
+ */
 public class RenderPlayer {
 	
 	private static final Color CHAP_BODY = new Color(234, 222, 189);
@@ -48,7 +54,7 @@ public class RenderPlayer {
 		}
 		
 		//draw the player
-		drawFront(x, y, tileSize, xOffset, yOffset, g2);
+		drawFront(x+xOffset, y+yOffset, tileSize, g2);
 		
 		//temp player direction showing
 		int angle = 0;
@@ -76,10 +82,10 @@ public class RenderPlayer {
 		g2 = (Graphics2D) gTemp.create();
 	}
 	
-	private void drawFront(int x, int y, int tileSize, int xOffset, int yOffset, Graphics2D g2) {
+	private void drawFront(int x, int y, int tileSize, Graphics2D g2) {
 		//draw a rounded square as a temp representation of the chap
-				g2.setStroke(new BasicStroke(2));
-				g2.setColor(CHAP_BODY);
-				g2.fill(new RoundRectangle2D.Double(x+xOffset+tileSize/4, y+yOffset+tileSize/4, tileSize/2, tileSize/2, 10, 10));
+		g2.setStroke(new BasicStroke(2));
+		g2.setColor(CHAP_BODY);
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2, 10, 10));
 	}
 }
