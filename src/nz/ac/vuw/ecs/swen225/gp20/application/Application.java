@@ -229,9 +229,9 @@ public class Application {
                             update();
                             tickEvent = replay.getNextTick();
                         }
-                    }
-                    else{
-                        update();
+                        else{
+                            update();
+                        }
                     }
                     updateCount++;
                 }
