@@ -3,6 +3,8 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
@@ -89,12 +91,12 @@ public class RenderPlayer {
 		int rightEdge = x+tileSize;
 		int bottomEdge = y+tileSize;
 		
-		int bodyWidth = tileSize/2;
-		int eyeWidth = tileSize/4;
-		int wheelWidth = tileSize/10;
-		int wheelHeight = tileSize/3;
-		int axelWidth = tileSize/3;
-		int axelHeight = tileSize/10;
+		double bodyWidth = tileSize/2;
+		double eyeWidth = tileSize/4;
+		double wheelWidth = tileSize/10;
+		double wheelHeight = tileSize/3;
+		double axelWidth = tileSize/3;
+		double axelHeight = tileSize/10;
 		
 		g2.setStroke(new BasicStroke(2));
 		g2.setColor(CHAP_BODY);
@@ -102,15 +104,15 @@ public class RenderPlayer {
 		
 		g2.fill(new RoundRectangle2D.Double(centerX-bodyWidth/2, y+tileSize/6, bodyWidth, tileSize/2, 5, 5)); //main body
 		
+		g2.fill(new Rectangle2D.Double(centerX-axelWidth/2, bottomEdge-wheelHeight/2-axelHeight/2, axelWidth, axelHeight)); //axel
 		
-		
-		g2.fillRect(centerX-axelWidth/2, bottomEdge-wheelHeight/2-axelHeight/2, axelWidth, axelHeight); //axel
 		
 		g2.setColor(CHAP_BODY_DARK);
 		
-		g2.fillOval(centerX-eyeWidth, centerY-eyeWidth, eyeWidth, eyeWidth); //left eye
-		g2.fillOval(centerX, centerY-eyeWidth, eyeWidth, eyeWidth); //right eye
+		g2.fill(new Ellipse2D.Double(centerX-eyeWidth, centerY-eyeWidth, eyeWidth, eyeWidth)); //left eye
+		g2.fill(new Ellipse2D.Double(centerX, centerY-eyeWidth, eyeWidth, eyeWidth)); //right eye
 		
-		g2.fillRect(centerX-wheelWidth/2, bottomEdge-wheelHeight, wheelWidth, wheelHeight); //wheel
+		
+		g2.fill(new Rectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelHeight, wheelWidth, wheelHeight)); //wheel
 	}
 }
