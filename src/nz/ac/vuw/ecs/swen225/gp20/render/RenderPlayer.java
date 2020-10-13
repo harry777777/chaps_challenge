@@ -35,23 +35,23 @@ public class RenderPlayer {
 		Direction direction = player.getFacing();
 		
 		//calculate player offset
-		int xOffset = 0;
-		int yOffset = 0;
+		double xOffset = 0;
+		double yOffset = 0;
 		if(player.getMove() != null) {
 			int offset = player.getMove().getDistance();
 			
 			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
 			if(direction.equals(Direction.LEFT)) {
-				xOffset = -(int)(offset/divisor);
+				xOffset = -(offset/divisor);
 			}
 			if(direction.equals(Direction.RIGHT)) {
-				xOffset = (int)(offset/divisor);
+				xOffset = (offset/divisor);
 			}
 			if(direction.equals(Direction.UP)) {
-				yOffset = -(int)(offset/divisor);
+				yOffset = -(offset/divisor);
 			}
 			if(direction.equals(Direction.DOWN)) {
-				yOffset = (int)(offset/divisor);
+				yOffset = (offset/divisor);
 			}
 
 		}
@@ -78,18 +78,18 @@ public class RenderPlayer {
 		
 		g2.rotate(Math.toRadians(angle), x+xOffset+tileSize/2, y+yOffset+tileSize/2);
 		g2.setColor(new Color(0,0,0));
-		g2.drawString("Player", x+8+xOffset, y+12+yOffset);
+		g2.drawString("Player", (int)(x+8+xOffset), (int)(y+12+yOffset));
 		
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 	}
 	
-	private void drawFront(int x, int y, int tileSize, Graphics2D g2) {
-		int centerX = x+tileSize/2;
-		int centerY = y+tileSize/2;
-		int rightEdge = x+tileSize;
-		int bottomEdge = y+tileSize;
+	private void drawFront(double x, double y, int tileSize, Graphics2D g2) {
+		double centerX = x+tileSize/2;
+		double centerY = y+tileSize/2;
+		double rightEdge = x+tileSize;
+		double bottomEdge = y+tileSize;
 		
 		double bodyWidth = tileSize/2;
 		double eyeWidth = tileSize/4;
