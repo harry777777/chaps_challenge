@@ -13,7 +13,7 @@ public class Move {
 
   private static final int THRESHOLD = 100;
 
-  private final Player player;
+  private final Actor actor;
   private final Tile destination;
   private int distance;
 
@@ -24,7 +24,7 @@ public class Move {
    * @param destination the destination tile of the move
    */
   public Move(Player player, Tile destination) {
-    this.player = player;
+    this.actor = player;
     this.destination = destination;
     distance = 0;
   }
@@ -62,10 +62,8 @@ public class Move {
     assert (distance >= THRESHOLD);
     assert (destination instanceof Accessible);
     Accessible destination = (Accessible) this.destination;
-    destination.admit(player);
-    player.endMove();
+    destination.admit(actor);
+    actor.endMove();
   }
-
-
 }
 

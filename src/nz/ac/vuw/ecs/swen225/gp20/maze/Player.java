@@ -11,11 +11,12 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  *
  * @author Arie Bates-Hermans
  */
-public class Player {
+public class Player implements Actor{
 
   private Location location;
-  private boolean isMoving = false;
+  private Move move;
   private Direction facing;
+
 
   /**
    * Constructs a new Player object at given horizontal and vertical components of location.
@@ -35,7 +36,6 @@ public class Player {
   public char getSymbol() {
     return 'C';
   }
-
 
   /**
    * Get player's x.
@@ -67,32 +67,32 @@ public class Player {
   }
 
 
-  /**
-   * Set the flags for movement and direction of travel.
-   *
-   * @param direction direction of travel
-   */
-  public void startMove(Direction direction) {
-    assert (isStationary());
-    facing = direction;
-    isMoving = true;
-  }
+//  /**
+//   * Set the flags for movement and direction of travel.
+//   *
+//   * @param direction direction of travel
+//   */
+//  public void startMove(Direction direction) {
+//    assert (isStationary());
+//    facing = direction;
+//    isMoving = true;
+//  }
 
 
-  /**
-   * Set facing direction to DOWN, and switch moving flag.
-   */
-  public void endMove() {
-    facing = Direction.DOWN;
-    isMoving = false; // fixme. side affect?
-  }
+//  /**
+//   * Set facing direction to DOWN, and switch moving flag.
+//   */
+//  public void endMove() {
+//    facing = Direction.DOWN;
+//    isMoving = false; // fixme. side affect?
+//  }
 
-  /**
-   * @return if the player is not currently moving
-   */
-  public boolean isStationary() {
-    return !isMoving;
-  }
+//  /**
+//   * @return if the player is not currently moving
+//   */
+//  public boolean isStationary() {
+//    return !isMoving;
+//  }
 
 
   /**
@@ -112,5 +112,33 @@ public class Player {
    */
   public void setLocation(Location location) {
     this.location = location;
+  }
+
+  @Override
+  public Move getMove() {
+    return move;
+  }
+
+  /**
+   * Getter for direction.
+   *
+   * @return direction the player is currently facing
+   */
+  public Direction getFacing() {
+    return facing;
+  }
+
+  public void endMove() {
+    move = null;
+  }
+
+  @Override
+  public boolean isStationary() {
+    return move == null;
+  }
+
+  public void startMove(Direction direction, Tile destination) {
+    facing = direction;
+    move = new Move(this, destination);
   }
 }
