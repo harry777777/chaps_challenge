@@ -81,14 +81,14 @@ public class ViewPort {
 		//if(player.getMotion() != null) {
 			//playerDirection = player.getMotion().getDirection();
 		//}
-	    drawChap(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, playerDirection); //temp
+	    drawChap(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, playerDirection, player); //temp
 	    
 	    //drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //old
 	    
 	    //TODO setup the moving viewport
 	}
 	
-	private void drawChap(Graphics2D g2, int x, int y, int tileSize, Direction d) {
+	private void drawChap(Graphics2D g2, int x, int y, int tileSize, Direction d, Player player) {
 		//draw a rounded square as a temp representation of the chap
 		g2.setStroke(new BasicStroke(2));
 		g2.setColor(CHAP_BODY);
@@ -124,6 +124,16 @@ public class ViewPort {
 		g2.setColor(new Color(0,0,0));
 		g2.drawString("FrameCount: " + Integer.toString(count), x-20, y+50);
 		count++;
+		
+		//player offset
+		int offset = 0;
+		if(player.getMove() != null) {
+			offset = player.getMove().getDistance();
+			g2.drawString("Offset: " + Integer.toString(offset), x-20, y+70);
+		}
+		
+		
+		
 		
 	}
 	
