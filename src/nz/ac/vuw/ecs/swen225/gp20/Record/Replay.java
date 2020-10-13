@@ -13,6 +13,7 @@ public class Replay {
     private Recording recording;
     private int recordingIndex;
     private TickEvent currentTickEvent;
+    private boolean finished;
 
     /**
      * @param fileName the name of the recording file the replay will be loading
@@ -23,6 +24,7 @@ public class Replay {
         this.recording = loadRecording(fileName);
         this.recordingIndex = 0;
         this.currentTickEvent = this.recording.getTickEvents().get(0);
+        this.finished = false;
     }
 
     /**
@@ -51,7 +53,11 @@ public class Replay {
      */
     private void iterateReplay() {
         recordingIndex++;
-        this.currentTickEvent = recording.getTickEvents().get(recordingIndex);
+        if(recording.getTickEvents().get(recordingIndex)!= null) {
+            this.currentTickEvent = recording.getTickEvents().get(recordingIndex);
+        }
+        else{ this.finished = true;
+        }
 
     }
 
