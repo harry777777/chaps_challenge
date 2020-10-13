@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.application;
 
 import nz.ac.vuw.ecs.swen225.gp20.Record.Recorder;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Recording;
+import nz.ac.vuw.ecs.swen225.gp20.Record.Replay;
 import nz.ac.vuw.ecs.swen225.gp20.Record.TickEvent;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
@@ -16,6 +17,7 @@ import nz.ac.vuw.ecs.swen225.gp20.render.Renderer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 
 /**
@@ -36,6 +38,7 @@ public class Application {
     private int currentTick = 0;
     private boolean running = true;
     private boolean paused = false;
+    private Replay replay;
 
     /**
      * @author Owen
@@ -165,9 +168,23 @@ public class Application {
         });
         unPauseButton.setFocusable(false);
 
-        buttons.add(exitButton);
+        JButton replayButton = new JButton("Replay");
+        replayButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    replay = new Replay("Recording");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
+        replayButton.setFocusable(false);
+
+        buttons.add(replayButton);
         buttons.add(pauseButton);
         buttons.add(unPauseButton);
+        buttons.add(exitButton);
         buttons.setVisible(true);
         frame.add(buttons, BorderLayout.PAGE_END);
 
