@@ -11,7 +11,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
  */
 public class Move {
 
-  private static final int THRESHOLD = 100;
+  public static final int THRESHOLD = 100;
 
   private final Actor actor;
   private final Tile destination;
