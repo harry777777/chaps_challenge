@@ -17,6 +17,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 public class RenderPlayer {
 	
 	private static final Color CHAP_BODY = new Color(234, 222, 189);
+	private static final Color CHAP_BODY_DARK = new Color(128, 121, 103);
 
 	
 	/**
@@ -83,9 +84,33 @@ public class RenderPlayer {
 	}
 	
 	private void drawFront(int x, int y, int tileSize, Graphics2D g2) {
-		//draw a rounded square as a temp representation of the chap
+		int centerX = x+tileSize/2;
+		int centerY = y+tileSize/2;
+		int rightEdge = x+tileSize;
+		int bottomEdge = y+tileSize;
+		
+		int bodyWidth = tileSize/2;
+		int eyeWidth = tileSize/4;
+		int wheelWidth = tileSize/10;
+		int wheelHeight = tileSize/3;
+		int axelWidth = tileSize/3;
+		int axelHeight = tileSize/10;
+		
 		g2.setStroke(new BasicStroke(2));
 		g2.setColor(CHAP_BODY);
-		g2.fill(new RoundRectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2, 10, 10));
+		
+		
+		g2.fill(new RoundRectangle2D.Double(centerX-bodyWidth/2, y+tileSize/6, bodyWidth, tileSize/2, 5, 5)); //main body
+		
+		
+		
+		g2.fillRect(centerX-axelWidth/2, bottomEdge-wheelHeight/2-axelHeight/2, axelWidth, axelHeight); //axel
+		
+		g2.setColor(CHAP_BODY_DARK);
+		
+		g2.fillOval(centerX-eyeWidth, centerY-eyeWidth, eyeWidth, eyeWidth); //left eye
+		g2.fillOval(centerX, centerY-eyeWidth, eyeWidth, eyeWidth); //right eye
+		
+		g2.fillRect(centerX-wheelWidth/2, bottomEdge-wheelHeight, wheelWidth, wheelHeight); //wheel
 	}
 }
