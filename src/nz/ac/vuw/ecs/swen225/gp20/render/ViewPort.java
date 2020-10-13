@@ -18,10 +18,10 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
  *
  */
 public class ViewPort {
-
 	
-	//Chap
-	private static final Color CHAP_BODY = new Color(234, 222, 189);
+	private RenderPlayer rPlayer = new RenderPlayer();
+	
+	
 		
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(164, 149, 126);
@@ -77,82 +77,26 @@ public class ViewPort {
 	    
 	    //draw the player on top of the view using information from the previous two stages
 		Location playerLocation = player.getLocation();
-		Direction playerDirection = null;
-		//if(player.getMotion() != null) {
-			//playerDirection = player.getMotion().getDirection();
-		//}
-	    drawChap(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, playerDirection, player); //temp
+		//drawFrame(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize);
+		drawFrame(g2, 5, 15);
+
+	    rPlayer.draw(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, player); //temp
+	    
+	   
 	    
 	    //drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //old
 	    
 	    //TODO setup the moving viewport
 	}
 	
-	private void drawChap(Graphics2D g2, int x, int y, int tileSize, Direction d, Player player) {
-		
-		//calculate player offset
-		int xOffset = 0;
-		int yOffset = 0;
-		if(player.getMove() != null) {
-			int offset = player.getMove().getDistance();
-			Direction direction = player.getFacing();
-			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
-			if(direction.equals(Direction.LEFT)) {
-				xOffset = -(int)(offset/divisor);
-			}
-			if(direction.equals(Direction.RIGHT)) {
-				xOffset = (int)(offset/divisor);
-			}
-			if(direction.equals(Direction.UP)) {
-				yOffset = -(int)(offset/divisor);
-			}
-			if(direction.equals(Direction.DOWN)) {
-				yOffset = (int)(offset/divisor);
-			}
-			//g2.setColor(new Color(0,0,0));
-			//g2.drawString("Offset: " + Integer.toString(offset), x-20, y+70);
-		}
-		
-		//draw a rounded square as a temp representation of the chap
-		g2.setStroke(new BasicStroke(2));
-		g2.setColor(CHAP_BODY);
-		g2.fill(new RoundRectangle2D.Double(x+xOffset+tileSize/4, y+yOffset+tileSize/4, tileSize/2, tileSize/2, 10, 10));
-		
-		
-		//temp player direction showing
-		int angle = 0;
-		if(d != null) {
-			if(d == Direction.UP) {
-				angle = 180;
-			}
-			if(d == Direction.LEFT) {
-				angle = 90;
-			}
-			if(d == Direction.RIGHT) {
-				angle = -90;
-			}
-		}
-		
-		//push matrix
-		Graphics2D gTemp = (Graphics2D) g2.create();
-		
-		g2.rotate(Math.toRadians(angle), x, y);
-		g2.setColor(new Color(0,0,0));
-		g2.drawString("Player", x, y);
-		
-		//pop matrix
-		g2.dispose();
-		g2 = (Graphics2D) gTemp.create();
+	private void drawFrame(Graphics2D g2, int x, int y) {
+
 		
 		//janky frame counter
 		g2.setColor(new Color(0,0,0));
-		g2.drawString("FrameCount: " + Integer.toString(count), x-20, y+50);
+		g2.drawString("FrameCount: " + Integer.toString(count), x, y);
 		count++;
-		
-		
-		
-		
-		
+
 		
 	}
 	

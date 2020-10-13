@@ -21,7 +21,7 @@ public class Renderer {
 	
 	Maze maze;
 	ViewPort viewPort;
-	Inventory inventory;
+	RenderInventory rInventory;
 	int viewX, viewY, tileSize, viewWidth, viewHeight;
 	
 	/**
@@ -35,11 +35,11 @@ public class Renderer {
 		this.maze = m;
 		this.viewX = 20;
 		this.viewY = 20;
-		this.tileSize = 40;
+		this.tileSize = 50;
 		this.viewHeight = 9;
 		this.viewWidth = 9;
 		this.viewPort = new ViewPort();
-		this.inventory = new Inventory();
+		this.rInventory = new RenderInventory();
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class Renderer {
 		this.viewHeight = height;
 		this.viewWidth = width;
 		this.viewPort = new ViewPort();
-		this.inventory = new Inventory();
+		this.rInventory = new RenderInventory();
 	}
 	
 
