@@ -60,6 +60,9 @@ public class Replay {
         }
 
     }
+    public boolean isFinished(){
+        return this.finished;
+    }
 
     /**
      * A test method that prints a recording object to the console
