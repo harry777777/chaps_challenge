@@ -96,7 +96,7 @@ public class ViewPort {
 		if(player.getMove() != null) {
 			int offset = player.getMove().getDistance();
 			Direction direction = player.getFacing();
-			double divisor = 100.0/tileSize;		//needs to access THRESHOLD in the Move class
+			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
 			if(direction.equals(Direction.LEFT)) {
 				xOffset = -(int)(offset/divisor);
 			}
