@@ -89,10 +89,34 @@ public class ViewPort {
 	}
 	
 	private void drawChap(Graphics2D g2, int x, int y, int tileSize, Direction d, Player player) {
+		
+		//calculate player offset
+		int xOffset = 0;
+		int yOffset = 0;
+		if(player.getMove() != null) {
+			int offset = player.getMove().getDistance();
+			Direction direction = player.getFacing();
+			double divisor = 100.0/tileSize;		//needs to access THRESHOLD in the Move class
+			if(direction.equals(Direction.LEFT)) {
+				xOffset = -(int)(offset/divisor);
+			}
+			if(direction.equals(Direction.RIGHT)) {
+				xOffset = (int)(offset/divisor);
+			}
+			if(direction.equals(Direction.UP)) {
+				yOffset = -(int)(offset/divisor);
+			}
+			if(direction.equals(Direction.DOWN)) {
+				yOffset = (int)(offset/divisor);
+			}
+			//g2.setColor(new Color(0,0,0));
+			//g2.drawString("Offset: " + Integer.toString(offset), x-20, y+70);
+		}
+		
 		//draw a rounded square as a temp representation of the chap
 		g2.setStroke(new BasicStroke(2));
 		g2.setColor(CHAP_BODY);
-		g2.fill(new RoundRectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2, 10, 10));
+		g2.fill(new RoundRectangle2D.Double(x+xOffset+tileSize/4, y+yOffset+tileSize/4, tileSize/2, tileSize/2, 10, 10));
 		
 		
 		//temp player direction showing
@@ -125,12 +149,7 @@ public class ViewPort {
 		g2.drawString("FrameCount: " + Integer.toString(count), x-20, y+50);
 		count++;
 		
-		//player offset
-		int offset = 0;
-		if(player.getMove() != null) {
-			offset = player.getMove().getDistance();
-			g2.drawString("Offset: " + Integer.toString(offset), x-20, y+70);
-		}
+		
 		
 		
 		
