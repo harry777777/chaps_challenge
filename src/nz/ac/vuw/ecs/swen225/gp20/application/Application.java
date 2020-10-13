@@ -44,13 +44,20 @@ public class Application {
      */
 
     public static void main(String[] args) {
-        Maze m = null;
-        LevelManager l = new LevelManager();
-        try {
-            m = l.loadLevel("levels/level1.json");
-        } catch (Exception E) {
-            System.out.println("Error loading level: " + E.getMessage());
-        }
+        char[][] testMap = {
+            {'W', 'W', 'W', 'W', 'W'},
+            {'W', 'F', 'F', 'F', 'W'},
+            {'W', 'F', 'C', 'F', 'W'},
+            {'W', 'F', 'F', 'F', 'W'},
+            {'W', 'W', 'W', 'W', 'W'}
+        };
+        Maze m = new Maze(testMap);
+//        LevelManager l = new LevelManager();
+//        try {
+//            m = l.loadLevel("levels/level1.json");
+//        } catch (Exception E) {
+//            System.out.println("Error loading level: " + E.getMessage());
+//        }
         if (m != null) {
             Application A = new Application(m);
         }

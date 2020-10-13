@@ -1,7 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
@@ -32,7 +32,7 @@ public class FreeTile implements Tile, Accessible {
   }
 
   @Override
-  public void admit(Player player) {
+  public void admit(Actor player) {
     player.setLocation(this.location);
   }
 

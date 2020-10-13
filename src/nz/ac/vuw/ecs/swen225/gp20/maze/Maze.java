@@ -24,7 +24,7 @@ public class Maze {
   public final int width;
   private final Tile[][] tiles;
   private final Player player;
-  public List<Move> moves = new ArrayList<>();
+  private List<Actor> actors = new ArrayList<>();
 
   /**
    * Most Constructs a new Maze with a Player Actor and Tiles.
@@ -37,7 +37,7 @@ public class Maze {
     this.width = tiles[0].length;
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
-
+    actors.add(player);
   }
 
   /**
@@ -73,6 +73,7 @@ public class Maze {
     this.tiles = tiles;
     this.height = input.length;
     this.width = input[0].length;
+    actors.add(player);
   }
 
   /**
@@ -98,15 +99,16 @@ public class Maze {
    * complete the move.
    */
   public void tick() {
-    List<Move> forRemoval = new ArrayList<>();
-    for (Move move : moves) {
-      move.incrementDistance();
-      if (move.isAtThreshold()) {
-        move.executeMove();
-        forRemoval.add(move);
+    for (Actor actor : actors) {
+      if (actor.getMove() != null) {
+        Move move = actor.getMove();
+        move.incrementDistance();
+        if (move.isAtThreshold()) {
+          move.executeMove();
+          actor.endMove();
+        }
       }
     }
-    moves.removeAll(forRemoval);
   }
 
   /**
@@ -119,11 +121,10 @@ public class Maze {
     Location currentLocation = player.getLocation();
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (player.canAccess(destination) && player.isStationary()) {
-      player.startMove(direction);
-      Move move = new Move(player, destination);
-      moves.add(move);
+      player.startMove(direction, destination);
     }
     //todo post-condition?
+    System.out.println(this.toString());
   }
 
   private Tile getTileAt(Location location) {
