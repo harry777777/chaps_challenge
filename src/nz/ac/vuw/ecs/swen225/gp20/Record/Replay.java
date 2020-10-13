@@ -11,77 +11,56 @@ import java.io.IOException;
  */
 public class Replay {
     private Recording recording;
-    private int playSpeed = 1;
-    private boolean paused = true; // paused == true causes the view replay loop to pause.
-    private boolean skip = false;  // skip == true causes the view replay loop to proceed one step further through the replay
-    private int sleepTime = 0;
+    private int recordingIndex;
+    private TickEvent currentTickEvent;
 
     /**
-     *
      * @param fileName the name of the recording file the replay will be loading
      * @throws IOException
      */
 
     public Replay(String fileName) throws IOException {
         this.recording = loadRecording(fileName);
+        this.recordingIndex = 0;
+        this.currentTickEvent = this.recording.getTickEvents().get(0);
     }
 
     /**
-     *
      * @param fileName name of the Json file in recordings folder to load
      * @return Recording of a game object loaded from a JSON file
      * @throws IOException
      */
-    public Recording loadRecording(String fileName) throws IOException {
+    private Recording loadRecording(String fileName) throws IOException {
         JSONHandler<Recording> p = new JSONHandler<Recording>();
-        Recording R = p.read("recordings/"+fileName+".json",Recording.class);
+        Recording R = p.read("recordings/" + fileName + ".json", Recording.class);
         return R;
+    }
+     /**
+     * Returns the next Tickevent of a replay object and updates the position of the replay object in its replay process
+      *
+     *
+      */
+    public TickEvent getNextTick(){
+        TickEvent t = this.currentTickEvent;
+        this.iterateReplay();
+        return t;
     }
 
     /**
-     * The method that runs through a recording of a game, can be paused and stepped through one game tick at a time,
-     * default behaviour is to automatically play at the speed of game ticks
+     * Increment recording index, and update the current tickEvent that the recording is waiting at.
      */
-    public void viewReplay() {
-        for (TickEvent t : recording.getTickEvents()) {
-            this.skip = false;
-            try {
-                while (paused) {  // if replay is paused wait
-                    if (skip == true) { // check if the user has clicked the skip button
-                        break;
-                    }
-                }
-
-                Thread.sleep(sleepTime / playSpeed); //@todo set the default sleep time to the tick rate of the game when its decided
-            } catch (InterruptedException ex) {
-            }
-           //@todo  implement the meat of the viewReplay Method, ie the part that does shit
-
-        }
-
+    private void iterateReplay() {
+        recordingIndex++;
+        this.currentTickEvent = recording.getTickEvents().get(recordingIndex);
 
     }
 
     /**
      * A test method that prints a recording object to the console
      */
-    public void testRecording(){
+    public void testRecording() {
         System.out.println(this.recording.toString());
     }
-
-
-    /**
-     * Toggle the replay between paused and unpaused states.
-     */
-    public void togglePause() {
-        this.paused = !paused;
-    }
-
-    /**
-     * Set the skip value to true.
-     */
-    public void SkipPressed() {
-       skip = true;
-    }
-
 }
+
+
