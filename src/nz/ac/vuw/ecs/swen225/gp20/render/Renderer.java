@@ -1,14 +1,10 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.RoundRectangle2D;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 
 /**
@@ -35,7 +31,7 @@ public class Renderer {
 		this.maze = m;
 		this.viewX = 20;
 		this.viewY = 20;
-		this.tileSize = 50;
+		this.tileSize = 120; //80
 		this.viewHeight = 9;
 		this.viewWidth = 9;
 		this.viewPort = new ViewPort();
@@ -63,8 +59,6 @@ public class Renderer {
 		this.rInventory = new RenderInventory();
 	}
 	
-
-	
 	/**
 	 * Redraws the maze and objects
 	 * 
@@ -76,12 +70,9 @@ public class Renderer {
 		//enable smooth edges
 		RenderingHints rh = new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		rh.put(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY);
+		//rh.put(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 	    g2.setRenderingHints(rh);
-		
-	    //currently waiting on:
-	    //need this class and method to be implemented in Application so I can start drawing things and testing
-	    
-	    
+
 	    
 		//access maze and draw
 	    Tile[][] tiles = maze.getTiles();

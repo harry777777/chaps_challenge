@@ -18,7 +18,7 @@ public class ViewPort {
 	private RenderPlayer rPlayer = new RenderPlayer();
 	
 	//Maze
-	private static final Color FLOOR_COLOR = new Color(164, 149, 126);
+	private static final Color FLOOR_COLOR = new Color(150,150,150);
 	
 	private int count = 0; //frame counter
 	
