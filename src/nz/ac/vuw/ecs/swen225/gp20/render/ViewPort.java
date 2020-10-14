@@ -64,7 +64,7 @@ public class ViewPort {
 	    		}
 	    		//temp tile boarder draw
 	    		g2.setColor(new Color(0,0,0));
-    			g2.drawRect(x+row*tileSize, y+col*tileSize, tileSize, tileSize);
+    			//g2.drawRect(x+row*tileSize, y+col*tileSize, tileSize, tileSize);
 	    		
 	    	}
 	    }
