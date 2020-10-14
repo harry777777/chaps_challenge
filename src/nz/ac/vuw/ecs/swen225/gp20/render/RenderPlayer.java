@@ -82,28 +82,30 @@ public class RenderPlayer {
 		}
 		
 		//draw the player
-		drawFront(x+xOffset, y+yOffset, tileSize, g2);
+		
 		
 		//temp player direction showing
 		int angle = 0;
-		if(direction != null) {
-			if(direction == Direction.UP) {
-				angle = 180;
-			}
-			if(direction == Direction.LEFT) {
-				angle = 90;
-			}
-			if(direction == Direction.RIGHT) {
-				angle = -90;
-			}
+		if(direction == null || direction == Direction.DOWN) {
+			drawFront(x+xOffset, y+yOffset, tileSize, g2);
+		}else if(direction == Direction.UP) {
+			angle = 180;
+			drawBack(x+xOffset, y+yOffset, tileSize, g2);
+		}else if(direction == Direction.LEFT) {
+			angle = 90;
+			drawFront(x+xOffset, y+yOffset, tileSize, g2);
+		}else if(direction == Direction.RIGHT) {
+			angle = -90;
+			drawFront(x+xOffset, y+yOffset, tileSize, g2);
 		}
+		
 		
 		//push matrix
 		Graphics2D gTemp = (Graphics2D) g2.create();
 		
 		g2.rotate(Math.toRadians(angle), x+xOffset+tileSize/2, y+yOffset+tileSize/2);
 		g2.setColor(new Color(0,0,0));
-		g2.drawString("Player", (int)(x+8+xOffset), (int)(y+12+yOffset));
+		//g2.drawString("Player", (int)(x+8+xOffset), (int)(y+12+yOffset));
 		
 		//pop matrix
 		g2.dispose();
@@ -111,13 +113,22 @@ public class RenderPlayer {
 	}
 	
 	private void drawFront(double x, double y, int tileSize, Graphics2D g2) {
+		drawBack(x, y, tileSize, g2);
+		
+		eyeDiam = tileSize/5;
+		g2.setColor(CHAP_BODY);
+		g2.fill(new Ellipse2D.Double(centerX-eyeDiam*1.1, centerY-eyeDiam*1.1, eyeDiam, eyeDiam)); //left eye
+		g2.fill(new Ellipse2D.Double(centerX+eyeDiam*0.1, centerY-eyeDiam*1.1, eyeDiam, eyeDiam)); //right eye
+	}
+	
+	private void drawBack(double x, double y, int tileSize, Graphics2D g2) {
 		centerX = x+tileSize/2;
 		centerY = y+tileSize/2;
 		rightEdge = x+tileSize;
 		bottomEdge = y+tileSize;
 		
 		bodySize = tileSize/2;
-		eyeDiam = tileSize/5;
+		//eyeDiam = tileSize/5;
 		ballDiam = tileSize/11;
 		rodDiam = tileSize/25;
 		rodLength = tileSize/6;
@@ -154,9 +165,7 @@ public class RenderPlayer {
 		g2.fill(new RoundRectangle2D.Double(centerX+bodySize/2+handSize*0.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //right hand
 		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y, ballDiam, ballDiam)); //antenna ball
 		
-		g2.setColor(CHAP_BODY);
-		g2.fill(new Ellipse2D.Double(centerX-eyeDiam*1.1, centerY-eyeDiam*1.1, eyeDiam, eyeDiam)); //left eye
-		g2.fill(new Ellipse2D.Double(centerX+eyeDiam*0.1, centerY-eyeDiam*1.1, eyeDiam, eyeDiam)); //right eye
+		
 		
 		g2.setColor(CHAP_BODY_DARK);
 		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, 5, 5)); //wheel
