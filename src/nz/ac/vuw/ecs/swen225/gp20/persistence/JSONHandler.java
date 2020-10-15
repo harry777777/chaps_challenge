@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 
 /**
@@ -23,6 +24,7 @@ public class JSONHandler<T> {
   public JSONHandler(){
     builder = new GsonBuilder();
     builder.registerTypeAdapter(Tile.class, new TileAdapter()); // allows handler to work with Tile interface
+    builder.registerTypeAdapter(Actor.class, new ActorAdapter()); // allows handler to work with Actor interface
     gson = builder.create();
   }
 
