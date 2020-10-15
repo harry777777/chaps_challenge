@@ -138,6 +138,9 @@ public class RenderPlayer {
 		supportLength = tileSize/6;
 		
 		shoulderDiam = tileSize/8;
+		armDiam = tileSize/18;
+		armLength = tileSize/6;
+		handSize = tileSize/10;
 		
 		
 		g2.setColor(CHAP_BODY_DARK);
@@ -150,11 +153,17 @@ public class RenderPlayer {
 		
 		g2.setColor(CHAP_BODY_LIGHT);
 		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, tileSize/2, 5, 5)); //main body
-		g2.fill(new Ellipse2D.Double(centerX-axelDiam/2, bottomEdge-wheelDiam/2-axelDiam/2, axelDiam, axelDiam)); //axel
 		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y, ballDiam, ballDiam)); //antenna ball
+		
+		g2.setColor(CHAP_BODY);
+		g2.fill(new Rectangle2D.Double(centerX-armDiam/2, centerY-shoulderDiam*0.8, armDiam, armLength)); //arm
+		
+		g2.setColor(CHAP_BODY_LIGHT);
+		g2.fill(new RoundRectangle2D.Double(centerX-handSize/2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //hand
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
 		g2.fill(new Ellipse2D.Double(centerX-shoulderDiam/2, centerY-shoulderDiam*1.5, shoulderDiam, shoulderDiam)); //shoulder
+		g2.fill(new Ellipse2D.Double(centerX-axelDiam/2, bottomEdge-wheelDiam/2-axelDiam/2, axelDiam, axelDiam)); //axel
 		
 	}
 	
@@ -208,15 +217,16 @@ public class RenderPlayer {
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
 		g2.fill(new RoundRectangle2D.Double(centerX-shoulderWidth/2, centerY-shoulderDiam*1.5, shoulderWidth, shoulderDiam, 3, 3)); //shoulder
+		g2.fill(new RoundRectangle2D.Double(centerX-axelLength/2, bottomEdge-wheelDiam/2-axelDiam/2, axelLength, axelDiam, 3, 3)); //axel
 		
 		g2.setColor(CHAP_BODY_LIGHT);
 		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, tileSize/2, 5, 5)); //main body
-		g2.fill(new RoundRectangle2D.Double(centerX-axelLength/2, bottomEdge-wheelDiam/2-axelDiam/2, axelLength, axelDiam, 3, 3)); //axel
 		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2-handSize*1.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //left hand
 		g2.fill(new RoundRectangle2D.Double(centerX+bodySize/2+handSize*0.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //right hand
 		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y, ballDiam, ballDiam)); //antenna ball
 		
 		g2.setColor(CHAP_BODY_DARK);
 		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, 5, 5)); //wheel
+		
 	}
 }

@@ -47,7 +47,7 @@ public class ViewPort {
 		//g2.drawString(Integer.toString(tiles.length), 120, 200);
 		
 		//draw background (temp)
-	    g2.setColor(new Color(86, 142, 115));
+	    g2.setColor(new Color(120, 120, 120)); //86, 142, 115
 	  	g2.fillRect(x, y, tiles[0].length*tileSize, tiles.length*tileSize);
 		
 	  	

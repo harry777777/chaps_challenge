@@ -31,7 +31,7 @@ public class Renderer {
 		this.maze = m;
 		this.viewX = 20;
 		this.viewY = 20;
-		this.tileSize = 120; //80
+		this.tileSize = 50; //80
 		this.viewHeight = 9;
 		this.viewWidth = 9;
 		this.viewPort = new ViewPort();
