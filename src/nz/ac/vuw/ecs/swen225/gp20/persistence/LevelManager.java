@@ -68,8 +68,7 @@ public class LevelManager {
    */
   public Maze loadLevel(String filepath) throws IOException {
     Maze loadedMaze = handler.read(filepath, Maze.class);
-    System.out.println(loadedMaze.toString());
-    return loadedMaze;
+    return new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer());
   }
 
   public static void main(String[] args) throws IOException {
