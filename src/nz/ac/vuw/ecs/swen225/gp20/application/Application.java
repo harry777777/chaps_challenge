@@ -26,6 +26,8 @@ import java.io.IOException;
  * Application class, this runs the game loop,creates the GUI and manages the key listeners
  */
 
+//todo Display time left on current level, keys collected, number of treasures to still be collected, make all keystrokes functional and add relevant buttons and menu items.
+
 public class Application {
 
     private static JFrame frame;
@@ -34,12 +36,13 @@ public class Application {
     private final boolean moving = false;
     private final Recorder r;
     private TickEvent tickEvent;
-    private final int timer = 60;
+    private int countdown = 0;
     private int currentTick = 0;
     private boolean running = true;
     private boolean paused = false;
     private Replay replay;
     private boolean replaying = false;
+    private boolean ctrlPressed = false;
 
     /**
      * @author Owen
@@ -111,8 +114,36 @@ public class Application {
 
         frame.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyReleased(KeyEvent e) {
-                if(!paused){
+            public void keyPressed(KeyEvent e){
+                if(e.getKeyCode() == 17){ //ctrl pressed
+                    ctrlPressed = true;
+                }
+                if(e.getKeyCode() == 88 && ctrlPressed){ // X pressed - Exits the Game
+                    System.exit(0);
+                }
+                if(e.getKeyCode() == 83 && ctrlPressed){ //S pressed - Saves and Exists the Game
+                    try{r.saveRecording("Recording");}catch (Exception E){
+                        System.out.println("Error saving recording:"+ E.getMessage());
+                    }
+                    System.exit(0);
+                }
+                if(e.getKeyCode() == 82 && ctrlPressed){ //R pressed - Resume a Saved Game
+                    resumeSavedGame();
+                }
+                if(e.getKeyCode() == 80 && ctrlPressed){ //P pressed - Start a New Game at the last unfinished Level
+
+                }
+                if(e.getKeyCode() == 49 && ctrlPressed){ //1 pressed - Start Game at Level 1
+
+                }
+                if(e.getKeyCode() == 32){ //Space Pressed - Pause and open pause window
+                    paused = true;
+                    JOptionPane.showMessageDialog(null,"The Game is Paused","", JOptionPane.ERROR_MESSAGE);
+                }
+                if(e.getKeyCode() == 27){ //Esc Pressed - Unpause and close pause window
+                    paused = false;
+                }
+                if(!paused) {
                     if ((e.getKeyCode() == 38) && !moving) {
                         tickEvent = new TickEvent(currentTick, Direction.UP);
                     }
@@ -125,6 +156,12 @@ public class Application {
                     if ((e.getKeyCode() == 39) && !moving) {
                         tickEvent = new TickEvent(currentTick, Direction.RIGHT);
                     }
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if(e.getKeyCode() == 17){
+                    ctrlPressed = false;
                 }
             }
         });
@@ -194,6 +231,9 @@ public class Application {
 
     }
 
+    private void resumeSavedGame() {
+    }
+
     private void redraw(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         renderer.draw(g2);
@@ -225,7 +265,7 @@ public class Application {
                 while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
                     lastUpdateTime += TBU;
                     if(tickEvent != null) {
-                        if (tickEvent.getTick() == currentTick && replaying) {
+                        if ((tickEvent.getTick() == currentTick) && replaying) {
                             update();
                             tickEvent = replay.getNextTick();
                         }
@@ -261,6 +301,7 @@ public class Application {
      * Updates every tick to move the player and at the tickEvent to the recording, but only if something occurred that tick
      */
     private void update() {
+        countdown += 1;
         if (tickEvent != null) {
             maze.movePlayer(tickEvent.getMoveDir());
             r.updateRecording(tickEvent);
