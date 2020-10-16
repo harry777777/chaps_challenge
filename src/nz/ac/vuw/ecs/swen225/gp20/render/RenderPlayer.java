@@ -169,7 +169,7 @@ public class RenderPlayer {
 		g2.fill(new Ellipse2D.Double(centerX-axelDiam/2, bottomEdge-wheelDiam/2-axelDiam/2, axelDiam, axelDiam)); //axel
 		
 		//arm tilt
-		g2.rotate(Math.toRadians(-bodyAngle*2), centerX, centerY-shoulderDiam*0.8);
+		g2.rotate(Math.toRadians(-bodyAngle), centerX, centerY-shoulderDiam*0.8);
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX-armDiam/2, centerY-shoulderDiam*0.8, armDiam, armLength)); //arm
 		g2.setColor(CHAP_BODY_LIGHT);
