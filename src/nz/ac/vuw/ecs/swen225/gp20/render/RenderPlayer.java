@@ -42,6 +42,9 @@ public class RenderPlayer {
 	private double armLength;
 	private double handSize;
 	
+	private double wheelAngle = 0;
+	private double bodyAngle = 0;
+	
 	private static final Color CHAP_BODY_LIGHT = new Color(234, 222, 189);
 	private static final Color CHAP_BODY_MEDIUM = new Color(166,157,134);
 	private static final Color CHAP_BODY = new Color(128, 121, 103); //(166, 157, 134);
@@ -65,7 +68,10 @@ public class RenderPlayer {
 		double yOffset = 0;
 		if(player.getMove() != null) {
 			int offset = player.getMove().getDistance();
-			
+			if(offset != 0) { //increment wheel rotation and set body angle
+				wheelAngle -= 10;
+				bodyAngle = 10;
+			}
 			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
 			if(direction.equals(Direction.LEFT)) {
 				xOffset = -(offset/divisor);
@@ -79,44 +85,33 @@ public class RenderPlayer {
 			if(direction.equals(Direction.DOWN)) {
 				yOffset = (offset/divisor);
 			}
-
+		}else {
+			bodyAngle = 0;
 		}
 		
-		//draw player
-		//int angle = 0;
+		//draw player from correct direction
 		if(direction == null || direction == Direction.DOWN) {
 			drawFront(x+xOffset, y+yOffset, tileSize, g2);
 		}else if(direction == Direction.UP) {
-			//angle = 180;
 			drawBack(x+xOffset, y+yOffset, tileSize, g2);
 		}else if(direction == Direction.LEFT) {
-			//angle = 90;
 			drawLeft(x+xOffset, y+yOffset, tileSize, g2);
 		}else if(direction == Direction.RIGHT) {
-			//angle = -90;
 			drawRight(x+xOffset, y+yOffset, tileSize, g2);
 		}
 		
-		
-		//push matrix
-		//Graphics2D gTemp = (Graphics2D) g2.create();
-		
-		//g2.rotate(Math.toRadians(angle), x+xOffset+tileSize/2, y+yOffset+tileSize/2);
-		//g2.setColor(new Color(0,0,0));
-		//g2.drawString("Player", (int)(x+8+xOffset), (int)(y+12+yOffset));
-		
-		//pop matrix
-		//g2.dispose();
-		//g2 = (Graphics2D) gTemp.create();
 	}
 	
 	private void drawFront(double x, double y, int tileSize, Graphics2D g2) {
+		Graphics2D gTemp = (Graphics2D) g2.create();
 		drawBack(x, y, tileSize, g2);
-		
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
 		eyeDiam = tileSize/5;
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Ellipse2D.Double(centerX-eyeDiam*1.1, centerY-eyeDiam*1.1, eyeDiam, eyeDiam)); //left eye
 		g2.fill(new Ellipse2D.Double(centerX+eyeDiam*0.1, centerY-eyeDiam*1.1, eyeDiam, eyeDiam)); //right eye
+		
 	}
 	
 	private void drawLeft(double x, double y, int tileSize, Graphics2D g2) {
@@ -146,6 +141,21 @@ public class RenderPlayer {
 		g2.setColor(CHAP_BODY_DARK);
 		g2.fill(new Ellipse2D.Double(centerX-wheelDiam/2, bottomEdge-wheelDiam, wheelDiam, wheelDiam)); //wheel
 		
+		
+		//wheel rotation - push matrix
+		Graphics2D gTemp = (Graphics2D) g2.create();
+		g2.rotate(Math.toRadians(wheelAngle), centerX, bottomEdge-wheelDiam/2);
+		g2.setColor(CHAP_BODY_LIGHT);
+		g2.fill(new Rectangle2D.Double(centerX-wheelDiam/4, bottomEdge-wheelDiam+wheelDiam/4, wheelDiam/2, wheelDiam/2)); //square
+		//wheel rotation pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
+		
+		//push matrix
+		gTemp = (Graphics2D) g2.create();
+		//body tilt
+		g2.rotate(Math.toRadians(bodyAngle), centerX, bottomEdge-wheelDiam/2);
+		
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX-bodySize/2-eyeDepth, centerY-eyeDiam*1.1, eyeDepth, eyeDiam)); //eye
 		g2.fill(new Rectangle2D.Double(centerX-supportDiam/2, centerY+tileSize/6, supportDiam, supportLength)); //support
@@ -155,15 +165,22 @@ public class RenderPlayer {
 		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, tileSize/2, 5, 5)); //main body
 		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y, ballDiam, ballDiam)); //antenna ball
 		
+		g2.setColor(CHAP_BODY_MEDIUM);
+		g2.fill(new Ellipse2D.Double(centerX-axelDiam/2, bottomEdge-wheelDiam/2-axelDiam/2, axelDiam, axelDiam)); //axel
+		
+		//arm tilt
+		g2.rotate(Math.toRadians(-bodyAngle*2), centerX, centerY-shoulderDiam*0.8);
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX-armDiam/2, centerY-shoulderDiam*0.8, armDiam, armLength)); //arm
-		
 		g2.setColor(CHAP_BODY_LIGHT);
 		g2.fill(new RoundRectangle2D.Double(centerX-handSize/2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //hand
-		
 		g2.setColor(CHAP_BODY_MEDIUM);
 		g2.fill(new Ellipse2D.Double(centerX-shoulderDiam/2, centerY-shoulderDiam*1.5, shoulderDiam, shoulderDiam)); //shoulder
-		g2.fill(new Ellipse2D.Double(centerX-axelDiam/2, bottomEdge-wheelDiam/2-axelDiam/2, axelDiam, axelDiam)); //axel
+		g2.draw(new RoundRectangle2D.Double(centerX-handSize/2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //hand
+		
+		//pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
 		
 	}
 	
@@ -206,14 +223,38 @@ public class RenderPlayer {
 		armLength = tileSize/6;
 		handSize = tileSize/10;
 		
-		g2.setStroke(new BasicStroke(2));
+		//g2.setStroke(new BasicStroke(2));
 		
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX-supportDiam*2, centerY+tileSize/6, supportDiam, supportLength)); //left support
 		g2.fill(new Rectangle2D.Double(centerX+supportDiam*1, centerY+tileSize/6, supportDiam, supportLength)); //right support
-		g2.fill(new Rectangle2D.Double(centerX-bodySize/2-armDiam*1.5, centerY-shoulderDiam*0.5, armDiam, armLength)); //left arm
-		g2.fill(new Rectangle2D.Double(centerX+bodySize/2+armDiam*0.5, centerY-shoulderDiam*0.5, armDiam, armLength)); //right arm
 		g2.fill(new Rectangle2D.Double(centerX-rodDiam/2, y, rodDiam, rodLength)); //antenna rod
+		
+		//push matrix - left arm
+		Graphics2D gTemp = (Graphics2D) g2.create();
+		
+		g2.rotate(Math.toRadians(bodyAngle), centerX-bodySize/2-armDiam*1.5, centerY-shoulderDiam*1);
+		g2.setColor(CHAP_BODY);
+		g2.fill(new Rectangle2D.Double(centerX-bodySize/2-armDiam*1.5, centerY-shoulderDiam*0.5, armDiam, armLength)); //left arm
+		g2.setColor(CHAP_BODY_LIGHT);
+		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2-handSize*1.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //left hand
+		
+		//pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
+		
+		//push matrix - right arm
+		gTemp = (Graphics2D) g2.create();
+		
+		g2.rotate(Math.toRadians(-bodyAngle), centerX+bodySize/2+armDiam*1, centerY-shoulderDiam*1);
+		g2.setColor(CHAP_BODY);
+		g2.fill(new Rectangle2D.Double(centerX+bodySize/2+armDiam*0.5, centerY-shoulderDiam*0.5, armDiam, armLength)); //right arm
+		g2.setColor(CHAP_BODY_LIGHT);
+		g2.fill(new RoundRectangle2D.Double(centerX+bodySize/2+handSize*0.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //right hand
+		
+		//pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
 		g2.fill(new RoundRectangle2D.Double(centerX-shoulderWidth/2, centerY-shoulderDiam*1.5, shoulderWidth, shoulderDiam, 3, 3)); //shoulder
@@ -221,8 +262,6 @@ public class RenderPlayer {
 		
 		g2.setColor(CHAP_BODY_LIGHT);
 		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, tileSize/2, 5, 5)); //main body
-		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2-handSize*1.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //left hand
-		g2.fill(new RoundRectangle2D.Double(centerX+bodySize/2+handSize*0.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //right hand
 		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y, ballDiam, ballDiam)); //antenna ball
 		
 		g2.setColor(CHAP_BODY_DARK);
