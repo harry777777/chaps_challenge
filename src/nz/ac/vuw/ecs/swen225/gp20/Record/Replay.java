@@ -46,6 +46,7 @@ public class Replay {
         TickEvent t = this.currentTickEvent;
         this.iterateReplay();
         return t;
+
     }
 
     /**
@@ -53,7 +54,7 @@ public class Replay {
      */
     private void iterateReplay() {
         recordingIndex++;
-        if(recording.getTickEvents().get(recordingIndex)!= null) {
+        if(recording.getTickEvents().size()>recordingIndex) {
             this.currentTickEvent = recording.getTickEvents().get(recordingIndex);
         }
         else{ this.finished = true;
