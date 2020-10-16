@@ -267,11 +267,14 @@ public class Application {
                 while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
                     lastUpdateTime += TBU;
                     if(tickEvent != null) {
-                        if ((tickEvent.getTick() == currentTick) && replaying) {
-                            update();
-                            tickEvent = replay.getNextTick();
+                        if (replaying) {
+                            if(tickEvent.getTick() == currentTick){
+                                update();
+                                tickEvent = replay.getNextTick();
+                            }
                         }
                         else{
+                            System.out.println("jeff");
                             update();
                         }
                     }
