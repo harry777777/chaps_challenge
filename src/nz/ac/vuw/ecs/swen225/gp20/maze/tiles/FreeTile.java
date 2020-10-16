@@ -2,6 +2,8 @@ package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
 
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
@@ -11,6 +13,12 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 public class FreeTile implements Tile, Accessible {
 
   private final Location location;
+  private Item item;
+
+  public FreeTile(Location location, Item item) {
+    this.location = location;
+    this.item = item;
+  }
 
   /**
    * Construct a FreeTile at a given location.
@@ -32,9 +40,18 @@ public class FreeTile implements Tile, Accessible {
   }
 
   @Override
-  public void admit(Actor player) {
-    player.setLocation(this.location);
+  public void admit(Actor actor) {
+    actor.setLocation(this.location);
+    if (actor instanceof Player) {
+      if (item != null) {
+        Player player = (Player) actor;
+        player.addToInventory(item);
+      }
+    }
   }
 
+  public Item getItem() {
+    return item;
+  }
 
 }

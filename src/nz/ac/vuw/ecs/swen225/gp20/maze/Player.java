@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
+import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
@@ -16,6 +17,7 @@ public class Player implements Actor{
   private Location location;
   private Move move;
   private Direction facing;
+  private List<Item> inventory;
 
 
   /**
@@ -35,24 +37,6 @@ public class Player implements Actor{
    */
   public char getSymbol() {
     return 'C';
-  }
-
-  /**
-   * Get player's x.
-   *
-   * @return the x coordinate of the player's location
-   */
-  public int getX() {
-    return location.x;
-  }
-
-  /**
-   * Get player's y.
-   *
-   * @return the y coordinate of the player's location
-   */
-  public int getY() {
-    return location.y;
   }
 
 
@@ -128,6 +112,7 @@ public class Player implements Actor{
     return facing;
   }
 
+  @Override
   public void endMove() {
     move = null;
   }
@@ -140,5 +125,11 @@ public class Player implements Actor{
   public void startMove(Direction direction, Tile destination) {
     facing = direction;
     move = new Move(this, destination);
+  }
+
+  public void addToInventory(Item item) {
+    if (item instanceof Key) {
+      inventory.add(item);
+    }
   }
 }
