@@ -110,6 +110,9 @@ public class RenderPlayer {
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 		
+		g2.setColor(CHAP_BODY_LIGHT);
+		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, bodySize/2, 5, 5)); //main body (to block antenna)
+		
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Ellipse2D.Double(centerX-eyeDiam*1.1, centerY-eyeDiam*1.1-bodyAngle/5, eyeDiam, eyeDiam)); //left eye
 		g2.fill(new Ellipse2D.Double(centerX+eyeDiam*0.1, centerY-eyeDiam*1.1-bodyAngle/5, eyeDiam, eyeDiam)); //right eye
@@ -154,7 +157,6 @@ public class RenderPlayer {
 		
 		g2.setColor(CHAP_BODY_DARK);
 		g2.fill(new Ellipse2D.Double(centerX-wheelDiam/2, bottomEdge-wheelDiam, wheelDiam, wheelDiam)); //wheel
-		
 		
 		//wheel rotation - push matrix
 		Graphics2D gTemp = (Graphics2D) g2.create();
@@ -239,11 +241,6 @@ public class RenderPlayer {
 		
 		//g2.setStroke(new BasicStroke(2));
 		
-		g2.setColor(CHAP_BODY);
-		g2.fill(new Rectangle2D.Double(centerX-supportDiam*2, centerY+tileSize/6, supportDiam, supportLength)); //left support
-		g2.fill(new Rectangle2D.Double(centerX+supportDiam*1, centerY+tileSize/6, supportDiam, supportLength)); //right support
-		g2.fill(new Rectangle2D.Double(centerX-rodDiam/2, y, rodDiam, rodLength)); //antenna rod
-		
 		//push matrix - left arm
 		Graphics2D gTemp = (Graphics2D) g2.create();
 		
@@ -272,11 +269,22 @@ public class RenderPlayer {
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
 		g2.fill(new RoundRectangle2D.Double(centerX-shoulderWidth/2, centerY-shoulderDiam*1.5, shoulderWidth, shoulderDiam, 3, 3)); //shoulder
-		g2.fill(new RoundRectangle2D.Double(centerX-axelLength/2, bottomEdge-wheelDiam/2-axelDiam/2, axelLength, axelDiam, 3, 3)); //axel
 		
 		g2.setColor(CHAP_BODY_LIGHT);
 		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, bodySize, 5, 5)); //main body
-		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y, ballDiam, ballDiam)); //antenna ball
+		
+		g2.setColor(CHAP_BODY);
+		g2.fill(new Rectangle2D.Double(centerX-supportDiam*2, centerY+tileSize/6, supportDiam, supportLength)); //left support
+		g2.fill(new Rectangle2D.Double(centerX+supportDiam*1, centerY+tileSize/6, supportDiam, supportLength)); //right support
+		
+		g2.setColor(CHAP_BODY_MEDIUM);
+		g2.fill(new RoundRectangle2D.Double(centerX-axelLength/2, bottomEdge-wheelDiam/2-axelDiam/2, axelLength, axelDiam, 3, 3)); //axel
+		
+		//antenna
+		g2.setColor(CHAP_BODY);
+		g2.fill(new Rectangle2D.Double(centerX-rodDiam/2, y+bodyAngle/5, rodDiam, rodLength)); //antenna rod
+		g2.setColor(CHAP_BODY_LIGHT);
+		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y+bodyAngle/5, ballDiam, ballDiam)); //antenna ball
 		
 		g2.setColor(CHAP_BODY_DARK);
 		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, 5, 5)); //wheel
