@@ -49,6 +49,7 @@ public class RenderPlayer {
 	private static final Color CHAP_BODY_MEDIUM = new Color(166,157,134);
 	private static final Color CHAP_BODY = new Color(128, 121, 103); //(166, 157, 134);
 	private static final Color CHAP_BODY_DARK = new Color(77,73,62);
+	private static final Color SHADOW = new Color(0,0,0,30);
 
 	
 	/**
@@ -103,7 +104,12 @@ public class RenderPlayer {
 	}
 	
 	private void drawFront(double x, double y, int tileSize, Graphics2D g2) {
+		centerX = y+tileSize/2;
+		bottomEdge = y+tileSize;
 		eyeDiam = tileSize/5;
+	
+		
+		
 		
 		Graphics2D gTemp = (Graphics2D) g2.create();
 		drawFrontBack(x, y, tileSize, g2);
@@ -153,6 +159,9 @@ public class RenderPlayer {
 		armDiam = tileSize/18;
 		armLength = tileSize/6;
 		handSize = tileSize/10;
+		
+		g2.setColor(SHADOW);
+		g2.fill(new Ellipse2D.Double(centerX-tileSize/4, bottomEdge-tileSize/13, tileSize/2, tileSize/11)); //shadow
 		
 		
 		g2.setColor(CHAP_BODY_DARK);
@@ -240,6 +249,9 @@ public class RenderPlayer {
 		handSize = tileSize/10;
 		
 		//g2.setStroke(new BasicStroke(2));
+		
+		g2.setColor(SHADOW);
+		g2.fill(new Ellipse2D.Double(centerX-tileSize/4, bottomEdge-tileSize/13, tileSize/2, tileSize/11)); //shadow
 		
 		//push matrix - left arm
 		Graphics2D gTemp = (Graphics2D) g2.create();
