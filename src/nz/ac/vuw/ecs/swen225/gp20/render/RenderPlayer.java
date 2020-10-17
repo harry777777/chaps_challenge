@@ -44,6 +44,8 @@ public class RenderPlayer {
 	
 	private double wheelAngle = 0;
 	private double bodyAngle = 0;
+	private static final double BODY_ANGLE_MAX = 10;
+	private static final double BODY_ANGLE_LERP = 0.25;
 	
 	private static final Color CHAP_BODY_LIGHT = new Color(234, 222, 189);
 	private static final Color CHAP_BODY_MEDIUM = new Color(166,157,134);
@@ -71,7 +73,8 @@ public class RenderPlayer {
 			int offset = player.getMove().getDistance();
 			if(offset != 0) { //increment wheel rotation and set body angle
 				wheelAngle -= 10;
-				bodyAngle = 10;
+				//bodyAngle = 10;
+				bodyAngle = lerp(bodyAngle, BODY_ANGLE_MAX, BODY_ANGLE_LERP);
 			}
 			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
 			if(direction.equals(Direction.LEFT)) {
@@ -87,7 +90,8 @@ public class RenderPlayer {
 				yOffset = (offset/divisor);
 			}
 		}else {
-			bodyAngle = 0;
+			//bodyAngle = 0;
+			bodyAngle = lerp(bodyAngle, 0, BODY_ANGLE_LERP);
 		}
 		
 		//draw player from correct direction
@@ -108,9 +112,6 @@ public class RenderPlayer {
 		bottomEdge = y+tileSize;
 		eyeDiam = tileSize/5;
 	
-		
-		
-		
 		Graphics2D gTemp = (Graphics2D) g2.create();
 		drawFrontBack(x, y, tileSize, g2);
 		g2.dispose();
@@ -300,6 +301,11 @@ public class RenderPlayer {
 		
 		g2.setColor(CHAP_BODY_DARK);
 		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, 5, 5)); //wheel
+	}
+	
+	private double lerp(double a, double b, double amount)
+	{
+	    return a + amount * (b - a);
 	}
 	
 	
