@@ -36,13 +36,15 @@ public class Application {
     private final boolean moving = false;
     private final Recorder r;
     private TickEvent tickEvent;
-    private int countdown = 0;
+    private int timer = 60;
     private int currentTick = 0;
     private boolean running = true;
     private boolean paused = false;
     private Replay replay;
     private boolean replaying = false;
     private boolean ctrlPressed = false;
+    private JLabel timerLabel;
+    private boolean gameOver = false;
 
     /**
      * @author Owen
@@ -178,6 +180,14 @@ public class Application {
         drawing.setVisible(true);
         frame.add(drawing, BorderLayout.CENTER);
 
+        JPanel gameInfo = new JPanel();
+        JLabel newTimer = new JLabel("Time:" + timer);
+        JLabel level = new JLabel("Level:");
+        gameInfo.add(newTimer);
+        timerLabel = newTimer;
+        gameInfo.add(level);
+        frame.add(gameInfo,BorderLayout.EAST);
+
         JPanel buttons = new JPanel();
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
@@ -249,6 +259,8 @@ public class Application {
      * Runs the game loop, its runs at 60hz and is created from a tutorial I followed here https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
      */
     private void run() {
+        int timerFrameCounter = 0;
+
         final double GAME_HERTZ = 60;
         final double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
@@ -261,7 +273,7 @@ public class Application {
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
         while (running) {
-            while(!paused) {
+            while(!paused && !gameOver) {
                 double now = System.nanoTime();
                 int updateCount = 0;
                 while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
@@ -288,6 +300,16 @@ public class Application {
                 redraw();
                 lastRenderTime = now;
                 currentTick++;
+                timerFrameCounter++;
+                if(timerFrameCounter == 60) {
+                    if(timer == 0){
+                        gameOver = true;
+                        break;
+                    }
+                    timer -= 1;
+                    timerLabel.setText("Time: " + timer);
+                    timerFrameCounter = 0;
+                }
 
                 while (now - lastRenderTime < TTBR && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
                     Thread.yield();
@@ -306,7 +328,6 @@ public class Application {
      * Updates every tick to move the player and at the tickEvent to the recording, but only if something occurred that tick
      */
     private void update() {
-        countdown += 1;
         if (tickEvent != null) {
             maze.movePlayer(tickEvent.getMoveDir());
             r.updateRecording(tickEvent);
