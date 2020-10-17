@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 import java.util.List;
+import java.util.logging.Logger;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
@@ -14,6 +15,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  */
 public class Player implements Actor{
 
+  private static final Logger LOGGER = Logger.getLogger(Player.class.getName());
   private Location location;
   private Move move;
   private Direction facing;
@@ -114,6 +116,7 @@ public class Player implements Actor{
 
   @Override
   public void endMove() {
+    LOGGER.info("Successfully moved to: " + location);
     move = null;
   }
 

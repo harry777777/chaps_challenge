@@ -124,7 +124,6 @@ public class Maze {
       player.startMove(direction, destination);
     }
     //todo post-condition?
-    System.out.println(this.toString());
   }
 
   private Tile getTileAt(Location location) {
