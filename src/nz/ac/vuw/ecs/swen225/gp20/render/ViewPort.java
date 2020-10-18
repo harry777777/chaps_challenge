@@ -29,7 +29,7 @@ public class ViewPort {
 	//Moving viewport
 	private int viewWidth, viewHeight;
 	
-	private double lerpXCurrent = -1, lerpYCurrent = -1, viewSpeed = 0.2;
+	private double lerpXCurrent = -1, lerpYCurrent = -1, viewSpeed = 0.05; //0.2
 	
 	private int count = 0; //frame counter
 	
@@ -84,16 +84,21 @@ public class ViewPort {
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
 	    		Tile current = tiles[row][col];
+	    		
+	    		//temp tile boarder draw
+	    		g2.setColor(FLOOR_COLOR);
+    			g2.draw(new Rectangle2D.Double(x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize, tileSize));
+	    		
+	    		if(row < playerX-viewWidth/2 || row > playerX+viewWidth/2 || col < playerY-viewHeight/2 || col > playerY+viewHeight/2) {
+	    			continue;
+	    		}
 	    		if(current instanceof FreeTile) {
 	    			drawFloor(g2, x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize);
 	    		}else if(current instanceof WallTile){
 	    			drawWall(g2, x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize);
 	    			
 	    		}
-	    		//temp tile boarder draw
-	    		g2.setColor(FLOOR_COLOR);
-    			//g2.drawRect(x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize, tileSize);
-    			//g2.draw(new Rectangle2D.Double(x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize, tileSize));
+	    		
 	    	}
 	    }
 	    

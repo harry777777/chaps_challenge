@@ -32,8 +32,8 @@ public class Renderer {
 		this.viewX = 200; //20
 		this.viewY = 200; //20
 		this.tileSize = 50; //50
-		this.viewHeight = 3;
-		this.viewWidth = 3;
+		this.viewHeight = 7;
+		this.viewWidth = 7;
 		this.viewPort = new ViewPort();
 		this.rInventory = new RenderInventory();
 	}
@@ -65,6 +65,8 @@ public class Renderer {
 	 * @param g the graphics pane
 	 */
 	public void draw(Graphics g) {
+		//g.create(viewX, viewY, viewWidth*tileSize, viewHeight*tileSize);
+		
 		Graphics2D g2 = (Graphics2D) g;
 		
 		//enable smooth edges
