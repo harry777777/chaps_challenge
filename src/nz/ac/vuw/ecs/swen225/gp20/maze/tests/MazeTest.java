@@ -263,16 +263,18 @@ class MazeTest {
   }
 
   @Test
-  public void pickUpItem() {
+  public void pickUpKey() {
 
     Maze maze = createStandardMaze('K', 1, 2);
     System.out.println(maze.toString());
     maze.movePlayer(Direction.UP);
     simulate100Ticks(maze);
+    maze.movePlayer(Direction.LEFT);
+    simulate100Ticks(maze);
     String actual = maze.toString();
 
     String expected = "WWWWW\n"
-        + "WFCFW\n"
+        + "WCFFW\n"
         + "WFFFW\n"
         + "WFFFW\n"
         + "WWWWW";
