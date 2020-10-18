@@ -94,6 +94,10 @@ public class RenderPlayer {
 			bodyAngle = lerp(bodyAngle, 0, BODY_ANGLE_LERP);
 		}
 		
+		//temp
+		xOffset = 0;
+		yOffset = 0;
+		
 		//draw player from correct direction
 		if(direction == null || direction == Direction.DOWN) {
 			drawFront(x+xOffset, y+yOffset, tileSize, g2);
