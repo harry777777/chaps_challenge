@@ -94,7 +94,7 @@ public class ViewPort {
 		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
 		
 		//draw background
-		g2.setColor(WALL_COLOR);
+		g2.setColor(FLOOR_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
 	  	//draw the maze in the view port
