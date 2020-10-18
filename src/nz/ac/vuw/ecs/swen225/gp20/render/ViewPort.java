@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
@@ -28,7 +29,7 @@ public class ViewPort {
 	//Moving viewport
 	private int viewWidth, viewHeight;
 	
-	private double lerpXCurrent = -1, lerpYCurrent = -1, lerpSpeed = 0.05;
+	private double lerpXCurrent = -1, lerpYCurrent = -1, viewSpeed = 0.2;
 	
 	private int count = 0; //frame counter
 	
@@ -49,12 +50,8 @@ public class ViewPort {
 		int playerX = player.getX();
 		int playerY = player.getY();
 		
-		
-		
 		double xMapOffset = playerX*tileSize;
 		double yMapOffset = playerY*tileSize;
-		
-		
 		
 		if(lerpXCurrent == -1 || lerpYCurrent == -1) {	//if the lerp values haven't been initialized, initialize them
 			lerpXCurrent = xMapOffset;
@@ -62,8 +59,8 @@ public class ViewPort {
 		}
 		
 		if(lerpXCurrent != xMapOffset || lerpYCurrent != yMapOffset) { //update the lerp
-			lerpXCurrent = lerp(lerpXCurrent, xMapOffset, lerpSpeed);
-			lerpYCurrent = lerp(lerpYCurrent, yMapOffset, lerpSpeed);
+			lerpXCurrent = lerp(lerpXCurrent, xMapOffset, viewSpeed);
+			lerpYCurrent = lerp(lerpYCurrent, yMapOffset, viewSpeed);
 		}
 		
 		
@@ -94,9 +91,9 @@ public class ViewPort {
 	    			
 	    		}
 	    		//temp tile boarder draw
-	    		g2.setColor(new Color(0,0,0));
-    			//g2.drawRect(x+row*tileSize, y+col*tileSize, tileSize, tileSize);
-	    		
+	    		g2.setColor(FLOOR_COLOR);
+    			//g2.drawRect(x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize, tileSize);
+    			//g2.draw(new Rectangle2D.Double(x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize, tileSize));
 	    	}
 	    }
 	    
@@ -127,12 +124,14 @@ public class ViewPort {
 		//draw a plane color for the floor (temp)
 		g2.setColor(FLOOR_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 	}
 	
 	private void drawWall(Graphics2D g2, double x, double y, int tileSize) {
 		//draw a plane color for the floor (temp)
 		g2.setColor(WALL_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 	}
 	
 	private double lerp(double a, double b, double amount){
