@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -43,10 +44,10 @@ public class Maze {
 
   /**
    * Construct from char array.
-   *
+   * @deprecated
    * @param input char[][] of symbolic representations of the maze.
    */
-  public Maze(char[][] input) {
+   public Maze(char[][] input) {
     int width = input.length;
     int height = input[0].length;
     Tile[][] tiles = new Tile[height][width];
@@ -65,9 +66,10 @@ public class Maze {
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i, j);
             break;
+          case 'N':
+            tiles[i][j] = new FreeTile(new Location(i, j));
+            actors.add( new NPC(10L, new Location(i, j)));
           case 'K':
-            // Commented out since cannot save Color constants with gson, as it violates reflection.
-//            tiles[i][j] = new FreeTile(new Location(i, j), new Key(Color.cyan));
             tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0,255,255)));
             break;
           case 'T':
@@ -113,11 +115,24 @@ public class Maze {
         Move move = actor.getMove();
         move.incrementDistance();
         if (move.isAtThreshold()) {
-          move.executeMove();
+          executeMove(actor, move.getDirection());
           actor.endMove();
         }
       }
     }
+  }
+
+  private void executeMove(Actor actor, Direction direction) {
+    Tile destination = getTileAdjacentTo(actor.getLocation() , direction);
+
+    if (destination != null) { // fixme this is gross
+      if(destination instanceof  Accessible){
+      Accessible accessible = (Accessible) destination;
+      accessible.admit(actor);
+      actor.setLocation(destination.getLocation());
+      }
+    }
+
   }
 
   /**
@@ -130,9 +145,8 @@ public class Maze {
     Location currentLocation = player.getLocation();
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (player.canAccess(destination) && player.isStationary()) {
-      player.startMove(direction, destination);
+      player.startMove(direction);
     }
-    //todo post-condition?
   }
 
   public Tile getTileAt(Location location) {
@@ -161,11 +175,13 @@ public class Maze {
 
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        if (j == x && i == y) {
-          sb.append(player.getSymbol());
-        } else {
-          sb.append(tiles[j][i].getSymbol());
+        Actor atLoc = null;
+        for (Actor actor : actors) {
+          if (actor.getLocation().y == i && actor.getLocation().x == j) {
+            atLoc = actor;
+          }
         }
+        sb.append(atLoc == null ? tiles[j][i].toString() : atLoc.toString());
       }
       sb.append("\n");
     }

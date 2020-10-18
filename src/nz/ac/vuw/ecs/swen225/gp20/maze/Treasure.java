@@ -8,7 +8,7 @@ public class Treasure implements Item{
   }
 
   @Override
-  public char getSymbol() {
-    return 'T';
+  public String toString() {
+    return "T";
   }
 }

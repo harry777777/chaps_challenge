@@ -34,13 +34,9 @@ public class Player implements Actor{
     location = new Location(horizontalDimension, verticalDimension);
   }
 
-  /**
-   * Get the player's symbolic representation.
-   *
-   * @return a char 'C' representing the location of the player on a console output.
-   */
-  public char getSymbol() {
-    return 'C';
+  @Override
+  public String toString() {
+    return "C";
   }
 
 
@@ -78,6 +74,16 @@ public class Player implements Actor{
     return move;
   }
 
+  @Override
+  public int getX() {
+    return location.x;
+  }
+
+  @Override
+  public int getY() {
+    return location.y;
+  }
+
   /**
    * Getter for direction.
    *
@@ -93,14 +99,13 @@ public class Player implements Actor{
     move = null;
   }
 
-  @Override
   public boolean isStationary() {
     return move == null;
   }
 
-  public void startMove(Direction direction, Tile destination) {
+  public void startMove(Direction direction) {
     facing = direction;
-    move = new Move(this, destination);
+    move = new Move(direction);
   }
 
   public void addToInventory(Item item) {

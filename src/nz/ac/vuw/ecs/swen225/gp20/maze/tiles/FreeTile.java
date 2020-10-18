@@ -30,11 +30,11 @@ public class FreeTile implements Tile, Accessible {
   }
 
   @Override
-  public char getSymbol() {
+  public String toString() {
     if (item != null) {
-      return item.getSymbol();
+      return item.toString();
     }
-    return 'F';
+    return "F";
   }
 
   @Override
@@ -44,7 +44,6 @@ public class FreeTile implements Tile, Accessible {
 
   @Override
   public void admit(Actor actor) {
-    actor.setLocation(this.location);
     if (actor instanceof Player) {
       if (item != null) {
         Player player = (Player) actor;
