@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.persistence;
 
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.ArrayList;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
@@ -62,6 +63,19 @@ public class LevelManager {
   }
 
   /**
+   * Saves a level as a JSON file.
+   * Takes in a char array to build a level from.
+   * @param filepath
+   * @param textLevel
+   * @throws IOException
+   */
+  public void saveLevel(String filepath, char[][] textLevel) throws IOException {
+    Maze maze = new Maze(textLevel);
+    // Writing object to JSON file
+    handler.write(filepath, maze);
+  }
+
+  /**
    * Loads a level from a JSON file.
    * @param filepath
    * @throws IOException
@@ -73,7 +87,21 @@ public class LevelManager {
 
   public static void main(String[] args) throws IOException {
     LevelManager lm = new LevelManager();
-    lm.saveLevel("levels/level1.json");
+    lm.saveLevel("levels/level1.json", lm.testLevel1);
     lm.loadLevel("levels/level1.json");
   }
+
+  // Textual level representations
+  private final char[][] testLevel1 = {
+            {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'},
+            {'W', 'C', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'W'},
+            {'W', 'F', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'W'},
+            {'W', 'F', 'F', 'T', 'W', 'F', 'W', 'F', 'F', 'W'},
+            {'W', 'F', 'F', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},
+            {'W', 'F', 'F', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},
+            {'W', 'F', 'F', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},
+            {'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'W'},
+            {'W', 'K', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'W'},
+            {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'}
+        };
 }
