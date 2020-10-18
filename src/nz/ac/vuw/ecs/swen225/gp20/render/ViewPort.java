@@ -119,6 +119,8 @@ public class ViewPort {
 	    					rTreasure.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    				}
 	    				if(currentT.getItem() instanceof Key) {
+	    					// todo change line below if necessary
+	    					g2.setColor(((Key) currentT.getItem()).getColor()); // test to draw key as it's color
 	    					drawKey(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    				}
 	    				//pop matrix
@@ -162,7 +164,8 @@ public class ViewPort {
 	}
 	
 	private void drawKey(Graphics2D g2, double x, double y, int tileSize) {
-		g2.setColor(new Color(234, 222, 189));
+		// Color set changed so that key can be draw as it's own color
+//		g2.setColor(new Color(234, 222, 189));
 		g2.fill(new RoundRectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2, 10, 10));
 	}
 	
