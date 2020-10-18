@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.geom.Line2D;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
@@ -76,9 +77,16 @@ public class ViewPort {
 		//temp tile boarder draw: could be an interesting effect
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
+	    		Tile current = tiles[row][col];
+	    		
 	    		g2.setColor(FLOOR_COLOR);
     			g2.draw(new Rectangle2D.Double(centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, tileSize));
-
+    			if(current instanceof FreeTile) {
+	    			FreeTile currentT = (FreeTile) current;
+	    			if(currentT.getItem() != null) {
+	    				drawX(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			}
+    			}
 	    	}
 	    }
 		
@@ -89,13 +97,17 @@ public class ViewPort {
 		g2.setColor(WALL_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
-	  	
+	  	//draw the maze in the view port
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
 	    		Tile current = tiles[row][col];
 	    		
 	    		if(current instanceof FreeTile) {
+	    			FreeTile currentT = (FreeTile) current;
 	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			if(currentT.getItem() != null) {
+	    				drawItem(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			}
 	    		}else if(current instanceof WallTile){
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}
@@ -125,6 +137,16 @@ public class ViewPort {
 		g2.setColor(FLOOR_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+	}
+	
+	private void drawItem(Graphics2D g2, double x, double y, int tileSize) {
+		g2.setColor(new Color(234, 222, 189));
+		g2.fill(new Ellipse2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
+	}
+	
+	private void drawX(Graphics2D g2, double x, double y, int tileSize) {
+		g2.draw(new Line2D.Double(x+tileSize/4, y+tileSize/4, x-tileSize/4+tileSize, y-tileSize/4+tileSize));
+		g2.draw(new Line2D.Double(x+tileSize/4, y-tileSize/4+tileSize, x-tileSize/4+tileSize, y+tileSize/4));
 	}
 	
 	private void drawWall(Graphics2D g2, double x, double y, int tileSize) {
