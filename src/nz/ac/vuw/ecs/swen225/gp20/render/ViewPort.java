@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
@@ -98,7 +99,7 @@ public class ViewPort {
 		//g2.drawString(Integer.toString(tiles.length), 120, 200);
 		
 		//g2.clip(new Rectangle2D.Double(25, 25, 500, 500));
-		g2.clip(new Rectangle2D.Double(50, 50, 450, 450));
+		g2.clip(new RoundRectangle2D.Double(50, 50, 450, 450, 20, 20));
 		
 		//draw background (temp)
 		g2.setColor(WALL_COLOR);
