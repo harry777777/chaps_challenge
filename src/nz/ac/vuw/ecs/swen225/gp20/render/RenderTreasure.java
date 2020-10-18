@@ -39,7 +39,7 @@ public class RenderTreasure {
 	public void draw(Graphics2D g2, double x, double y, int tileSize){
 		//do animation
 		if(up) {
-			if(height < 5) {
+			if(height < 10) {
 				height+=0.25;
 			}else {
 				up = !up;
@@ -61,21 +61,46 @@ public class RenderTreasure {
 		
 		BufferedImage bi = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
 		Graphics2D big = bi.createGraphics();
-		Rectangle r = new Rectangle((int)x, (int)(y+height/2), tileSize, tileSize);
-		//Rectangle r = new Rectangle(0, 0, tileSize, tileSize);
+		//Rectangle r = new Rectangle((int)x, (int)(y+height/2), tileSize, tileSize);
+		Rectangle r = new Rectangle(0, 0, tileSize, tileSize);
 		big.setColor(CHAP_BODY_LIGHT);
 		big.fillRect(0, 0, tileSize, tileSize); //background color
 		
 		big.setColor(CHAP_BODY_MEDIUM);
-		//big.fillRect(0, tileSize/2, tileSize, tileSize/10); //dark stripe
+		big.fillRect(0, tileSize/4, tileSize, tileSize/10); //dark stripe
 		
 		TexturePaint tp = new TexturePaint(bi, r);
 		g2.setPaint(tp);
 		
-		g2.fill(new Ellipse2D.Double(x+tileSize/4, y+tileSize/4+height/2, tileSize/2, tileSize/2)); //ball
+		//g2.fill(new Ellipse2D.Double(x+tileSize/4, y+tileSize/4+height/2, tileSize/2, tileSize/2)); //ball
+		
+		//push matrix - left arm
+		Graphics2D gTemp = (Graphics2D) g2.create();
+		
+		g2.translate(x+tileSize/4, y+tileSize/4+height/2);
+		
+		g2.fill(new Ellipse2D.Double(0, 0, tileSize/2, tileSize/2)); //ball
+		
+		//pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
+		
+		//push matrix - left arm
+		gTemp = (Graphics2D) g2.create();
+		
+		g2.translate(x+tileSize/2-0.5, bottomEdge-tileSize/11);
+		
+		g2.scale(1+height/15, 1+height/50);
 		
 		g2.setColor(SHADOW);
-		g2.fill(new Ellipse2D.Double(centerX-(tileSize/2.5)/2-(height/2)/2, bottomEdge-tileSize/11, (tileSize/2.5)+(height/2), tileSize/11)); //shadow
+		g2.fill(new Ellipse2D.Double(-(tileSize/4)/2, 0, (tileSize/4), tileSize/14)); //shadow
+		
+		//pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
+		
+		//g2.setColor(SHADOW);
+		//g2.fill(new Ellipse2D.Double(centerX-(tileSize/2.5)/2-(height/2)/2, bottomEdge-tileSize/11, (tileSize/2.5)+(height/2), tileSize/11)); //shadow
 
 
 	}
