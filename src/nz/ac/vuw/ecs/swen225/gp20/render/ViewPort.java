@@ -29,7 +29,7 @@ public class ViewPort {
 	//Moving viewport
 	private int viewWidth, viewHeight;
 	
-	private double lerpXCurrent = -1, lerpYCurrent = -1, viewSpeed = 0.05; //0.2
+	private double lerpXCurrent = -1, lerpYCurrent = -1, viewSpeed = 0.025; //0.2
 	
 	private int count = 0; //frame counter
 	
@@ -113,7 +113,7 @@ public class ViewPort {
 	    
 	    //drawChap(g2, x+playerLocation.getHorizontal()*tileSize, y+playerLocation.getVertical()*tileSize, tileSize, playerDirection); //old
 	    
-	    //TODO setup the moving viewport
+
 	}
 	
 	private void drawFrame(Graphics2D g2, int x, int y) {
