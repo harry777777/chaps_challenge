@@ -1,5 +1,8 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
@@ -13,9 +16,12 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  */
 public class Player implements Actor{
 
+  private static final Logger LOGGER = Logger.getLogger(Player.class.getName());
   private Location location;
   private Move move;
   private Direction facing;
+  private List<Item> inventory = new ArrayList<>();
+  private int treasure = 0;
 
 
   /**
@@ -37,24 +43,6 @@ public class Player implements Actor{
     return 'C';
   }
 
-  /**
-   * Get player's x.
-   *
-   * @return the x coordinate of the player's location
-   */
-  public int getX() {
-    return location.x;
-  }
-
-  /**
-   * Get player's y.
-   *
-   * @return the y coordinate of the player's location
-   */
-  public int getY() {
-    return location.y;
-  }
-
 
   /**
    * Check the player may access a given tile.
@@ -65,35 +53,6 @@ public class Player implements Actor{
   public boolean canAccess(Tile destination) {
     return destination instanceof Accessible;
   }
-
-
-//  /**
-//   * Set the flags for movement and direction of travel.
-//   *
-//   * @param direction direction of travel
-//   */
-//  public void startMove(Direction direction) {
-//    assert (isStationary());
-//    facing = direction;
-//    isMoving = true;
-//  }
-
-
-//  /**
-//   * Set facing direction to DOWN, and switch moving flag.
-//   */
-//  public void endMove() {
-//    facing = Direction.DOWN;
-//    isMoving = false; // fixme. side affect?
-//  }
-
-//  /**
-//   * @return if the player is not currently moving
-//   */
-//  public boolean isStationary() {
-//    return !isMoving;
-//  }
-
 
   /**
    * Get the player's location.
@@ -128,7 +87,9 @@ public class Player implements Actor{
     return facing;
   }
 
+  @Override
   public void endMove() {
+    LOGGER.info("Successfully moved to: " + location);
     move = null;
   }
 
@@ -140,5 +101,18 @@ public class Player implements Actor{
   public void startMove(Direction direction, Tile destination) {
     facing = direction;
     move = new Move(this, destination);
+  }
+
+  public void addToInventory(Item item) {
+    if (item instanceof Key) {
+      inventory.add(item);
+    }
+    if (item instanceof Treasure) {
+      treasure += ((Treasure) item).value;
+    }
+  }
+
+  public List<Item> getInventory() {
+    return inventory;
   }
 }

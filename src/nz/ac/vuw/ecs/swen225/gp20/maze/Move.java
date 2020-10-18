@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * An object's Move component. This is similar to a vector, with a direction and magnitude, but
@@ -11,7 +12,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
  */
 public class Move {
 
-  public static final int THRESHOLD = 20;
+  public static final int THRESHOLD = 25;
 
   private final Actor actor;
   private final Tile destination;
@@ -64,6 +65,10 @@ public class Move {
     Accessible destination = (Accessible) this.destination;
     destination.admit(actor);
     actor.endMove();
+  }
+
+  public Location getDestinationLocation() {
+    return destination.getLocation();
   }
 }
 

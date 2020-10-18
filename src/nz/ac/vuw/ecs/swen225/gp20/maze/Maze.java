@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +65,11 @@ public class Maze {
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i, j);
             break;
+          case 'K':
+            tiles[i][j] = new FreeTile(new Location(i, j), new Key(Color.cyan));
+            break;
+          case 'T':
+            tiles[i][j] = new FreeTile(new Location(i, j), new Treasure(1));
           default:
             throw new IllegalStateException("Unexpected value: " + c);
         }
@@ -124,10 +130,9 @@ public class Maze {
       player.startMove(direction, destination);
     }
     //todo post-condition?
-    System.out.println(this.toString());
   }
 
-  private Tile getTileAt(Location location) {
+  public Tile getTileAt(Location location) {
     return tiles[location.x][location.y];
   }
 
