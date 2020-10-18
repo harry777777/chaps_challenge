@@ -43,8 +43,8 @@ public class ViewPort {
 	 */
 	public void draw(Graphics2D g2, Tile[][] tiles, Player player, int x, int y, int tileSize, int viewWidth, int viewHeight) {
 
-		int playerX = player.getX();
-		int playerY = player.getY();
+		int playerX = player.getLocation().x;
+		int playerY = player.getLocation().y;
 		
 		double xMapOffset = playerX*tileSize;
 		double yMapOffset = playerY*tileSize;
