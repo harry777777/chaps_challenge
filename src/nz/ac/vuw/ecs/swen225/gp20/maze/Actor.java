@@ -12,5 +12,7 @@ public interface Actor {
 
   void setLocation(Location location);
 
+  Location getLocation();
+
 }
 
