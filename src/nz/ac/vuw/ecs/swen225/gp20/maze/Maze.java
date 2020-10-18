@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
@@ -40,6 +41,21 @@ public class Maze {
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     actors.add(player);
+  }
+
+  /**
+   * Most Constructs a new Maze with a Player Actor and Tiles.
+   *
+   * @param tiles  array of tile objects
+   * @param player the player
+   * @param actors the actors (i.e player and NPCS)
+   */
+  public Maze(Tile[][] tiles, Player player, List<Actor> actors) {
+    this.height = tiles.length;
+    this.width = tiles[0].length;
+    this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
+    this.player = player; // fixme: look at error on spotBugs
+    actors.addAll(actors);
   }
 
   /**

@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.persistence;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.ActorAdapter;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.ColorAdapter;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.ItemAdapter;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.TileAdapter;
 
@@ -30,6 +32,7 @@ public class JSONHandler<T> {
     builder.registerTypeAdapter(Tile.class, new TileAdapter()); // allows handler to work with Tile interface
     builder.registerTypeAdapter(Actor.class, new ActorAdapter()); // allows handler to work with Actor interface
     builder.registerTypeAdapter(Item.class, new ItemAdapter()); // allows handler to work with Item interface
+    builder.registerTypeAdapter(Color.class, new ColorAdapter()); // allows handler to work with Color, to avoid illegal reflection
     gson = builder.create();
   }
 

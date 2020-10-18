@@ -1,10 +1,18 @@
 package nz.ac.vuw.ecs.swen225.gp20.persistence;
 
 import com.google.gson.Gson;
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
+import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -70,9 +78,45 @@ public class LevelManager {
    * @throws IOException
    */
   public void saveLevel(String filepath, char[][] textLevel) throws IOException {
-    Maze maze = new Maze(textLevel);
+    int width = textLevel.length;
+    int height = textLevel[0].length;
+    Tile[][] tiles = new Tile[height][width];
+    Player player = null;
+    List<Actor> actors = new ArrayList<>();
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        char c = textLevel[j][i];
+        switch (c) {
+          case 'F':
+            tiles[i][j] = new FreeTile(new Location(i, j));
+            break;
+          case 'W':
+            tiles[i][j] = new WallTile(new Location(i, j));
+            break;
+          case 'C':
+            tiles[i][j] = new FreeTile(new Location(i, j));
+            player = new Player(i,j);
+            actors.add(player);
+            break;
+          case 'N':
+            tiles[i][j] = new FreeTile(new Location(i, j));
+            actors.add(new NPC(10L, new Location(i, j)));
+          case 'K':
+            tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0,255,255)));
+            break;
+          case 'T':
+            tiles[i][j] = new FreeTile(new Location(i, j), new Treasure(1));
+            break;
+          default:
+            throw new IllegalStateException("Unexpected value: " + c);
+        }
+      }
+    }
+
+    Maze mazeToSave = new Maze(tiles, player, actors);
+
     // Writing object to JSON file
-    handler.write(filepath, maze);
+    handler.write(filepath, mazeToSave);
   }
 
   /**
