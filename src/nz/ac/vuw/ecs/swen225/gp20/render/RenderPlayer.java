@@ -63,7 +63,7 @@ public class RenderPlayer {
 	 * @param tileSize
 	 * @param player
 	 */
-	public void draw(Graphics2D g2, int x, int y, int tileSize, Player player){
+	public void draw(Graphics2D g2, double x, double y, int tileSize, Player player){
 		Direction direction = player.getFacing();
 		
 		//calculate player offset
@@ -303,8 +303,7 @@ public class RenderPlayer {
 		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, 5, 5)); //wheel
 	}
 	
-	private double lerp(double a, double b, double amount)
-	{
+	private double lerp(double a, double b, double amount){
 	    return a + amount * (b - a);
 	}
 	

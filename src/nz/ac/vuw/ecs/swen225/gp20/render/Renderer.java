@@ -29,8 +29,8 @@ public class Renderer {
 	 */
 	public Renderer(Maze m) {
 		this.maze = m;
-		this.viewX = 20;
-		this.viewY = 20;
+		this.viewX = 200; //20
+		this.viewY = 200; //20
 		this.tileSize = 50; //50
 		this.viewHeight = 3;
 		this.viewWidth = 3;
