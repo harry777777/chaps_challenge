@@ -64,7 +64,6 @@ public class Move {
     assert (destination instanceof Accessible);
     Accessible destination = (Accessible) this.destination;
     destination.admit(actor);
-    actor.endMove();
   }
 
   public Location getDestinationLocation() {
