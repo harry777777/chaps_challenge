@@ -11,7 +11,7 @@ public class Key implements Item {
   }
 
   @Override
-  public char getSymbol() {
-    return 'K';
+  public String toString() {
+    return "K";
   }
 }

@@ -15,7 +15,12 @@ public class NPC implements Actor {
     this.location = location;
     random = new Random();
     random.setSeed(seed);
-    facing = Direction.values()[random.nextInt(Direction.values().length)];
+    facing = getRandomDirection();
+    startMove(facing);
+  }
+
+  private Direction getRandomDirection() {
+    return Direction.values()[random.nextInt(Direction.values().length)];
   }
 
 
@@ -25,22 +30,43 @@ public class NPC implements Actor {
   }
 
   @Override
-  public void endMove() {
-    move = null;
+  public int getX() {
+    return location.x;
   }
 
   @Override
-  public boolean isStationary() {
-    return move == null;
+  public int getY() {
+    return location.y;
+  }
+
+  @Override
+  public void endMove() {
+    move = null;
+    startMove(getRandomDirection());
   }
 
   @Override
   public void setLocation(Location location) {
-
+    this.location = location;
   }
 
+  @Override
+  public Location getLocation() {
+    return location;
+  }
+
+  @Override
+  public void startMove(Direction direction) {
+    move = new Move(direction);
+  }
+
+  @Override
+  public String toString() {
+    return "N";
+  }
 
   public static void main(String[] args) {
+
     NPC npc = new NPC(1L, new Location(1,1));
   }
 }
