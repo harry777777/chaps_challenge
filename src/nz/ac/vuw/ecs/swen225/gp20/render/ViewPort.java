@@ -74,6 +74,9 @@ public class ViewPort {
 			}
 		}
 		
+		//crop the drawing plane
+		g2.clip(new RoundRectangle2D.Double(x-tileSize*1.25, y-tileSize*1.25, viewWidth*tileSize+tileSize*2.5, viewHeight*tileSize+tileSize*2.5, 20, 20));
+		
 		//temp tile boarder draw: could be an interesting effect
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
