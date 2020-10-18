@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
@@ -14,19 +15,13 @@ public class Move {
 
   public static final int THRESHOLD = 25;
 
-  private final Actor actor;
-  private final Tile destination;
   private int distance;
+  private final Direction direction;
+  private int speed = 1;
 
-  /**
-   * Construct a new move with a player and destination.
-   *
-   * @param player      the player
-   * @param destination the destination tile of the move
-   */
-  public Move(Player player, Tile destination) {
-    this.actor = player;
-    this.destination = destination;
+
+  public Move(Direction direction) {
+    this.direction = direction;
     distance = 0;
   }
 
@@ -34,7 +29,7 @@ public class Move {
    * Increase the distance.
    */
   public void incrementDistance() {
-    distance++;
+    distance += speed;
   }
 
   /**
@@ -55,19 +50,9 @@ public class Move {
     return distance;
   }
 
-  /**
-   * Finalise the Move. Admit a player to the destination tile. Set the player back to face down
-   * direction.
-   */
-  public void executeMove() {
-    assert (distance >= THRESHOLD);
-    assert (destination instanceof Accessible);
-    Accessible destination = (Accessible) this.destination;
-    destination.admit(actor);
+  public Direction getDirection() {
+    return direction;
   }
 
-  public Location getDestinationLocation() {
-    return destination.getLocation();
-  }
 }
 

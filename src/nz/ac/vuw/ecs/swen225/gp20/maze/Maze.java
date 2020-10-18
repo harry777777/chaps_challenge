@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -113,11 +114,19 @@ public class Maze {
         Move move = actor.getMove();
         move.incrementDistance();
         if (move.isAtThreshold()) {
-          move.executeMove();
+          executeMove(actor, move.getDirection());
           actor.endMove();
         }
       }
     }
+  }
+
+  private void executeMove(Actor actor, Direction direction) {
+    Tile destination = getTileAdjacentTo(actor.getLocation() , direction);
+    Accessible accessible = (Accessible) destination;
+    accessible.admit(actor);
+    actor.setLocation(destination.getLocation());
+
   }
 
   /**
@@ -130,9 +139,8 @@ public class Maze {
     Location currentLocation = player.getLocation();
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (player.canAccess(destination) && player.isStationary()) {
-      player.startMove(direction, destination);
+      player.startMove(direction);
     }
-    //todo post-condition?
   }
 
   public Tile getTileAt(Location location) {

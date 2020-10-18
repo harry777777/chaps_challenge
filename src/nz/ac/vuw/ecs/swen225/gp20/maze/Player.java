@@ -98,9 +98,9 @@ public class Player implements Actor{
     return move == null;
   }
 
-  public void startMove(Direction direction, Tile destination) {
+  public void startMove(Direction direction) {
     facing = direction;
-    move = new Move(this, destination);
+    move = new Move(direction);
   }
 
   public void addToInventory(Item item) {
