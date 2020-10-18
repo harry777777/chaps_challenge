@@ -10,4 +10,8 @@ public class Key implements Item {
     this.color = color;
   }
 
+  @Override
+  public char getSymbol() {
+    return 'K';
+  }
 }

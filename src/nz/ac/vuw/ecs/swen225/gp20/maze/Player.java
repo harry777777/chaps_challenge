@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
@@ -19,7 +20,8 @@ public class Player implements Actor{
   private Location location;
   private Move move;
   private Direction facing;
-  private List<Item> inventory;
+  private List<Item> inventory = new ArrayList<>();
+  private int treasure = 0;
 
 
   /**
@@ -51,35 +53,6 @@ public class Player implements Actor{
   public boolean canAccess(Tile destination) {
     return destination instanceof Accessible;
   }
-
-
-//  /**
-//   * Set the flags for movement and direction of travel.
-//   *
-//   * @param direction direction of travel
-//   */
-//  public void startMove(Direction direction) {
-//    assert (isStationary());
-//    facing = direction;
-//    isMoving = true;
-//  }
-
-
-//  /**
-//   * Set facing direction to DOWN, and switch moving flag.
-//   */
-//  public void endMove() {
-//    facing = Direction.DOWN;
-//    isMoving = false; // fixme. side affect?
-//  }
-
-//  /**
-//   * @return if the player is not currently moving
-//   */
-//  public boolean isStationary() {
-//    return !isMoving;
-//  }
-
 
   /**
    * Get the player's location.
@@ -134,5 +107,12 @@ public class Player implements Actor{
     if (item instanceof Key) {
       inventory.add(item);
     }
+    if (item instanceof Treasure) {
+      treasure += ((Treasure) item).value;
+    }
+  }
+
+  public List<Item> getInventory() {
+    return inventory;
   }
 }

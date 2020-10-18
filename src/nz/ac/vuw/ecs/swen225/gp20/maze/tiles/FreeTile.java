@@ -31,6 +31,9 @@ public class FreeTile implements Tile, Accessible {
 
   @Override
   public char getSymbol() {
+    if (item != null) {
+      return item.getSymbol();
+    }
     return 'F';
   }
 
@@ -46,8 +49,13 @@ public class FreeTile implements Tile, Accessible {
       if (item != null) {
         Player player = (Player) actor;
         player.addToInventory(item);
+        removeItem();
       }
     }
+  }
+
+  private void removeItem() {
+    item = null;
   }
 
   public Item getItem() {

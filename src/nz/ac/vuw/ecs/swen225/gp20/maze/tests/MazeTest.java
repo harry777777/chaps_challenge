@@ -2,12 +2,15 @@ package nz.ac.vuw.ecs.swen225.gp20.maze.tests;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import org.junit.jupiter.api.Test;
 
@@ -259,6 +262,26 @@ class MazeTest {
     assertEquals(expected, actual);
   }
 
+  @Test
+  public void pickUpItem() {
+
+    Maze maze = createStandardMaze('K', 1, 2);
+    System.out.println(maze.toString());
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
+    String actual = maze.toString();
+
+    String expected = "WWWWW\n"
+        + "WFCFW\n"
+        + "WFFFW\n"
+        + "WFFFW\n"
+        + "WWWWW";
+
+    assertEquals(expected, actual);
+    FreeTile tileAt = (FreeTile) maze.getTileAt(maze.getPlayer().getLocation());
+    assertNull(tileAt.getItem());
+  }
+
   private Maze createStandardMaze() {
     char[][] initialState = {
         {'W', 'W', 'W', 'W', 'W'},
@@ -267,6 +290,18 @@ class MazeTest {
         {'W', 'F', 'F', 'F', 'W'},
         {'W', 'W', 'W', 'W', 'W'}
     };
+    return new Maze(initialState);
+  }
+
+  private Maze createStandardMaze(char insertValue, int x, int y) {
+    char[][] initialState = {
+        {'W', 'W', 'W', 'W', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'F', 'C', 'F', 'W'},
+        {'W', 'F', 'F', 'F', 'W'},
+        {'W', 'W', 'W', 'W', 'W'}
+    };
+    initialState[x][y] = insertValue;
     return new Maze(initialState);
   }
 
