@@ -63,7 +63,7 @@ public class RenderPlayer {
 	 * @param tileSize
 	 * @param player
 	 */
-	public void draw(Graphics2D g2, int x, int y, int tileSize, Player player){
+	public void draw(Graphics2D g2, double x, double y, int tileSize, Player player){
 		Direction direction = player.getFacing();
 		
 		//calculate player offset
@@ -93,6 +93,10 @@ public class RenderPlayer {
 			//bodyAngle = 0;
 			bodyAngle = lerp(bodyAngle, 0, BODY_ANGLE_LERP);
 		}
+		
+		//temp: keeping the code like this because I'll need it for enemies
+		xOffset = 0;
+		yOffset = 0;
 		
 		//draw player from correct direction
 		if(direction == null || direction == Direction.DOWN) {
@@ -303,8 +307,7 @@ public class RenderPlayer {
 		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, 5, 5)); //wheel
 	}
 	
-	private double lerp(double a, double b, double amount)
-	{
+	private double lerp(double a, double b, double amount){
 	    return a + amount * (b - a);
 	}
 	
