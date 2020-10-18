@@ -20,6 +20,9 @@ public class ViewPort {
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
 	
+	//Moving viewport
+	private int viewWidth, viewHeight;
+	
 	private int count = 0; //frame counter
 	
 	/**
@@ -34,7 +37,8 @@ public class ViewPort {
 	 * @param viewHeight 
 	 */
 	public void draw(Graphics2D g2, Tile[][] tiles, Player player, int x, int y, int tileSize, int viewWidth, int viewHeight) {
-		
+		this.viewWidth = viewWidth;
+		this.viewHeight = viewHeight;
 		
 		//find player position in the Maze and player offset
 		

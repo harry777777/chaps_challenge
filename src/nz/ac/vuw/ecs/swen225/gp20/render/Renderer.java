@@ -32,8 +32,8 @@ public class Renderer {
 		this.viewX = 20;
 		this.viewY = 20;
 		this.tileSize = 50; //50
-		this.viewHeight = 9;
-		this.viewWidth = 9;
+		this.viewHeight = 3;
+		this.viewWidth = 3;
 		this.viewPort = new ViewPort();
 		this.rInventory = new RenderInventory();
 	}
