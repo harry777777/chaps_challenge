@@ -1,4 +1,4 @@
-package nz.ac.vuw.ecs.swen225.gp20.persistence;
+package nz.ac.vuw.ecs.swen225.gp20.persistence.adapters;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

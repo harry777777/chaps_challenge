@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.ActorAdapter;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.TileAdapter;
 
 /**
  * Class for hanling JSON files.
