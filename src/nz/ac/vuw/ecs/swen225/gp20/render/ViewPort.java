@@ -25,6 +25,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 public class ViewPort {
 	
 	private RenderPlayer rPlayer = new RenderPlayer();
+	private RenderTreasure rTreasure = new RenderTreasure();
 	
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
@@ -99,6 +100,7 @@ public class ViewPort {
 		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
 		
 		//draw background
+		//g2.setBackground(color);			//look into this
 		g2.setColor(FLOOR_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
@@ -109,14 +111,19 @@ public class ViewPort {
 	    		
 	    		if(current instanceof FreeTile) {
 	    			FreeTile currentT = (FreeTile) current;
-	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			//drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    			if(currentT.getItem() != null) {
+	    				//push matrix
+	    				Graphics2D gTemp = (Graphics2D) g2.create();
 	    				if(currentT.getItem() instanceof Treasure) {
-	    					drawTreasure(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    					rTreasure.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    				}
 	    				if(currentT.getItem() instanceof Key) {
 	    					drawKey(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    				}
+	    				//pop matrix
+	    				g2.dispose();
+	    				g2 = (Graphics2D) gTemp.create();
 	    			}
 	    		}else if(current instanceof WallTile){
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
