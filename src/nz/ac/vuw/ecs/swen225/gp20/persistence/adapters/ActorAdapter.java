@@ -9,6 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 
 /**
@@ -33,6 +34,8 @@ public class ActorAdapter implements JsonSerializer<Actor>, JsonDeserializer<Act
       switch(type.getAsString()){
         case "Player":
           return context.deserialize(jsonObject.get("data"), Player.class);
+        case "NPC":
+          return context.deserialize(jsonObject.get("data"), NPC.class);
       }
     }
     return null;
