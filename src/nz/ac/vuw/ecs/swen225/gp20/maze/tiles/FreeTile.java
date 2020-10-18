@@ -30,11 +30,11 @@ public class FreeTile implements Tile, Accessible {
   }
 
   @Override
-  public char getSymbol() {
+  public String toString() {
     if (item != null) {
-      return item.getSymbol();
+      return item.toString();
     }
-    return 'F';
+    return "F";
   }
 
   @Override

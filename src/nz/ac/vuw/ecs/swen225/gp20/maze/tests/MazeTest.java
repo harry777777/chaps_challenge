@@ -284,6 +284,28 @@ class MazeTest {
     assertNull(tileAt.getItem());
   }
 
+  @Test
+  public void NPCMove() {
+
+    Maze maze = createStandardMaze('N', 1, 2);
+    System.out.println(maze.toString());
+    maze.movePlayer(Direction.UP);
+    simulate100Ticks(maze);
+    maze.movePlayer(Direction.LEFT);
+    simulate100Ticks(maze);
+    String actual = maze.toString();
+
+    String expected = "WWWWW\n"
+        + "WCFFW\n"
+        + "WFFFW\n"
+        + "WFFFW\n"
+        + "WWWWW";
+
+    assertEquals(expected, actual);
+    FreeTile tileAt = (FreeTile) maze.getTileAt(maze.getPlayer().getLocation());
+    assertNull(tileAt.getItem());
+  }
+
   private Maze createStandardMaze() {
     char[][] initialState = {
         {'W', 'W', 'W', 'W', 'W'},
