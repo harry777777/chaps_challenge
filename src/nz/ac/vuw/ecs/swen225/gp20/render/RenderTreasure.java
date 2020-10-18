@@ -59,8 +59,6 @@ public class RenderTreasure {
 		bottomEdge = y+tileSize;
 		
 		
-
-		
 		BufferedImage bi = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
 		Graphics2D big = bi.createGraphics();
 		Rectangle r = new Rectangle((int)x, (int)(y+height/2), tileSize, tileSize);
@@ -78,9 +76,7 @@ public class RenderTreasure {
 		
 		g2.setColor(SHADOW);
 		g2.fill(new Ellipse2D.Double(centerX-(tileSize/2.5)/2-(height/2)/2, bottomEdge-tileSize/11, (tileSize/2.5)+(height/2), tileSize/11)); //shadow
-		
 
-		
 
 	}
 }
