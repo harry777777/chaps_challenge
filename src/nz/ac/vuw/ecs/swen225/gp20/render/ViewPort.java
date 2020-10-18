@@ -27,10 +27,6 @@ public class ViewPort {
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
 	private static final Color WALL_COLOR = new Color(120, 120, 120);
 	private static final Color BACKGROUND_COLOR = new Color(242,242,242);
-	//Moving viewport
-	private int viewWidth, viewHeight;
-	
-	private double lerpXCurrent = -1, lerpYCurrent = -1, viewSpeed = 0.15; //0.2 //0.025
 	
 	private int count = 0; //frame counter
 	
@@ -46,29 +42,20 @@ public class ViewPort {
 	 * @param viewHeight 
 	 */
 	public void draw(Graphics2D g2, Tile[][] tiles, Player player, int x, int y, int tileSize, int viewWidth, int viewHeight) {
-		this.viewWidth = viewWidth;
-		this.viewHeight = viewHeight;
+
 		int playerX = player.getX();
 		int playerY = player.getY();
 		
 		double xMapOffset = playerX*tileSize;
 		double yMapOffset = playerY*tileSize;
 		
-		if(lerpXCurrent == -1 || lerpYCurrent == -1) {	//if the lerp values haven't been initialized, initialize them
-			lerpXCurrent = xMapOffset;
-			lerpYCurrent = yMapOffset;
-		}
-		
-		if(lerpXCurrent != xMapOffset || lerpYCurrent != yMapOffset) { //update the lerp
-			//lerpXCurrent = lerp(lerpXCurrent, xMapOffset, viewSpeed);
-			//lerpYCurrent = lerp(lerpYCurrent, yMapOffset, viewSpeed);
-			lerpXCurrent = xMapOffset;
-			lerpYCurrent = yMapOffset;
-		}
+		int centerX = x+(viewWidth/2)*tileSize;
+		int centerY = y+(viewHeight/2)*tileSize;
 		
 		Direction direction = player.getFacing();
 		double xOffset = 0;
 		double yOffset = 0;
+		
 		if(player.getMove() != null) {
 			int offset = player.getMove().getDistance();
 			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
@@ -86,67 +73,41 @@ public class ViewPort {
 			}
 		}
 		
+		//temp tile boarder draw: could be an interesting effect
+		for(int row = 0; row < tiles.length; row++) {
+	    	for(int col = 0; col < tiles[row].length; col++) {
+	    		g2.setColor(FLOOR_COLOR);
+    			g2.draw(new Rectangle2D.Double(centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, tileSize));
+
+	    	}
+	    }
 		
+		//crop the drawing plane
+		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
 		
-		//find player position in the Maze and player offset
-		
-		//needs to be modified so it only access and draws the tiles around the player position as determined above
-	    //this is done using the viewHeight and viewWidth values as well as the position of the player
-		
-		//random testing
-		//drawFloor(g2, 100, 100, 200); 
-		//g2.setColor(new Color(0,0,0));
-		//g2.drawString(Integer.toString(tiles.length), 120, 200);
-		
-		//g2.clip(new Rectangle2D.Double(25, 25, 500, 500));
-		g2.clip(new RoundRectangle2D.Double(50, 50, 450, 450, 20, 20));
-		
-		//draw background (temp)
+		//draw background
 		g2.setColor(WALL_COLOR);
-	  	g2.fillRect(0, 0, 1000, 1000);
+	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
 	  	
-	  	
-		
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
 	    		Tile current = tiles[row][col];
 	    		
-	    		//temp tile boarder draw
-	    		g2.setColor(FLOOR_COLOR);
-    			//g2.draw(new Rectangle2D.Double(x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize, tileSize));
-	    		
-	    		if(row < playerX-viewWidth/2 || row > playerX+viewWidth/2 || col < playerY-viewHeight/2 || col > playerY+viewHeight/2) {
-	    			//continue;
-	    		}
 	    		if(current instanceof FreeTile) {
-	    			//drawFloor(g2, x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize);
-	    			drawFloor(g2, x-lerpXCurrent+row*tileSize-xOffset, y-lerpYCurrent+col*tileSize-yOffset, tileSize);
+	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}else if(current instanceof WallTile){
-	    			//drawWall(g2, x-lerpXCurrent+row*tileSize, y-lerpYCurrent+col*tileSize, tileSize);
-	    			drawWall(g2, x-lerpXCurrent+row*tileSize-xOffset, y-lerpYCurrent+col*tileSize-yOffset, tileSize);
+	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}
 	    		
 	    	}
 	    }
 	    
-	    //draw the player on top of the view using information from the previous two stages
-		Location playerLocation = player.getLocation();
-
-		//g2.setColor(BACKGROUND_COLOR);
-		//g2.fill(new Rectangle2D.Double(0, 0, tileSize/2, 1000)); //left edge
-		//g2.fill(new Rectangle2D.Double(0, 0, 1000, tileSize/2)); //top edge
+		//drawFrame(g2, 5, 15);
 		
-		
-		drawFrame(g2, 5, 15);
-		
-		
-
-	    //rPlayer.draw(g2, x-lerpXCurrent+playerLocation.x*tileSize, y-lerpYCurrent+playerLocation.y*tileSize, tileSize, player); //temp
-		rPlayer.draw(g2, x, y, tileSize, player); //temp
-	    
-	  
-	    
+		//Location playerLocation = player.getLocation();
+	    //rPlayer.draw(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, player); //temp
+		rPlayer.draw(g2, centerX, centerY, tileSize, player); //temp
 
 	}
 	
@@ -172,8 +133,5 @@ public class ViewPort {
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 	}
-	
-	private double lerp(double a, double b, double amount){
-	    return a + amount * (b - a);
-	}
+
 }

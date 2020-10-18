@@ -94,7 +94,7 @@ public class RenderPlayer {
 			bodyAngle = lerp(bodyAngle, 0, BODY_ANGLE_LERP);
 		}
 		
-		//temp
+		//temp: keeping the code like this because I'll need it for enemies
 		xOffset = 0;
 		yOffset = 0;
 		

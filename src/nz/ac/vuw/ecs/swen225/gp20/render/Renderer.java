@@ -29,11 +29,11 @@ public class Renderer {
 	 */
 	public Renderer(Maze m) {
 		this.maze = m;
-		this.viewX = 250; //20
-		this.viewY = 250; //20
+		this.viewX = 70; //20
+		this.viewY = 20; //20
 		this.tileSize = 50; //50
-		this.viewHeight = 7;
-		this.viewWidth = 7;
+		this.viewHeight = 9;
+		this.viewWidth = 9;
 		this.viewPort = new ViewPort();
 		this.rInventory = new RenderInventory();
 	}
