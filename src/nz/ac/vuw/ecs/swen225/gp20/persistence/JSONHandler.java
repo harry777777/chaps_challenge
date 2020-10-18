@@ -9,8 +9,10 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.ActorAdapter;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.ItemAdapter;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.TileAdapter;
 
 /**
@@ -27,6 +29,7 @@ public class JSONHandler<T> {
     builder = new GsonBuilder();
     builder.registerTypeAdapter(Tile.class, new TileAdapter()); // allows handler to work with Tile interface
     builder.registerTypeAdapter(Actor.class, new ActorAdapter()); // allows handler to work with Actor interface
+    builder.registerTypeAdapter(Item.class, new ItemAdapter()); // allows handler to work with Item interface
     gson = builder.create();
   }
 

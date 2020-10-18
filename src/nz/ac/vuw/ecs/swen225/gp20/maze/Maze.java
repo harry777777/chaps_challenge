@@ -66,10 +66,13 @@ public class Maze {
             player = new Player(i, j);
             break;
           case 'K':
-            tiles[i][j] = new FreeTile(new Location(i, j), new Key(Color.cyan));
+            // Commented out since cannot save Color constants with gson, as it violates reflection.
+//            tiles[i][j] = new FreeTile(new Location(i, j), new Key(Color.cyan));
+            tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0,255,255)));
             break;
           case 'T':
             tiles[i][j] = new FreeTile(new Location(i, j), new Treasure(1));
+            break;
           default:
             throw new IllegalStateException("Unexpected value: " + c);
         }
