@@ -12,6 +12,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
+import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -159,8 +160,9 @@ public class ViewPort {
 		for(Actor a: actors) {
 			int aX = a.getX();
 			int aY = a.getY();
-			//System.out.println("Enemy: X = " + aX + " Y = " + aY);
-			drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
+			if (a instanceof NPC) {
+				drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
+			}
 		}
 		
 		//Location playerLocation = player.getLocation();

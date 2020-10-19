@@ -47,8 +47,8 @@ public class RenderAudio {
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.start();
-	        // If you want the sound to loop infinitely, then put: clip.loop(Clip.LOOP_CONTINUOUSLY); 
-	        // If you want to stop the sound, then use clip.stop();
+	        //If you want the sound to loop infinitely, then put: clip.loop(Clip.LOOP_CONTINUOUSLY); 
+	        //If you want to stop the sound, then use clip.stop();
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
 	    }
