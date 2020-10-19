@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.io.File; 
-import java.io.IOException;
 import javax.sound.sampled.*; 
 
 
@@ -11,47 +10,66 @@ import javax.sound.sampled.*;
  *
  */
 public class RenderAudio {
+	private String move = "sounds/move.wav"; 
+	private String item = "sounds/item.wav";
+	private String death = "sounds/death.wav"; 
+	private String end = "sounds/levelend.wav"; 
+	private String wall = "sounds/wall.wav";
+	private String unlock = "sounds/unlock.wav"; 
 	
-	// to store current position 
-    Long currentFrame; 
-    Clip clip; 
-      
-    // current status of clip 
-    String status;
-    
-	AudioInputStream audioInputStream; 
-	//static String filePath; 
-
 	/**
-	 * 
-	 * Constructor for the sound effect class
-	 * 
-	 * @throws UnsupportedAudioFileException
-	 * @throws IOException
-	 * @throws LineUnavailableException
+	 * Plays the move sound effect
 	 */
-	public RenderAudio() {
-
+	public void playMove() {
+		playSound(move);
 	}
 	
 	/**
-	 * Plays a test tone
+	 * Plays the collect item sound effect
 	 */
-	public void playTest() {
-		String soundFile = "sounds/move.wav"; 
-		
+	public void playItem() {
+		playSound(item);
+	}
+	
+	/**
+	 * Plays the player death sound effect
+	 */
+	public void playDeath() {
+		playSound(death);
+	}
+	
+	/**
+	 * Plays the end of level sound effect
+	 */
+	public void playEnd() {
+		playSound(end);
+	}
+	
+	/**
+	 * Plays the player colliding with wall sound effect
+	 */
+	public void playWall() {
+		playSound(wall);
+	}
+	
+	/**
+	 * Plays the door unlocking sound effect
+	 */
+	public void playUnlock() {
+		playSound(unlock);
+	}
+	
+	private void playSound(String sound) {
 		try {
-			File f = new File("./" + soundFile);
+			File f = new File("./" + sound);
 		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f.toURI().toURL());  
-			
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.start();
-	        //If you want the sound to loop infinitely, then put: clip.loop(Clip.LOOP_CONTINUOUSLY); 
-	        //If you want to stop the sound, then use clip.stop();
-	    } catch (Exception ex) {
-	        ex.printStackTrace();
+	        //clip.loop(Clip.LOOP_CONTINUOUSLY); 
+	        //clip.stop();
+	    } catch (Exception e) {
+	        e.printStackTrace();
 	    }
-          
 	}
 }

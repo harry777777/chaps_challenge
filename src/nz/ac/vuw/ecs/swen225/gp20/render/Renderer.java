@@ -52,7 +52,8 @@ public class Renderer {
 		this.rAudio = new RenderAudio();
 		
 		//TODO: get rid of this
-	    rAudio.playTest();
+	    rAudio.playMove();
+	    rAudio.playItem();
 	}
 	
 	/**
