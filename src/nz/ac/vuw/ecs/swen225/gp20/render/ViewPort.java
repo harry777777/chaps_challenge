@@ -159,7 +159,7 @@ public class ViewPort {
 		for(Actor a: actors) {
 			int aX = a.getX();
 			int aY = a.getY();
-			System.out.println("Enemy: X = " + aX + " Y = " + aY);
+			//System.out.println("Enemy: X = " + aX + " Y = " + aY);
 			drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
 		}
 		
