@@ -156,15 +156,20 @@ public class ViewPort {
 	    
 		//drawFrame(g2, 5, 15);
 		
+		for(Actor a: actors) {
+			int aX = a.getX();
+			int aY = a.getY();
+			System.out.println("Enemy: X = " + aX + " Y = " + aY);
+			drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
+		}
+		
 		//Location playerLocation = player.getLocation();
 	    //rPlayer.draw(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, player); //temp
 		rPlayer.draw(g2, centerX, centerY, tileSize, player); //temp
 
-		for(Actor a: actors) {
-			int aX = a.getX();
-			int aY = a.getY();
-			drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
-		}
+		
+
+		//System.out.println(actors.size());
 		
 	}
 	
@@ -184,7 +189,7 @@ public class ViewPort {
 	
 	private void drawBad(Graphics2D g2, double x, double y, int tileSize) {
 		//draw a plane color for the floor (temp)
-		g2.setColor(WALL_COLOR);
+		g2.setColor(BACKGROUND_COLOR);
 		g2.fill(new Rectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
 	}
 	
