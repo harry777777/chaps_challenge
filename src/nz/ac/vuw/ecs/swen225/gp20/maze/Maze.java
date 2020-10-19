@@ -27,6 +27,11 @@ public class Maze {
   public final int width;
   private final Tile[][] tiles;
   private final Player player;
+
+  public List<Actor> getActors() {
+    return actors;
+  }
+
   private List<Actor> actors = new ArrayList<>();
 
   /**
