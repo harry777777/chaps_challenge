@@ -1,7 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.io.File; 
-import java.io.IOException; 
-import java.util.Scanner; 
+import java.io.IOException;
 import javax.sound.sampled.*; 
 
 
@@ -31,10 +30,13 @@ public class RenderAudio {
 	 * @throws IOException
 	 * @throws LineUnavailableException
 	 */
-	public RenderAudio() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	public RenderAudio() {
 
 	}
 	
+	/**
+	 * Plays a test tone
+	 */
 	public void playTest() {
 		String soundFile = "sounds/error.wav"; 
 		

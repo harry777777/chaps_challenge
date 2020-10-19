@@ -7,8 +7,6 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 
 /**
@@ -26,6 +24,8 @@ public class RenderInventory {
 	/**
 	 * 
 	 * Initializes the inventory renderer passing it the object renderers
+	 * 
+	 * @param rKey 
 	 * 
 	 */
 	public RenderInventory(RenderKey rKey) {

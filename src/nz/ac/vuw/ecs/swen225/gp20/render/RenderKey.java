@@ -21,6 +21,7 @@ public class RenderKey {
 	 * @param x
 	 * @param y
 	 * @param tileSize
+	 * @param keyColor 
 	 * @param color
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, Color keyColor){

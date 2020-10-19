@@ -138,7 +138,7 @@ public class LevelManager {
   // Textual level representations
   private final char[][] testLevel1 = {
             {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'},
-            {'W', 'C', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'W'},
+            {'W', 'C', 'F', 'F', 'F', 'F', 'F', 'N', 'F', 'W'},
             {'W', 'F', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'W'},
             {'W', 'F', 'F', 'T', 'W', 'F', 'W', 'F', 'F', 'W'},
             {'W', 'F', 'F', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},

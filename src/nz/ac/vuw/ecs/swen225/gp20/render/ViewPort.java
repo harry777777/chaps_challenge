@@ -5,10 +5,12 @@ import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.List;
 import java.awt.geom.Line2D;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
@@ -27,6 +29,7 @@ public class ViewPort {
 	private RenderPlayer rPlayer = new RenderPlayer();
 	private RenderTreasure rTreasure;
 	private RenderKey rKey;
+	private List<Actor> actors;
 	
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
@@ -41,9 +44,10 @@ public class ViewPort {
 	 * Initializes the view port renderer passing it the object renderers
 	 * 
 	 */
-	public ViewPort(RenderTreasure rTreasure, RenderKey rKey) {
+	public ViewPort(RenderTreasure rTreasure, RenderKey rKey, List<Actor> actors) {
 		this.rTreasure = rTreasure;
 		this.rKey = rKey;
+		this.actors = actors;
 	}
 	
 	/**
@@ -156,6 +160,10 @@ public class ViewPort {
 	    //rPlayer.draw(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, player); //temp
 		rPlayer.draw(g2, centerX, centerY, tileSize, player); //temp
 
+		for(Actor a: actors) {
+			drawBad(g2, centerX, centerY, tileSize);
+		}
+		
 	}
 	
 	private void drawFrame(Graphics2D g2, int x, int y) {
@@ -170,6 +178,12 @@ public class ViewPort {
 		g2.setColor(FLOOR_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+	}
+	
+	private void drawBad(Graphics2D g2, double x, double y, int tileSize) {
+		//draw a plane color for the floor (temp)
+		g2.setColor(WALL_COLOR);
+		g2.fill(new Rectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
 	}
 	
 	private void drawX(Graphics2D g2, double x, double y, int tileSize) {

@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
@@ -19,7 +18,6 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 public class RenderPlayer {
 	private double centerX;
 	private double centerY;
-	private double rightEdge;
 	private double bottomEdge;
 	
 	private double bodySize;
@@ -145,7 +143,6 @@ public class RenderPlayer {
 	private void drawLeft(double x, double y, int tileSize, Graphics2D g2) {
 		centerX = x+tileSize/2;
 		centerY = y+tileSize/2;
-		rightEdge = x+tileSize;
 		bottomEdge = y+tileSize;
 		
 		bodySize = tileSize/2;
@@ -232,7 +229,6 @@ public class RenderPlayer {
 	private void drawFrontBack(double x, double y, int tileSize, Graphics2D g2) {
 		centerX = x+tileSize/2;
 		centerY = y+tileSize/2;
-		rightEdge = x+tileSize;
 		bottomEdge = y+tileSize;
 		
 		bodySize = tileSize/2;

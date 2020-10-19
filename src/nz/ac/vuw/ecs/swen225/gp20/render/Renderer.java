@@ -9,6 +9,7 @@ import java.util.List;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
@@ -45,22 +46,12 @@ public class Renderer {
 		
 		RenderTreasure rTreasure = new RenderTreasure();
 		RenderKey rKey = new RenderKey();
-		this.viewPort = new ViewPort(rTreasure, rKey);
+		List<Actor> actors = m.getActors();
+		this.viewPort = new ViewPort(rTreasure, rKey, actors);
 		this.rInventory = new RenderInventory(rKey);
+		this.rAudio = new RenderAudio();
 		
-		try {
-			rAudio = new RenderAudio();
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		//TODO: get rid of this
 	    rAudio.playTest();
 	}
 	
@@ -84,21 +75,11 @@ public class Renderer {
 		
 		RenderTreasure rTreasure = new RenderTreasure();
 		RenderKey rKey = new RenderKey();
-		this.viewPort = new ViewPort(rTreasure, rKey);
+		List<Actor> actors = m.getActors();
+		this.viewPort = new ViewPort(rTreasure, rKey, actors);
 		this.rInventory = new RenderInventory(rKey);
-		
-		try {
-			rAudio = new RenderAudio();
-		} catch (UnsupportedAudioFileException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (LineUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.rAudio = new RenderAudio();
+
 	}
 	
 	/**
