@@ -38,7 +38,7 @@ public class RenderAudio {
 	 * Plays a test tone
 	 */
 	public void playTest() {
-		String soundFile = "sounds/error.wav"; 
+		String soundFile = "sounds/move.wav"; 
 		
 		try {
 			File f = new File("./" + soundFile);

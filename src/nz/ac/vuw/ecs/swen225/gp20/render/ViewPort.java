@@ -160,7 +160,7 @@ public class ViewPort {
 		for(Actor a: actors) {
 			int aX = a.getX();
 			int aY = a.getY();
-			if (a instanceof NPC) {
+			if (!(a instanceof Player)) {
 				drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
 			}
 		}
