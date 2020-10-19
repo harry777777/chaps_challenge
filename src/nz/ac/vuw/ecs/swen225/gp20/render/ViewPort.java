@@ -31,7 +31,8 @@ public class ViewPort {
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
 	private static final Color WALL_COLOR = new Color(120, 120, 120);
-	private static final Color BACKGROUND_COLOR = new Color(242,242,242);
+	private static final Color BACKGROUND_COLOR = new Color(0,180,0); //0,195,0
+	private static final Color GRID_COLOR = new Color(3,251,3);
 	
 	private int count = 0; //frame counter
 	
@@ -89,6 +90,9 @@ public class ViewPort {
 			}
 		}
 		
+		//g2.setColor(BACKGROUND_COLOR);
+	  	//g2.fillRect(x-1000, y-1000, 2000, 2000);
+		
 		//crop the drawing plane
 		g2.clip(new RoundRectangle2D.Double(x-tileSize*1.25, y-tileSize*1.25, viewWidth*tileSize+tileSize*2.5, viewHeight*tileSize+tileSize*2.5, 20, 20));
 		
@@ -97,7 +101,8 @@ public class ViewPort {
 	    	for(int col = 0; col < tiles[row].length; col++) {
 	    		Tile current = tiles[row][col];
 	    		
-	    		g2.setColor(FLOOR_COLOR);
+	    		//g2.setColor(GRID_COLOR);
+	    		g2.setColor(WALL_COLOR);
     			g2.draw(new Rectangle2D.Double(centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, tileSize));
     			if(current instanceof FreeTile) {
 	    			FreeTile currentT = (FreeTile) current;
@@ -112,7 +117,7 @@ public class ViewPort {
 		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
 		
 		//draw background
-		//g2.setBackground(color);			//look into this
+		
 		g2.setColor(FLOOR_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		

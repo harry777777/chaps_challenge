@@ -3,7 +3,11 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.io.IOException;
 import java.util.List;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
@@ -21,6 +25,7 @@ public class Renderer {
 	Maze maze;
 	ViewPort viewPort;
 	RenderInventory rInventory;
+	RenderAudio rAudio;
 	int viewX, viewY, tileSize, viewWidth, viewHeight;
 	
 	/**
@@ -42,6 +47,21 @@ public class Renderer {
 		RenderKey rKey = new RenderKey();
 		this.viewPort = new ViewPort(rTreasure, rKey);
 		this.rInventory = new RenderInventory(rKey);
+		
+		try {
+			rAudio = new RenderAudio();
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	    rAudio.playTest();
 	}
 	
 	/**
@@ -66,6 +86,19 @@ public class Renderer {
 		RenderKey rKey = new RenderKey();
 		this.viewPort = new ViewPort(rTreasure, rKey);
 		this.rInventory = new RenderInventory(rKey);
+		
+		try {
+			rAudio = new RenderAudio();
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -95,7 +128,9 @@ public class Renderer {
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 	    List<Item> inventory = player.getInventory();
-	    rInventory.draw(g2, inventory, viewX+tileSize*0.5, viewY+tileSize*9.5, tileSize);
+	    rInventory.draw(g2, inventory, viewX+tileSize*2.5, viewY+tileSize*9, tileSize/2);
+	    
+
 	    
 	}
 }
