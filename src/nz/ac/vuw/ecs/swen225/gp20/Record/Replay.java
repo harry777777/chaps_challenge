@@ -43,6 +43,9 @@ public class Replay {
      *
       */
     public TickEvent getNextTick(){
+        if(finished){
+            return null;
+        }
         TickEvent t = this.currentTickEvent;
         this.iterateReplay();
         return t;
