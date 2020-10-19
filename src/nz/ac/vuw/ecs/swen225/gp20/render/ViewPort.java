@@ -161,7 +161,9 @@ public class ViewPort {
 		rPlayer.draw(g2, centerX, centerY, tileSize, player); //temp
 
 		for(Actor a: actors) {
-			drawBad(g2, centerX, centerY, tileSize);
+			int aX = a.getX();
+			int aY = a.getY();
+			drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
 		}
 		
 	}
