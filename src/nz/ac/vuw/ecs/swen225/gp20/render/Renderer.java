@@ -3,6 +3,9 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.List;
+
+import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
@@ -34,8 +37,11 @@ public class Renderer {
 		this.tileSize = 50; //50
 		this.viewHeight = 9;
 		this.viewWidth = 9;
-		this.viewPort = new ViewPort();
-		this.rInventory = new RenderInventory();
+		
+		RenderTreasure rTreasure = new RenderTreasure();
+		RenderKey rKey = new RenderKey();
+		this.viewPort = new ViewPort(rTreasure, rKey);
+		this.rInventory = new RenderInventory(rKey);
 	}
 	
 	/**
@@ -55,8 +61,11 @@ public class Renderer {
 		this.tileSize = tileSize;
 		this.viewHeight = height;
 		this.viewWidth = width;
-		this.viewPort = new ViewPort();
-		this.rInventory = new RenderInventory();
+		
+		RenderTreasure rTreasure = new RenderTreasure();
+		RenderKey rKey = new RenderKey();
+		this.viewPort = new ViewPort(rTreasure, rKey);
+		this.rInventory = new RenderInventory(rKey);
 	}
 	
 	/**
@@ -79,7 +88,14 @@ public class Renderer {
 		//access maze and draw
 	    Tile[][] tiles = maze.getTiles();
 	    Player player = maze.getPlayer();
+	    //push matrix - viewport
+		Graphics2D gTemp = (Graphics2D) g2.create();
 	    viewPort.draw(g2, tiles, player, viewX, viewY, tileSize, viewWidth, viewHeight);
+	    //pop matrix
+		g2.dispose();
+		g2 = (Graphics2D) gTemp.create();
+	    List<Item> inventory = player.getInventory();
+	    rInventory.draw(g2, inventory, viewX+tileSize*0.5, viewY+tileSize*9.5, tileSize);
 	    
 	}
 }
