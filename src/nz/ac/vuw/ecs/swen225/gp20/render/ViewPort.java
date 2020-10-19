@@ -2,7 +2,6 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
@@ -12,12 +11,10 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
-import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * @author Marco
@@ -28,6 +25,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 public class ViewPort {
 	
 	private RenderPlayer rPlayer = new RenderPlayer();
+	private RenderEnemy rEnemy = new RenderEnemy();
 	private RenderTreasure rTreasure;
 	private RenderKey rKey;
 	private List<Actor> actors;
@@ -122,7 +120,6 @@ public class ViewPort {
 		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
 		
 		//draw background
-		
 		g2.setColor(FLOOR_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
@@ -154,22 +151,16 @@ public class ViewPort {
 	    		
 	    	}
 	    }
-	    
-		//drawFrame(g2, 5, 15);
 		
-		for(Actor a: actors) {
-			int aX = a.getX();
-			int aY = a.getY();
-			if (!(a instanceof Player)) {
-				drawBad(g2, centerX-xMapOffset+aX*tileSize-xOffset, centerY-yMapOffset+aY*tileSize-yOffset, tileSize);
+		for(Actor actor: actors) {
+			int actorX = actor.getX();
+			int actorY = actor.getY();
+			if (!(actor instanceof Player)) {
+				rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actor);
 			}
 		}
 		
-		//Location playerLocation = player.getLocation();
-	    //rPlayer.draw(g2, x+playerLocation.x*tileSize, y+playerLocation.y*tileSize, tileSize, player); //temp
 		rPlayer.draw(g2, centerX, centerY, tileSize, player); //temp
-
-		
 
 		//System.out.println(actors.size());
 		
@@ -187,12 +178,6 @@ public class ViewPort {
 		g2.setColor(FLOOR_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
-	}
-	
-	private void drawBad(Graphics2D g2, double x, double y, int tileSize) {
-		//draw a plane color for the floor (temp)
-		g2.setColor(BACKGROUND_COLOR);
-		g2.fill(new Rectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
 	}
 	
 	private void drawX(Graphics2D g2, double x, double y, int tileSize) {
