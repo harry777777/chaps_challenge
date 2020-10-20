@@ -27,6 +27,7 @@ public class Maze {
   public final int width;
   private final Tile[][] tiles;
   private final Player player;
+  private SoundNotifier sound;
 
   public List<Actor> getActors() {
     return actors;
@@ -164,11 +165,12 @@ public class Maze {
    */
   public void movePlayer(Direction direction) {
     LOGGER.info(String.format("Attempting to move %s", direction));
+    player.setFacing(direction);
     Location currentLocation = player.getLocation();
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (player.canAccess(destination) && player.isStationary()) {
       player.startMove(direction);
-      player.setFacing(direction);
+      sound = SoundNotifier.PLAYER_MOVE;
     }
   }
 
@@ -190,6 +192,7 @@ public class Maze {
         && location.y >= 0
         && location.y < height;
   }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -210,6 +213,21 @@ public class Maze {
     }
     sb.setLength(sb.length() - 1);
     return sb.toString();
+  }
+
+  public SoundNotifier getSound() {
+    SoundNotifier sound = this.sound;
+    this.sound = null;
+    return sound;
+  }
+
+  public enum SoundNotifier {
+    PLAYER_MOVE,
+    WALL_COLLISION,
+    PICKUP_ITEM,
+    PLAYER_DEATH,
+    DOOR_UNLOCK,
+    END_LEVEL,
   }
 
 }

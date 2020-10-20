@@ -37,6 +37,7 @@ public class Player implements Actor{
    */
   public Player(int horizontalDimension, int verticalDimension) {
     location = new Location(horizontalDimension, verticalDimension);
+    facing = Direction.DOWN;
   }
 
   @Override

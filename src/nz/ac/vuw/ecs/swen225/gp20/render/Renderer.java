@@ -12,6 +12,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Maze.SoundNotifier;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 
@@ -111,7 +112,36 @@ public class Renderer {
 	    List<Item> inventory = player.getInventory();
 	    rInventory.draw(g2, inventory, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
 	    
-
+	    //sounds
+	    playSound();
 	    
+	}
+	
+	private void playSound() {
+		Maze.SoundNotifier sound = maze.getSound();
+	    if(sound == null) {
+	    	return;
+	    }
+	    
+	    switch (sound) {
+        case PLAYER_MOVE: 
+        	rAudio.playMove();
+            break;
+        case WALL_COLLISION: 
+        	rAudio.playWall();
+            break;
+        case PICKUP_ITEM: 
+        	rAudio.playItem();
+            break;
+        case PLAYER_DEATH: 
+        	rAudio.playDeath();
+            break;
+        case DOOR_UNLOCK: 
+        	rAudio.playUnlock();
+            break;
+        case END_LEVEL: 
+        	rAudio.playEnd();
+            break;
+	    }
 	}
 }
