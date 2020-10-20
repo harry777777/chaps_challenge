@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
@@ -189,8 +190,16 @@ public class ViewPort {
 		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		
 		g2.setColor(WALL_COLOR_DARK);
-		g2.setStroke(new BasicStroke(2));
-		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.setStroke(new BasicStroke(1));
+		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize/20, tileSize/20, 10, 10));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize/10, tileSize/20, tileSize/20, 10, 10));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, 10, 10));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, 10, 10));
+		
+		g2.draw(new Line2D.Double(x+tileSize/2.5, y+tileSize/2, x+tileSize-tileSize/2.5, y+tileSize/2));
+		g2.draw(new Line2D.Double(x+tileSize/2, y+tileSize/2.5, x+tileSize/2, y+tileSize-tileSize/2.5));
 	}
 	
 	private void drawX(Graphics2D g2, double x, double y, int tileSize) {
@@ -214,7 +223,7 @@ public class ViewPort {
 		g2.draw(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, 10, 10));
 		
 		g2.setStroke(new BasicStroke(2));
-		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 	}
 
 }
