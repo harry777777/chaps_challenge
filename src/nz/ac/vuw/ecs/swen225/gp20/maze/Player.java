@@ -21,6 +21,11 @@ public class Player implements Actor{
   private Move move;
   private Direction facing;
   private List<Item> inventory = new ArrayList<>();
+
+  public int getTreasure() {
+    return treasure;
+  }
+
   private int treasure = 0;
 
 
@@ -104,7 +109,6 @@ public class Player implements Actor{
   }
 
   public void startMove(Direction direction) {
-    facing = direction;
     move = new Move(direction);
   }
 
@@ -119,5 +123,9 @@ public class Player implements Actor{
 
   public List<Item> getInventory() {
     return inventory;
+  }
+
+  public void setFacing(Direction facing) {
+    this.facing = facing;
   }
 }
