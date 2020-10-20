@@ -96,7 +96,6 @@ public class LevelManager {
           case 'C':
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i,j);
-            actors.add(player);
             break;
           case 'N':
             tiles[i][j] = new FreeTile(new Location(i, j));
@@ -128,7 +127,7 @@ public class LevelManager {
    */
   public Maze loadLevel(String filepath) throws IOException {
     Maze loadedMaze = handler.read(filepath, Maze.class);
-    return new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer());
+    return new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer(), loadedMaze.getActors());
   }
 
   public static void main(String[] args) throws IOException {

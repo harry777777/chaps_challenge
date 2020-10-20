@@ -61,6 +61,7 @@ public class Maze {
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
+    this.actors.add(player);
   }
 
   /**
@@ -132,6 +133,7 @@ public class Maze {
    */
   public void tick() {
     for (Actor actor : actors) {
+      System.out.println(actor.getClass());
       if (actor.getMove() != null) {
         Move move = actor.getMove();
         move.incrementDistance();
