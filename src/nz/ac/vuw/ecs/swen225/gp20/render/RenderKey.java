@@ -1,6 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
@@ -74,17 +75,30 @@ public class RenderKey {
 		big.fill(new Rectangle2D.Double(tileSize/30, tileSize/8, tileSize/6, tileSize/4)); //dark square
 		big.draw(new Rectangle2D.Double(tileSize/30, tileSize/8, tileSize/6, tileSize/4));
 		
+		//push matrix - KEY text
+		Graphics2D gTemp = (Graphics2D) big.create();
+		
+		big.rotate(Math.toRadians(-90), tileSize/7.5, tileSize/2.8); //rotate so text is sideways
+		
+		big.setFont(new Font("Arial", Font.PLAIN, (int)(tileSize/8.3))); 
+		big.setColor(CHAP_BODY_DARK);
+		big.drawString("KEY", (float)(tileSize/7.5), (float)(tileSize/2.8));
+		
+		//pop matrix
+		big.dispose();
+		big = (Graphics2D) gTemp.create();
+		
 		big.setColor(keyColor);
-		big.fill(new Rectangle2D.Double(tileSize/4, tileSize/8, tileSize/2, tileSize/4)); //key card section
+		big.fill(new Rectangle2D.Double(tileSize/4, tileSize/8, tileSize/2, tileSize/4)); //key card color section
 		
 		big.setColor(CHAP_BODY_DARK);
-		big.draw(new Rectangle2D.Double(tileSize/4, tileSize/8, tileSize/2, tileSize/4));
+		big.draw(new Rectangle2D.Double(tileSize/4, tileSize/8, tileSize/2, tileSize/4)); //key card color section outline
 		
 		TexturePaint tp = new TexturePaint(bi, r);
 		g2.setPaint(tp);
 		
 		//push matrix - key movement
-		Graphics2D gTemp = (Graphics2D) g2.create();
+		gTemp = (Graphics2D) g2.create();
 				
 		g2.translate(x+tileSize/4, y+tileSize/4+height/2);
 				
