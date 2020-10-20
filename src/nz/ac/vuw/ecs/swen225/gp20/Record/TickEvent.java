@@ -21,6 +21,9 @@ public class TickEvent {
    * Constructor for a tick Event object
    */
   public TickEvent(int tick, Direction d) {
+    if(tick < 0){
+     throw new IllegalArgumentException(" TickEvent can't be created with a negative tick");
+    }
     this.tick = tick;
     this.moveDir = d;
     if (moveDir == null) {
