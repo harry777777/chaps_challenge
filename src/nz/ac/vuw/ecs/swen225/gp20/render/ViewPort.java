@@ -7,8 +7,6 @@ import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
@@ -36,14 +34,15 @@ public class ViewPort {
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
 	private static final Color WALL_COLOR = new Color(120, 120, 120);
 	private static final Color WALL_COLOR_DARK = new Color(100, 100, 100);
-	private static final Color BACKGROUND_COLOR = new Color(0,180,0); //0,195,0
-	private static final Color GRID_COLOR = new Color(3,251,3);
-	
-	private int count = 0; //frame counter
+	private static final Color SPACE_COLOR = new Color(50,50,50);
+	private static final Color GRID_COLOR = new Color(0,180,0);
 	
 	/**
 	 * 
 	 * Initializes the view port renderer passing it the object renderers
+	 * @param rTreasure 
+	 * @param rKey 
+	 * @param actors 
 	 * 
 	 */
 	public ViewPort(RenderTreasure rTreasure, RenderKey rKey, List<Actor> actors) {
@@ -96,21 +95,16 @@ public class ViewPort {
 			}
 		}
 		
-		//g2.setColor(BACKGROUND_COLOR);
-	  	//g2.fillRect(x-1000, y-1000, 2000, 2000);
-		
-		
 		//crop the drawing plane for level grid
 		g2.clip(new RoundRectangle2D.Double(x-tileSize*1.25, y-tileSize*1.25, viewWidth*tileSize+tileSize*2.5, viewHeight*tileSize+tileSize*2.5, 20, 20));
 		
-		//temp tile boarder draw: could be an interesting effect
+		//tile boarder draw: the outside viewport blueprint effect
 		g2.setStroke(new BasicStroke(1));
 		for(int row = 0; row < tiles.length; row++) {
 	    	for(int col = 0; col < tiles[row].length; col++) {
 	    		Tile current = tiles[row][col];
 	    		
-	    		g2.setColor(BACKGROUND_COLOR);
-	    		//g2.setColor(WALL_COLOR);
+	    		g2.setColor(GRID_COLOR);
     			g2.draw(new Rectangle2D.Double(centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, tileSize));
     			if(current instanceof FreeTile) {
 	    			FreeTile currentT = (FreeTile) current;
@@ -121,16 +115,11 @@ public class ViewPort {
 	    	}
 	    }
 		
-		//draw inventory background
-		//g2.setColor(new Color(234, 222, 189));
-		//g2.fill(new RoundRectangle2D.Double(centerX-tileSize*1.5-4, y+viewHeight*tileSize-10, tileSize*4+8, tileSize/2+13, 20, 20));
-		
 		//crop the drawing plane for window into level (player view)
 		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
 		
 		//draw background
-		//g2.setColor(FLOOR_COLOR);
-		g2.setColor(new Color(50,50,50));
+		g2.setColor(SPACE_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
 	  	//draw the maze in the view port
@@ -170,28 +159,18 @@ public class ViewPort {
 			}
 		}
 		
-		rPlayer.draw(g2, centerX, centerY, tileSize, player); //temp
+		//System.out.println(actors.size());
 		
+		rPlayer.draw(g2, centerX, centerY, tileSize, player); 
 		
-		
-	}
-	
-	private void drawFrame(Graphics2D g2, int x, int y) {
-		//janky frame counter
-		g2.setColor(new Color(0,0,0));
-		g2.drawString("FrameCount: " + Integer.toString(count), x, y);
-		count++;
 	}
 	
 	private void drawFloor(Graphics2D g2, double x, double y, int tileSize) {
-		//draw a plane color for the floor (temp)
 		g2.setColor(FLOOR_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
-		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		
 		g2.setColor(WALL_COLOR_DARK);
 		g2.setStroke(new BasicStroke(1));
-		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		
 		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize/20, tileSize/20, 10, 10));
 		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize/10, tileSize/20, tileSize/20, 10, 10));
@@ -222,8 +201,6 @@ public class ViewPort {
 		g2.setColor(WALL_COLOR_DARK);
 		g2.draw(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, 10, 10));
 		
-		g2.setStroke(new BasicStroke(2));
-		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 	}
 
 }

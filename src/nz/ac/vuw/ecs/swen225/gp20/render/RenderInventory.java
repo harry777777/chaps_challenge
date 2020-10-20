@@ -2,7 +2,6 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.List;
 
