@@ -38,8 +38,10 @@ public class Replay {
         return R;
     }
      /**
+      * * @author Harry
      * Returns the next Tickevent of a replay object and updates the position of the replay object in its replay process
-      *
+      * when finished will return null to alert application that the recording is over.
+      * @return  TickEvent or null if the recording has finished.
      *
       */
     public TickEvent getNextTick(){
@@ -53,7 +55,9 @@ public class Replay {
     }
 
     /**
-     * Increment recording index, and update the current tickEvent that the recording is waiting at.
+     * @author Harry
+     * Increment recording index, and update the current tickEvent that the recording is waiting at,
+     * Checks if the recording is at the end of the recording, updates the finished boolean if this is the case
      */
     private void iterateReplay() {
         recordingIndex++;
@@ -68,7 +72,7 @@ public class Replay {
         return this.finished;
     }
 
-    /**
+    /** @author Harry
      * A test method that prints a recording object to the console
      */
     public void testRecording() {
