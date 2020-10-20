@@ -113,10 +113,35 @@ public class Renderer {
 	    rInventory.draw(g2, inventory, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
 	    
 	    //sounds
-	    Maze.SoundNotifier sound = maze.getSound();
-	    if(sound != null && sound.equals(SoundNotifier.PLAYER_MOVE)) {
-	    	rAudio.playMove();
+	    playSound();
+	    
+	}
+	
+	private void playSound() {
+		Maze.SoundNotifier sound = maze.getSound();
+	    if(sound == null) {
+	    	return;
 	    }
 	    
+	    switch (sound) {
+        case PLAYER_MOVE: 
+        	rAudio.playMove();
+            break;
+        case WALL_COLLISION: 
+        	rAudio.playWall();
+            break;
+        case PICKUP_ITEM: 
+        	rAudio.playItem();
+            break;
+        case PLAYER_DEATH: 
+        	rAudio.playDeath();
+            break;
+        case DOOR_UNLOCK: 
+        	rAudio.playUnlock();
+            break;
+        case END_LEVEL: 
+        	rAudio.playEnd();
+            break;
+	    }
 	}
 }
