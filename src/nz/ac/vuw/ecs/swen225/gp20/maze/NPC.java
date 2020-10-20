@@ -32,6 +32,11 @@ public class NPC implements Actor {
   }
 
   @Override
+  public Direction getFacing() {
+    return facing;
+  }
+
+  @Override
   public int getX() {
     return location.x;
   }
