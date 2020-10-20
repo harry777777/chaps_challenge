@@ -164,6 +164,7 @@ public class Maze {
    */
   public void movePlayer(Direction direction) {
     LOGGER.info(String.format("Attempting to move %s", direction));
+    player.setFacing(direction);
     Location currentLocation = player.getLocation();
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (player.canAccess(destination) && player.isStationary()) {
