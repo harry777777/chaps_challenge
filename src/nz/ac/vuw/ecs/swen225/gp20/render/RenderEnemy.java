@@ -28,7 +28,7 @@ public class RenderEnemy {
 	 * @param actor
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, Actor actor){
-		//Direction direction = actor.getFacing();
+		Direction direction = actor.getFacing();
 		
 		//calculate enemy offset
 		double xOffset = 0;
@@ -49,7 +49,27 @@ public class RenderEnemy {
 			//if(direction.equals(Direction.DOWN)) {
 			//	yOffset = (offset/divisor);
 			//}
+			
+			switch (direction) {
+				case LEFT: 
+					xOffset = -(offset/divisor);
+					break;
+				case RIGHT: 
+					xOffset = (offset/divisor);
+					break;
+				case UP: 
+					yOffset = -(offset/divisor);
+					break;
+				case DOWN: 
+					yOffset = (offset/divisor);
+					break;
+			}
 		}
+		
+		//System.out.println(direction);
+		
+		//xOffset = 0;
+		//yOffset = 0;
 		
 		drawFront(x+xOffset, y+yOffset, tileSize, g2);
 	}
