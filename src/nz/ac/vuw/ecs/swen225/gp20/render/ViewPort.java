@@ -187,6 +187,10 @@ public class ViewPort {
 		g2.setColor(FLOOR_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		
+		g2.setColor(WALL_COLOR_DARK);
+		g2.setStroke(new BasicStroke(2));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 	}
 	
 	private void drawX(Graphics2D g2, double x, double y, int tileSize) {
@@ -209,8 +213,8 @@ public class ViewPort {
 		g2.setColor(WALL_COLOR_DARK);
 		g2.draw(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, 10, 10));
 		
-		g2.setStroke(new BasicStroke(1));
-		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.setStroke(new BasicStroke(2));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 	}
 
 }

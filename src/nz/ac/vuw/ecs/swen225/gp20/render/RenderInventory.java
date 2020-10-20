@@ -44,13 +44,13 @@ public class RenderInventory {
 	 */
 	public void draw(Graphics2D g2, List<Item> inventory, double x, double y, int tileSize) {
 		for(int row = 0; row <8; row++) {
-			drawTile(g2, x+tileSize*row, y, tileSize);
+			drawTile(g2, x, y+tileSize*row, tileSize);
 			if(inventory.size() > row) {
 				Item current = inventory.get(row);
 				if(current instanceof Key) {
 					//draw the key
 					Key k = (Key) current;
-					rKey.draw(g2, x+tileSize*row, y, tileSize, k.getColor());
+					rKey.draw(g2, x, y+tileSize*row, tileSize, k.getColor());
 				}
 			}
 	    	

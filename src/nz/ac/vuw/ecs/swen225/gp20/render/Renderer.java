@@ -109,7 +109,7 @@ public class Renderer {
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 	    List<Item> inventory = player.getInventory();
-	    rInventory.draw(g2, inventory, viewX+tileSize*2.5, viewY+tileSize*9, tileSize/2);
+	    rInventory.draw(g2, inventory, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
 	    
 
 	    
