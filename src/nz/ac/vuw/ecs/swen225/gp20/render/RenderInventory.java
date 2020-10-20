@@ -50,7 +50,12 @@ public class RenderInventory {
 				if(current instanceof Key) {
 					//draw the key
 					Key k = (Key) current;
+					//push matrix - key movement
+					Graphics2D gTemp = (Graphics2D) g2.create();
 					rKey.draw(g2, x, y+tileSize*row, tileSize, k.getColor());
+					//pop matrix
+					g2.dispose();
+					g2 = (Graphics2D) gTemp.create();
 				}
 			}
 	    	
