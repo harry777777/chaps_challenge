@@ -51,9 +51,8 @@ public class Renderer {
 		this.rInventory = new RenderInventory(rKey);
 		this.rAudio = new RenderAudio();
 		
-		//TODO: get rid of this
-	    rAudio.playMove();
-	    rAudio.playItem();
+		//Plays sound for start of level
+	    rAudio.playEnd();
 	}
 	
 	/**

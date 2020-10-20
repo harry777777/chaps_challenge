@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
@@ -95,6 +96,8 @@ public class RenderPlayer {
 		//temp: keeping the code like this because I'll need it for enemies
 		xOffset = 0;
 		yOffset = 0;
+		
+		g2.setStroke(new BasicStroke(1));
 		
 		//draw player from correct direction
 		if(direction == null || direction == Direction.DOWN) {
