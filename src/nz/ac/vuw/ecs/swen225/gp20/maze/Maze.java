@@ -60,7 +60,7 @@ public class Maze {
     this.width = tiles[0].length;
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
-    actors.addAll(actors);
+    this.actors = actors;
   }
 
   /**

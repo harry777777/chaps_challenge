@@ -15,7 +15,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 
 /**
- * Adapter to deserialise Tile objects from JSON (since tile is an interface).
+ * Adapter to deserialise Color objects.
  */
 public class ColorAdapter implements JsonSerializer<Color>, JsonDeserializer<Color> {
 

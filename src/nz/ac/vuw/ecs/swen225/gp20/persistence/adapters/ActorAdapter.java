@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
+import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * Adapter to deserialise Tile objects from JSON (since tile is an interface).
@@ -21,7 +22,14 @@ public class ActorAdapter implements JsonSerializer<Actor>, JsonDeserializer<Act
   public JsonElement serialize(Actor actor, Type typeOfT, JsonSerializationContext context){
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("type", actor.getClass().getSimpleName());
-    jsonObject.add("data", context.serialize(actor));
+    if(actor instanceof NPC){
+      NPC npc = (NPC) actor;
+      jsonObject.add("seed", context.serialize(npc.getSeed()));
+      int[] location = {npc.getX(), npc.getY()};
+      jsonObject.add("location", context.serialize(location));
+    }else{
+      jsonObject.add("data", context.serialize(actor));
+    }
     return jsonObject;
 
   }
@@ -35,7 +43,9 @@ public class ActorAdapter implements JsonSerializer<Actor>, JsonDeserializer<Act
         case "Player":
           return context.deserialize(jsonObject.get("data"), Player.class);
         case "NPC":
-          return context.deserialize(jsonObject.get("data"), NPC.class);
+          long seed = context.deserialize(jsonObject.get("seed"), long.class);
+          int[] location = context.deserialize(jsonObject.get("location"), int[].class);
+          return new NPC(seed, new Location(location[0], location[1]));
       }
     }
     return null;

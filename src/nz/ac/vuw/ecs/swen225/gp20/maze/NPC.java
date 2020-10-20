@@ -10,9 +10,11 @@ public class NPC implements Actor {
   private Move move;
   private Location location;
   private Direction facing;
+  private long seed;
 
   public NPC(long seed, Location location) {
     this.location = location;
+    this.seed = seed;
     random = new Random();
     random.setSeed(seed);
     facing = getRandomDirection();
@@ -37,6 +39,10 @@ public class NPC implements Actor {
   @Override
   public int getY() {
     return location.y;
+  }
+
+  public long getSeed() {
+    return seed;
   }
 
   @Override

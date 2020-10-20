@@ -100,7 +100,8 @@ public class LevelManager {
             break;
           case 'N':
             tiles[i][j] = new FreeTile(new Location(i, j));
-            actors.add(new NPC(10L, new Location(i, j)));
+            NPC npc = new NPC(10L, new Location(i, j));
+            actors.add(npc);
             break;
           case 'K':
             tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0,255,255)));
@@ -143,7 +144,7 @@ public class LevelManager {
             {'W', 'F', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'W'},
             {'W', 'F', 'F', 'T', 'W', 'F', 'W', 'F', 'F', 'W'},
             {'W', 'F', 'F', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},
-            {'W', 'F', 'F', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},
+            {'W', 'F', 'N', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},
             {'W', 'F', 'F', 'F', 'W', 'F', 'W', 'F', 'F', 'W'},
             {'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'W'},
             {'W', 'K', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'W'},
