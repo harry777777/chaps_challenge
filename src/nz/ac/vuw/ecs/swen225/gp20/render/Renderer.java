@@ -3,16 +3,10 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.io.IOException;
 import java.util.List;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Maze.SoundNotifier;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 
@@ -124,24 +118,24 @@ public class Renderer {
 	    }
 	    
 	    switch (sound) {
-        case PLAYER_MOVE: 
-        	rAudio.playMove();
-            break;
-        case WALL_COLLISION: 
-        	rAudio.playWall();
-            break;
-        case PICKUP_ITEM: 
-        	rAudio.playItem();
-            break;
-        case PLAYER_DEATH: 
-        	rAudio.playDeath();
-            break;
-        case DOOR_UNLOCK: 
-        	rAudio.playUnlock();
-            break;
-        case END_LEVEL: 
-        	rAudio.playEnd();
-            break;
+        	case PLAYER_MOVE: 
+        		rAudio.playMove();
+        		break;
+        	case WALL_COLLISION: 
+        		rAudio.playWall();
+        		break;
+        	case PICKUP_ITEM: 
+        		rAudio.playItem();
+        		break;
+        	case PLAYER_DEATH: 
+        		rAudio.playDeath();
+        		break;
+        	case DOOR_UNLOCK: 
+        		rAudio.playUnlock();
+        		break;
+        	case END_LEVEL: 
+        		rAudio.playEnd();
+        		break;
 	    }
 	}
 }

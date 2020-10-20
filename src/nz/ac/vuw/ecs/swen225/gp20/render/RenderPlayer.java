@@ -99,15 +99,23 @@ public class RenderPlayer {
 		
 		g2.setStroke(new BasicStroke(1));
 		
-		//draw player from correct direction
-		if(direction == null || direction == Direction.DOWN) {
+		if(direction != null) {
+			switch (direction) {
+				case LEFT: 
+					drawLeft(x+xOffset, y+yOffset, tileSize, g2);
+					break;
+				case RIGHT: 
+					drawRight(x+xOffset, y+yOffset, tileSize, g2);
+					break;
+				case UP: 
+					drawBack(x+xOffset, y+yOffset, tileSize, g2);
+					break;
+				case DOWN: 
+					drawFront(x+xOffset, y+yOffset, tileSize, g2);
+					break;
+			}
+		}else {
 			drawFront(x+xOffset, y+yOffset, tileSize, g2);
-		}else if(direction == Direction.UP) {
-			drawBack(x+xOffset, y+yOffset, tileSize, g2);
-		}else if(direction == Direction.LEFT) {
-			drawLeft(x+xOffset, y+yOffset, tileSize, g2);
-		}else if(direction == Direction.RIGHT) {
-			drawRight(x+xOffset, y+yOffset, tileSize, g2);
 		}
 		
 	}

@@ -78,20 +78,24 @@ public class ViewPort {
 		double xOffset = 0;
 		double yOffset = 0;
 		
+		
 		if(player.getMove() != null) {
 			int offset = player.getMove().getDistance();
 			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
-			if(direction.equals(Direction.LEFT)) {
-				xOffset = -(offset/divisor);
-			}
-			if(direction.equals(Direction.RIGHT)) {
-				xOffset = (offset/divisor);
-			}
-			if(direction.equals(Direction.UP)) {
-				yOffset = -(offset/divisor);
-			}
-			if(direction.equals(Direction.DOWN)) {
-				yOffset = (offset/divisor);
+			
+			switch (direction) {
+				case LEFT: 
+					xOffset = -(offset/divisor);
+					break;
+				case RIGHT: 
+					xOffset = (offset/divisor);
+					break;
+				case UP: 
+					yOffset = -(offset/divisor);
+					break;
+				case DOWN: 
+					yOffset = (offset/divisor);
+					break;
 			}
 		}
 		
