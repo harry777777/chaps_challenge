@@ -26,7 +26,8 @@ import java.io.IOException;
  * Application class, this runs the game loop,creates the GUI and manages the key listeners
  */
 
-//todo Display time left on current level, keys collected, number of treasures to still be collected, make all keystrokes functional and add relevant buttons and menu items.
+     //todo number of treasures to still be collected, make all keystrokes functional and add relevant buttons and menu items.
+    //todo Ask for recording name, let user choose what recording to replay, add menu bar, add all keybinds, add relevant buttons for speeding up / slowing down recording,
 
 public class Application {
 
@@ -41,10 +42,16 @@ public class Application {
     private boolean running = true;
     private boolean paused = false;
     private Replay replay;
+    private Replay save;
     private boolean replaying = false;
     private boolean ctrlPressed = false;
     private JLabel timerLabel;
     private boolean gameOver = false;
+    private boolean loadingSave = false;
+    private boolean stepByStepReplay = false;
+
+    private double GAME_HERTZ = 60;
+    private double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
     /**
      * @author Owen
@@ -126,7 +133,7 @@ public class Application {
                     System.exit(0);
                 }
                 if(e.getKeyCode() == 83 && ctrlPressed){ //S pressed - Saves and Exists the Game
-                    try{r.saveRecording("Recording");}catch (Exception E){
+                    try{r.saveRecording("SavedGame");}catch (Exception E){
                         System.out.println("Error saving recording:"+ E.getMessage());
                     }
                     System.exit(0);
@@ -225,7 +232,18 @@ public class Application {
                 try {
                     replay = new Replay("Recording");
                     replaying = true;
+                    paused = true;
+                    Object[] possibleValues = { "Normal", "Step by Step"};
+                    Object replayChoice = JOptionPane.showInputDialog(null,
+                            "What type of replay", "Input",
+                            JOptionPane.INFORMATION_MESSAGE, null,
+                            possibleValues, possibleValues[0]);
+                    if(replayChoice == "Step by Step"){
+                        stepByStepReplay = true;
+                    }
                     currentTick = 0;
+                    timer = 60;
+                    paused = false;
                     tickEvent = replay.getNextTick();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -244,6 +262,17 @@ public class Application {
     }
 
     private void resumeSavedGame() {
+        GAME_HERTZ = 100000000;
+        TBU = 1000000000 / GAME_HERTZ;
+        try {
+            save = new Replay("SavedGame");
+            loadingSave = true;
+            currentTick = 0;
+            tickEvent = save.getNextTick();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+
     }
 
     private void redraw(Graphics g) {
@@ -260,9 +289,6 @@ public class Application {
      */
     private void run() {
         int timerFrameCounter = 0;
-
-        final double GAME_HERTZ = 60;
-        final double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
         final double MUBR = 1; //Most update before render
 
@@ -283,10 +309,24 @@ public class Application {
                             if(tickEvent.getTick() == currentTick){
                                 update();
                                 tickEvent = replay.getNextTick();
+                                if(stepByStepReplay) {
+                                    paused = true;
+                                }
+                            }
+                        }
+                        else if (loadingSave) {
+                            if(tickEvent.getTick() == currentTick){
+                                update();
+                                tickEvent = save.getNextTick();
+                                if(tickEvent == null){
+                                    System.out.println("yasss");
+                                    GAME_HERTZ = 60;
+                                    TBU = 1000000000/GAME_HERTZ;
+                                    loadingSave = false;
+                                }
                             }
                         }
                         else{
-                            System.out.println("jeff");
                             update();
                         }
                     }
@@ -296,11 +336,16 @@ public class Application {
                 if (now - lastUpdateTime > TBU) {
                     lastUpdateTime = now - TBU;
                 }
-                maze.tick();
-                redraw();
+
                 lastRenderTime = now;
-                currentTick++;
-                timerFrameCounter++;
+
+                if(!paused) {
+                    maze.tick();
+                    redraw();
+                    currentTick++;
+                    timerFrameCounter++;
+                }
+
                 if(timerFrameCounter == 60) {
                     if(timer == 0){
                         gameOver = true;
