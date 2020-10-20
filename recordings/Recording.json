@@ -1,1 +1,1 @@
-{"tickEvents":[],"name":"test"}
+{"tickEvents":[{"tick":40,"moveDir":"DOWN","idle":false},{"tick":59,"moveDir":"DOWN","idle":false},{"tick":76,"moveDir":"DOWN","idle":false},{"tick":102,"moveDir":"RIGHT","idle":false},{"tick":125,"moveDir":"RIGHT","idle":false},{"tick":148,"moveDir":"RIGHT","idle":false}],"name":"test"}

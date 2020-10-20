@@ -133,7 +133,6 @@ public class Maze {
    */
   public void tick() {
     for (Actor actor : actors) {
-      System.out.println(actor.getClass());
       if (actor.getMove() != null) {
         Move move = actor.getMove();
         move.incrementDistance();
