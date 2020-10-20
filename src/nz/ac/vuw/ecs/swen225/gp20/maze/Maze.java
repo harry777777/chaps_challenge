@@ -167,6 +167,7 @@ public class Maze {
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (player.canAccess(destination) && player.isStationary()) {
       player.startMove(direction);
+      player.setFacing(direction);
     }
   }
 
