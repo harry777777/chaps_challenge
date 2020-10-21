@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D;
 public class RenderDoor {
 
 	private static final Color WALL_COLOR_DARK = new Color(100, 100, 100);
+	private static final Color WALL_COLOR = new Color(120, 120, 120);
 	
 	private double ballDiam;
 	private double lazerDiam;
@@ -31,6 +32,12 @@ public class RenderDoor {
 	public void draw(Graphics2D g2, double x, double y, int tileSize, Color doorColor, boolean locked){
 		ballDiam = tileSize/5;
 		lazerDiam = tileSize/8;
+		
+		g2.setColor(WALL_COLOR);
+		g2.fill(new Rectangle2D.Double(x, y, lazerDiam, lazerDiam)); //top left
+		g2.fill(new Rectangle2D.Double(x+tileSize-lazerDiam, y, lazerDiam, lazerDiam)); //top right
+		g2.fill(new Rectangle2D.Double(x, y+tileSize-lazerDiam, lazerDiam, lazerDiam)); //bottom left
+		g2.fill(new Rectangle2D.Double(x+tileSize-lazerDiam, y+tileSize-lazerDiam, lazerDiam, lazerDiam)); //top right
 		
 		//push matrix - lazer top left
 		Graphics2D gTemp = (Graphics2D) g2.create();
