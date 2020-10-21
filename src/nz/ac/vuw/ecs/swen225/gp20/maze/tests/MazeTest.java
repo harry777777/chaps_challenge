@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import org.junit.jupiter.api.Test;
 
@@ -63,7 +62,7 @@ class MazeTest {
   public void movePlayerUp() {
     Maze maze = createStandardMaze();
     maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected =
@@ -83,7 +82,7 @@ class MazeTest {
   public void movePlayerDown() {
     Maze maze = createStandardMaze();
     maze.movePlayer(Direction.DOWN);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected =
@@ -104,7 +103,7 @@ class MazeTest {
   public void movePlayerLeft() {
     Maze maze = createStandardMaze();
     maze.movePlayer(Direction.LEFT);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected =
@@ -124,7 +123,7 @@ class MazeTest {
   public void movePlayerRight() {
     Maze maze = createStandardMaze();
     maze.movePlayer(Direction.RIGHT);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
     String expected =
         "WWWWW\n"
@@ -145,7 +144,7 @@ class MazeTest {
     Maze maze = createStandardMaze();
     maze.movePlayer(Direction.UP);
     maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected =
@@ -167,9 +166,9 @@ class MazeTest {
     Maze maze = createStandardMaze();
 
     maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     maze.movePlayer(Direction.LEFT);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
 
     String actual = maze.toString();
 
@@ -191,7 +190,7 @@ class MazeTest {
     Maze maze = createStandardMaze();
 
     maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
 
 
     String actual = maze.toString();
@@ -212,7 +211,7 @@ class MazeTest {
     char[][] initState = {{'C'}};
     Maze maze = new Maze(initState);
     maze.movePlayer(Direction.RIGHT);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected = "C";
@@ -226,7 +225,7 @@ class MazeTest {
     char[][] initState = {{'C'}};
     Maze maze = new Maze(initState);
     maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected = "C";
@@ -240,7 +239,7 @@ class MazeTest {
     char[][] initState = {{'C'}};
     Maze maze = new Maze(initState);
     maze.movePlayer(Direction.DOWN);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected = "C";
@@ -254,7 +253,7 @@ class MazeTest {
     char[][] initState = {{'C'}};
     Maze maze = new Maze(initState);
     maze.movePlayer(Direction.LEFT);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected = "C";
@@ -268,9 +267,9 @@ class MazeTest {
     Maze maze = createStandardMaze('K', 1, 2);
     System.out.println(maze.toString());
     maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     maze.movePlayer(Direction.LEFT);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected = "WWWWW\n"
@@ -288,11 +287,7 @@ class MazeTest {
   public void NPCMove() {
 
     Maze maze = createStandardMaze('N', 1, 2);
-    System.out.println(maze.toString());
-    maze.movePlayer(Direction.UP);
-    simulate100Ticks(maze);
-    maze.movePlayer(Direction.LEFT);
-    simulate100Ticks(maze);
+    simulateTicks(maze);
     String actual = maze.toString();
 
     String expected = "WWWWW\n"
@@ -305,6 +300,53 @@ class MazeTest {
     FreeTile tileAt = (FreeTile) maze.getTileAt(maze.getPlayer().getLocation());
     assertNull(tileAt.getItem());
   }
+
+  @Test
+  public void doorReject() {
+   char[][] initialState = {
+        {'C', 'F' , 'D', 'F'},
+    };
+    Maze maze = new Maze(initialState);
+    maze.movePlayer(Direction.RIGHT);
+    simulateTicks(maze);
+    maze.movePlayer(Direction.RIGHT);
+    simulateTicks(maze);
+    maze.movePlayer(Direction.RIGHT);
+    simulateTicks(maze);
+
+    String actual = maze.toString();
+
+    String expected = "FCDF";
+
+    assertEquals(expected, actual);
+    FreeTile tileAt = (FreeTile) maze.getTileAt(maze.getPlayer().getLocation());
+    assertNull(tileAt.getItem());
+  }
+
+  @Test
+  public void doorEnter() {
+    char[][] initialState = {
+        {'C', 'K' , 'D', 'F'},
+        {'F', 'F' , 'F', 'F'},
+    };
+    Maze maze = new Maze(initialState);
+    maze.movePlayer(Direction.RIGHT);
+    simulateTicks(maze);
+    maze.movePlayer(Direction.RIGHT);
+    simulateTicks(maze);
+    maze.movePlayer(Direction.RIGHT);
+    simulateTicks(maze);
+
+    String actual = maze.toString();
+
+    String expected = "FFOC";
+
+    assertEquals(expected, actual);
+    FreeTile tileAt = (FreeTile) maze.getTileAt(maze.getPlayer().getLocation());
+    assertNull(tileAt.getItem());
+  }
+
+
 
   private Maze createStandardMaze() {
     char[][] initialState = {
@@ -329,10 +371,11 @@ class MazeTest {
     return new Maze(initialState);
   }
 
-  private void simulate100Ticks(Maze maze) {
-    for (int i = 0; i < 100; i++) {
+  private void simulateTicks(Maze maze) {
+    for (int i = 0; i < 25; i++) {
       maze.tick();
     }
+    System.out.println(maze.toString());
   }
 
 
