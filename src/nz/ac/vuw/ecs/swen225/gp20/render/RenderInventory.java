@@ -38,14 +38,14 @@ public class RenderInventory {
 	 * @param y
 	 * @param tileSize
 	 */
-	public void draw(Graphics2D g2, MazeInterface mazeInterface, double x, double y, int tileSize) {
+	public void draw(Graphics2D g2, MazeInterface maze, double x, double y, int tileSize) {
 		for(int row = 0; row <8; row++) {
 			drawTile(g2, x, y+tileSize*row, tileSize);
-			if(mazeInterface.getInventorySize() > row) {
-				ItemType type = mazeInterface.getFromInventory(row);
+			if(maze.getInventorySize() > row) {
+				ItemType type = maze.getFromInventory(row);
 				if(type.equals(ItemType.KEY)) {
 					//draw the key
-					Color keyColor = mazeInterface.getKeyColorInventory(row);
+					Color keyColor = maze.getKeyColorInventory(row);
 					//push matrix - key movement
 					Graphics2D gTemp = (Graphics2D) g2.create();
 					rKey.draw(g2, x, y+tileSize*row-tileSize/9, tileSize, keyColor);

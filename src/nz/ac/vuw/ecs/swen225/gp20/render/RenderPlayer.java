@@ -61,9 +61,9 @@ public class RenderPlayer {
 	 * @param tileSize
 	 * @param mazeInterface
 	 */
-	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface mazeInterface){
-		InterfaceDirection direction = mazeInterface.getPlayerDirection();
-		int offset = mazeInterface.getPlayerOffset();
+	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface maze){
+		InterfaceDirection direction = maze.getPlayerDirection();
+		int offset = maze.getPlayerOffset();
 		
 		if(offset != 0) { //increment wheel rotation and body angle
 			wheelAngle -= 10;

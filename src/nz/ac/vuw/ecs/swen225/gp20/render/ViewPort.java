@@ -54,10 +54,10 @@ public class ViewPort {
 	 * @param viewWidth 
 	 * @param viewHeight 
 	 */
-	public void draw(Graphics2D g2, MazeInterface mazeInterface, int x, int y, int tileSize, int viewWidth, int viewHeight) {
+	public void draw(Graphics2D g2, MazeInterface maze, int x, int y, int tileSize, int viewWidth, int viewHeight) {
 
-		int playerX = mazeInterface.getPlayerX();
-		int playerY = mazeInterface.getPlayerY();
+		int playerX = maze.getPlayerX();
+		int playerY = maze.getPlayerY();
 		
 		double xMapOffset = playerX*tileSize;
 		double yMapOffset = playerY*tileSize;
@@ -66,13 +66,13 @@ public class ViewPort {
 		int centerY = y+(viewHeight/2)*tileSize;
 		
 		//calculate offset for smooth player movement (used for smooth viewport movement)
-		InterfaceDirection direction = mazeInterface.getPlayerDirection();
+		InterfaceDirection direction = maze.getPlayerDirection();
 		double xOffset = 0;
 		double yOffset = 0;
-		int offset = mazeInterface.getPlayerOffset();
+		int offset = maze.getPlayerOffset();
 		if(offset != 0) {
 
-			double divisor = (double)(mazeInterface.getPlayerThreshold())/tileSize;
+			double divisor = (double)(maze.getPlayerThreshold())/tileSize;
 			
 			switch (direction) {
 				case LEFT: 
@@ -95,13 +95,13 @@ public class ViewPort {
 		
 		//tile boarder draw: the outside viewport blueprint effect
 		g2.setStroke(new BasicStroke(1));
-		for(int row = 0; row < mazeInterface.getMazeHeight(); row++) {
-	    	for(int col = 0; col < mazeInterface.getMazeWidth(); col++) {
+		for(int row = 0; row < maze.getMazeHeight(); row++) {
+	    	for(int col = 0; col < maze.getMazeWidth(); col++) {
 	    		
 	    		g2.setColor(GRID_COLOR);
     			g2.draw(new Rectangle2D.Double(centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, tileSize));
-    			if(mazeInterface.getTileType(row, col).equals(TileType.FREE)) {
-	    			if(mazeInterface.getItemType(row, col) != null) {
+    			if(maze.getTileType(row, col).equals(TileType.FREE)) {
+	    			if(maze.getItemType(row, col) != null) {
 	    				drawX(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    			}
     			}
@@ -116,40 +116,40 @@ public class ViewPort {
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
 	  	//draw the maze in the view port
-		for(int row = 0; row < mazeInterface.getMazeHeight(); row++) {
-	    	for(int col = 0; col < mazeInterface.getMazeWidth(); col++) {
+		for(int row = 0; row < maze.getMazeHeight(); row++) {
+	    	for(int col = 0; col < maze.getMazeWidth(); col++) {
 
-	    		if(mazeInterface.getTileType(row, col).equals(TileType.FREE)) {
+	    		if(maze.getTileType(row, col).equals(TileType.FREE)) {
 	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
-	    			if(mazeInterface.getItemType(row, col) != null) {
+	    			if(maze.getItemType(row, col) != null) {
 	    				//push matrix
 	    				Graphics2D gTemp = (Graphics2D) g2.create();
-	    				if(mazeInterface.getItemType(row, col).equals(ItemType.TREASURE)) {
+	    				if(maze.getItemType(row, col).equals(ItemType.TREASURE)) {
 	    					rTreasure.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    				}
-	    				if(mazeInterface.getItemType(row, col).equals(ItemType.KEY)) {
-	    					Color keyColor = mazeInterface.getKeyColor(row, col);
+	    				if(maze.getItemType(row, col).equals(ItemType.KEY)) {
+	    					Color keyColor = maze.getKeyColor(row, col);
 	    					rKey.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, keyColor);
 	    				}
 	    				//pop matrix
 	    				g2.dispose();
 	    				g2 = (Graphics2D) gTemp.create();
 	    			}
-	    		}else if(mazeInterface.getTileType(row, col).equals(TileType.WALL)){
+	    		}else if(maze.getTileType(row, col).equals(TileType.WALL)){
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}
 	    		
 	    	}
 	    }
 		
-		for(int i = 0; i < mazeInterface.getNumberActors(); i++) {
-			int actorX = mazeInterface.getActorX(i);
-			int actorY = mazeInterface.getActorY(i);
-			rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, mazeInterface, i);
+		for(int i = 0; i < maze.getNumberActors(); i++) {
+			int actorX = maze.getActorX(i);
+			int actorY = maze.getActorY(i);
+			rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, maze, i);
 		}
 
 		
-		rPlayer.draw(g2, centerX, centerY, tileSize, mazeInterface);
+		rPlayer.draw(g2, centerX, centerY, tileSize, maze);
 		
 		//update item animations
 		rTreasure.step();

@@ -14,7 +14,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
  *
  */
 public class Renderer {
-	MazeInterface mazeInterface;
+	MazeInterface maze;
 	ViewPort viewPort;
 	RenderInventory rInventory;
 	RenderAudio rAudio;
@@ -33,7 +33,7 @@ public class Renderer {
 		this.viewHeight = 9;
 		this.viewWidth = 9;
 		
-		this.mazeInterface = new MazeInterface(maze);
+		this.maze = new MazeInterface(maze);
 		RenderTreasure rTreasure = new RenderTreasure();
 		RenderKey rKey = new RenderKey();
 		this.viewPort = new ViewPort(rTreasure, rKey);
@@ -61,11 +61,11 @@ public class Renderer {
 		//access maze and draw
 	    //push matrix - viewport
 		Graphics2D gTemp = (Graphics2D) g2.create();
-	    viewPort.draw(g2, mazeInterface, viewX, viewY, tileSize, viewWidth, viewHeight);
+	    viewPort.draw(g2, maze, viewX, viewY, tileSize, viewWidth, viewHeight);
 	    //pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
-	    rInventory.draw(g2, mazeInterface, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
+	    rInventory.draw(g2, maze, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
 	    
 	    //sounds
 	    playSound();
@@ -73,7 +73,7 @@ public class Renderer {
 	}
 	
 	private void playSound() {
-		MazeInterface.SoundType sound = mazeInterface.getSound();
+		MazeInterface.SoundType sound = maze.getSound();
 	    if(sound == null) {
 	    	return;
 	    }

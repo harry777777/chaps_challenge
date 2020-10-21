@@ -27,16 +27,16 @@ public class RenderEnemy {
 	 * @param mazeInterface 
 	 * @param i Enemy number in the actors array
 	 */
-	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface mazeInterface, int i){
-		InterfaceDirection direction = mazeInterface.getActorDirection(i);
-		int offset = mazeInterface.getActorOffset(i);
+	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface maze, int i){
+		InterfaceDirection direction = maze.getActorDirection(i);
+		int offset = maze.getActorOffset(i);
 		
 		//calculate enemy offset
 		double xOffset = 0;
 		double yOffset = 0;
 		if(offset != 0) {
  
-			double divisor = (double)(mazeInterface.getActorThreshold(i))/tileSize;
+			double divisor = (double)(maze.getActorThreshold(i))/tileSize;
 			
 			switch (direction) {
 				case LEFT: 
