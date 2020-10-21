@@ -90,13 +90,33 @@ public class ViewPort {
 			}
 		}
 		
+		//prevent checking and rendering for things out of view
+		int topEdge = playerY-viewHeight/2-1;
+		int bottomEdge = playerY+viewHeight/2+2;
+		int leftEdge = playerX-viewWidth/2-1;
+		int rightEdge = playerX+viewHeight/2+2;
+		if(topEdge < 0) {
+			topEdge = 0;
+		}
+		if(leftEdge < 0) {
+			leftEdge = 0;
+		}
+		if(bottomEdge > maze.getMazeWidth()) {
+			bottomEdge = maze.getMazeWidth();
+		}
+		if(rightEdge > maze.getMazeHeight()) {
+			rightEdge = maze.getMazeHeight();
+		}
+		//System.out.println(topEdge);
+		
+		
 		//crop the drawing plane for level grid
 		g2.clip(new RoundRectangle2D.Double(x-tileSize*1.25, y-tileSize*1.25, viewWidth*tileSize+tileSize*2.5, viewHeight*tileSize+tileSize*2.5, 20, 20));
 		
 		//tile boarder draw: the outside viewport blueprint effect
 		g2.setStroke(new BasicStroke(1));
-		for(int row = 0; row < maze.getMazeHeight(); row++) {
-	    	for(int col = 0; col < maze.getMazeWidth(); col++) {
+		for(int row = 0; row < maze.getMazeHeight(); row++) {  //maze.getMazeHeight()
+	    	for(int col = 0; col < maze.getMazeWidth(); col++) { //maze.getMazeWidth()
 	    		
 	    		g2.setColor(GRID_COLOR);
     			g2.draw(new Rectangle2D.Double(centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, tileSize));
@@ -116,8 +136,8 @@ public class ViewPort {
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 		
 	  	//draw the maze in the view port
-		for(int row = 0; row < maze.getMazeHeight(); row++) {
-	    	for(int col = 0; col < maze.getMazeWidth(); col++) {
+		for(int row = leftEdge; row < rightEdge; row++) {
+	    	for(int col = topEdge; col < bottomEdge; col++) {
 
 	    		if(maze.getTileType(row, col).equals(TileType.FREE)) {
 	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
