@@ -30,6 +30,17 @@ public class Maze {
   private final Player player;
   private SoundNotifier sound;
 
+  private boolean isAlive = true;
+  private boolean isLevelComplete = false;
+
+  public boolean isAlive() {
+    return isAlive;
+  }
+
+  public boolean isLevelComplete() {
+    return isLevelComplete;
+  }
+
   public List<Actor> getActors() {
     return actors;
   }
