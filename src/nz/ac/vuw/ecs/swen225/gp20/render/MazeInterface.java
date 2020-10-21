@@ -124,7 +124,7 @@ public class MazeInterface {
 	 */
 	public boolean getDoorLocked(int x, int y) {
 		DoorTile current = (DoorTile) maze.getTiles()[x][y];
-		return true; //TODO
+		return current.isLocked(); //TODO
 	}
 	
 	/**
