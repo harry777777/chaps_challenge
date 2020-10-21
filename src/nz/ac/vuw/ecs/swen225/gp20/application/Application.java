@@ -30,7 +30,7 @@ import java.io.IOException;
  * Application class, this runs the game loop,creates the GUI and manages the key listeners
  */
 
-//todo number of treasures to still be collected, make all keystrokes functional and add relevant buttons and menu items.
+//todo number of treasures to still be collected, add relevant buttons and menu items.
 //todo add menu bar, add all keybinds, add relevant buttons for speeding up / slowing down recording, make time out, add game over popups
 
 public class Application {
@@ -66,17 +66,7 @@ public class Application {
      */
 
     public static void main(String[] args) {
-//        char[][] testMap = {
-//            {'W', 'W', 'W', 'W', 'W'},
-//            {'W', 'F', 'F', 'F', 'W'},
-//            {'W', 'F', 'C', 'F', 'W'},
-//            {'W', 'F', 'F', 'F', 'W'},
-//            {'W', 'W', 'W', 'W', 'W'}
-//        };
-//        Maze m = new Maze(testMap);
-
         Application A = new Application();
-
     }
 
     /**
@@ -92,22 +82,17 @@ public class Application {
     private void loadGame(String fileName) {
         Maze m = null;
         manager = new LevelManager();
+        if(paused){
+            paused = false;
+        }
+        if(gameOver){
+            gameOver = false;
+        }
         if(fileName != null) {
             try {
-
-                JFileChooser fc = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
-                fc.setFileFilter(filter);
-                fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                int returnVal = fc.showOpenDialog(frame);
-                if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File file = fc.getSelectedFile();
-                    //m = manager.loadLevel("levels/" + fileName);
-                    level = manager.loadLevel("levels/" + fileName);
-                    m = level.getMaze();
-                    timer = level.getTimer();
-
-                }
+                level = manager.loadLevel("levels/" + fileName);
+                m = level.getMaze();
+                timer = level.getTimer();
             } catch (Exception E) {
                 System.out.println("Error loading chosen level: " + E.getMessage());
             }
@@ -168,7 +153,8 @@ public class Application {
                 if (e.getKeyCode() == 83 && ctrlPressed) { //S pressed - Saves and Exists the Game
 
                     try {
-                        manager.saveLevel("levels/savedGame.json", level);
+                        Level newSave = new Level(maze, timer);
+                        manager.saveLevel("levels/savedGame.json", newSave);
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     }
@@ -287,7 +273,6 @@ public class Application {
                     if (returnVal == JFileChooser.APPROVE_OPTION) {
                         File file = fc.getSelectedFile();
                         replay = new Replay(file.getName());
-
                         replaying = true;
                         paused = true;
                         Object[] possibleValues = {"Normal", "Step by Step"};
@@ -298,6 +283,7 @@ public class Application {
                         if (replayChoice == "Step by Step") {
                             stepByStepReplay = true;
                         }
+                        loadGame(null);
                         currentTick = 0;
                         timer = 60;
                         paused = false;
@@ -316,20 +302,6 @@ public class Application {
         buttons.add(exitButton);
         buttons.setVisible(true);
         frame.add(buttons, BorderLayout.PAGE_END);
-
-    }
-
-    private void resumeSavedGame() {
-        GAME_HERTZ = 100000000;
-        TBU = 1000000000 / GAME_HERTZ;
-        try {
-            save = new Replay("SavedGame");
-            loadingSave = true;
-            currentTick = 0;
-            tickEvent = save.getNextTick();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
 
     }
 
@@ -370,13 +342,17 @@ public class Application {
                                 if (stepByStepReplay) {
                                     paused = true;
                                 }
+                                if(replay.isFinished()) {
+                                    Object replayChoice = JOptionPane.showInputDialog("The recording is finished");
+                                    paused = true;
+                                    replaying = true;
+                                }
                             }
                         } else if (loadingSave) {
                             if (tickEvent.getTick() == currentTick) {
                                 update();
                                 tickEvent = save.getNextTick();
                                 if (tickEvent == null) {
-                                    System.out.println("yasss");
                                     GAME_HERTZ = 60;
                                     TBU = 1000000000 / GAME_HERTZ;
                                     loadingSave = false;
