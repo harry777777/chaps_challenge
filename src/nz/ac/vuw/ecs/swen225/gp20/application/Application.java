@@ -295,7 +295,7 @@ public class Application {
                             GAME_HERTZ = 30;
                             TBU = 1000000000 / GAME_HERTZ;
                         }
-                        if (replayChoice == "Double") {
+                        if (replayChoice == "Double Speed") {
                             GAME_HERTZ = 120;
                             TBU = 1000000000 / GAME_HERTZ;
                         }
