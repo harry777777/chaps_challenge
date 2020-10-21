@@ -22,6 +22,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.jar.JarFile;
 
 
 /**
@@ -30,8 +31,8 @@ import java.io.IOException;
  * Application class, this runs the game loop,creates the GUI and manages the key listeners
  */
 
-//todo number of treasures to still be collected, add relevant buttons and menu items.
-//todo add menu bar, add all keybinds, add relevant buttons for speeding up / slowing down recording, make time out, add game over popups
+//todo add relevant buttons and menu items.
+//todo add menu bar, add all keybinds, add relevant buttons for speeding up / slowing down recording
 
 public class Application {
 
@@ -172,7 +173,14 @@ public class Application {
                     }
                 }
                 if (e.getKeyCode() == 80 && ctrlPressed) { //P pressed - Start a New Game at the last unfinished Level
-
+                    File file = new File("levels/l1c.txt");
+                    boolean exists = file.exists();
+                    if(exists){
+                        System.out.println("Loading level 2");
+                    }
+                    else{
+                        loadGame(null);
+                    }
                 }
                 if (e.getKeyCode() == 49 && ctrlPressed) { //1 pressed - Start Game at Level 1
                     loadGame(null);
@@ -275,7 +283,7 @@ public class Application {
                         replay = new Replay(file.getName());
                         replaying = true;
                         paused = true;
-                        Object[] possibleValues = {"Normal", "Step by Step"};
+                        Object[] possibleValues = {"Normal Speed","Half Speed", "Double Speed", "Step by Step"};
                         Object replayChoice = JOptionPane.showInputDialog(null,
                                 "What type of replay", "Input",
                                 JOptionPane.INFORMATION_MESSAGE, null,
@@ -283,6 +291,15 @@ public class Application {
                         if (replayChoice == "Step by Step") {
                             stepByStepReplay = true;
                         }
+                        if (replayChoice == "Half Speed") {
+                            GAME_HERTZ = 30;
+                            TBU = 1000000000 / GAME_HERTZ;
+                        }
+                        if (replayChoice == "Double") {
+                            GAME_HERTZ = 120;
+                            TBU = 1000000000 / GAME_HERTZ;
+                        }
+
                         loadGame(null);
                         currentTick = 0;
                         timer = 60;
@@ -343,6 +360,8 @@ public class Application {
                                     paused = true;
                                 }
                                 if(replay.isFinished()) {
+                                    GAME_HERTZ = 60;
+                                    TBU = 1000000000 / GAME_HERTZ;
                                     JOptionPane.showMessageDialog(frame, "The recording is finished");
                                     paused = true;
                                     replaying = false;
