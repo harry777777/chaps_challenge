@@ -147,6 +147,7 @@ public class LevelManager {
     Level loadedLevel = handler.read(filepath, Level.class);
     Maze loadedMaze = loadedLevel.getMaze();
     Maze newMaze = new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer(), loadedMaze.getActors());
+//    System.out.println(loadedMaze.getActors());
     int timer = loadedLevel.getTimer();
     return new Level(newMaze, timer);
   }
