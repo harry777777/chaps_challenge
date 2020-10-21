@@ -62,7 +62,7 @@ public class Maze {
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
-    this.actors.add(player);
+    this.actors.add(0, player);
   }
 
   /**

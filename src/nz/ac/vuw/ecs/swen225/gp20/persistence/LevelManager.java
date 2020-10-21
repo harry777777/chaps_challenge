@@ -153,7 +153,7 @@ public class LevelManager {
 
   public static void main(String[] args) throws IOException {
     LevelManager lm = new LevelManager();
-    lm.saveLevel("levels/level1.json", lm.testLevel1);
+    lm.saveLevel("levels/level1.json", lm.level1);
     lm.loadLevel("levels/level1.json");
   }
 
@@ -170,4 +170,22 @@ public class LevelManager {
             {'W', 'K', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'W'},
             {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'}
         };
+
+  private final char[][] level1 = {
+      {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'},
+      {'W', 'T', 'F', 'K', 'F', 'W', 'F', 'F', 'F', 'W', 'W', 'T', 'F', 'T', 'W'},
+      {'W', 'F', 'F', 'F', 'F', 'W', 'F', 'F', 'F', 'W', 'W', 'F', 'T', 'F', 'W'},
+      {'W', 'F', 'F', 'W', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'T', 'F', 'T', 'W'},
+      {'W', 'F', 'W', 'W', 'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'T', 'F', 'W'},
+      {'W', 'F', 'W', 'W', 'T', 'F', 'F', 'F', 'F', 'F', 'F', 'T', 'F', 'T', 'W'},
+      {'W', 'F', 'W', 'W', 'W', 'W', 'F', 'F', 'F', 'W', 'W', 'F', 'T', 'F', 'W'},
+      {'W', 'T', 'F', 'F', 'T', 'W', 'F', 'F', 'F', 'W', 'W', 'T', 'F', 'T', 'W'},
+      {'W', 'W', 'W', 'W', 'F', 'W', 'F', 'F', 'F', 'W', 'W', 'F', 'T', 'F', 'W'},
+      {'W', 'F', 'F', 'F', 'T', 'W', 'F', 'F', 'F', 'W', 'W', 'T', 'F', 'T', 'W'},
+      {'W', 'F', 'W', 'W', 'W', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'W', 'W', 'W'},
+      {'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'T', 'W'},
+      {'W', 'W', 'W', 'W', 'W', 'W', 'F', 'F', 'F', 'W', 'F', 'F', 'F', 'T', 'W'},
+      {'W', 'W', 'W', 'W', 'W', 'W', 'F', 'C', 'F', 'W', 'K', 'F', 'F', 'T', 'W'},
+      {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'}
+  };
 }
