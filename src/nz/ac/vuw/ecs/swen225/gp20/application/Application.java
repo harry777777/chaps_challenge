@@ -175,7 +175,7 @@ public class Application {
           File file = new File("levels/l1c.txt");
           boolean exists = file.exists();
           if (exists) {
-            System.out.println("Loading level 2");
+            loadGame("levels/level2.json");
           } else {
             loadGame(null);
           }
@@ -294,8 +294,8 @@ public class Application {
               GAME_HERTZ = 30;
               TBU = 1000000000 / GAME_HERTZ;
             }
-            if (replayChoice == "Double") {
-              GAME_HERTZ = 120;
+            if (replayChoice == "Double Speed") {
+              GAME_HERTZ = 60*60;
               TBU = 1000000000 / GAME_HERTZ;
             }
 
@@ -354,7 +354,7 @@ public class Application {
           lastUpdateTime += TBU;
           if (tickEvent != null) {
             if (replaying) {
-              if (replay.isFinished() && currentTick > tickEvent.getTick() + 100) {
+              if (replay.isFinished() && currentTick > tickEvent.getTick() + 25) {
                 GAME_HERTZ = 60;
                 TBU = 1000000000 / GAME_HERTZ;
                 JOptionPane.showMessageDialog(frame, "The recording is finished");
@@ -364,7 +364,7 @@ public class Application {
              if (tickEvent.getTick() == currentTick) {
                 update();
                 tickEvent = replay.getNextTick();
-                if (stepByStepReplay) {
+                if (stepByStepReplay && !replay.isFinished()) {
                   paused = true;
                 }
               }
