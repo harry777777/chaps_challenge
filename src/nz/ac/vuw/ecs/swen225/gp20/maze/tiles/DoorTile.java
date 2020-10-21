@@ -44,6 +44,7 @@ public class DoorTile implements Tile, Accessible {
       for (Item item : player.getInventory()) {
         if (item instanceof Key) {
           Key key = (Key) item;
+          System.out.println(key.getColor().equals(color));
           if (key.getColor().equals(color)) {
             return true;
           }

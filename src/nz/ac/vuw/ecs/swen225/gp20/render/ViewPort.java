@@ -156,6 +156,7 @@ public class ViewPort {
 	    		}else if(maze.getTileType(row, col).equals(TileType.DOOR)) {
 	    			//get color
 	    			Color doorColor = maze.getDoorColor(row, col);
+						System.out.println();
 	    			//get locked status
 	    			rDoor.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, doorColor, false);
 	    		}
