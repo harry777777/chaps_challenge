@@ -20,8 +20,10 @@ public class ViewPort {
 	
 	private RenderPlayer rPlayer = new RenderPlayer();
 	private RenderEnemy rEnemy = new RenderEnemy();
+	private RenderDoor rDoor = new RenderDoor();
 	private RenderTreasure rTreasure;
 	private RenderKey rKey;
+	
 	
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
@@ -151,11 +153,11 @@ public class ViewPort {
 	    			}
 	    		}else if(maze.getTileType(row, col).equals(TileType.WALL)){
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
-	    		}else{
-	    			//drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
-	    		}
-	    		if(maze.getTileType(row, col).equals(TileType.DOOR)) {
-
+	    		}else if(maze.getTileType(row, col).equals(TileType.DOOR)) {
+	    			//get color
+	    			Color doorColor = maze.getDoorColor(row, col);
+	    			//get locked status
+	    			rDoor.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, doorColor, false);
 	    		}
 	    	}
 	    }

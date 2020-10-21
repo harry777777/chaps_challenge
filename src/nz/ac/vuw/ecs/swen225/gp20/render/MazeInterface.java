@@ -86,7 +86,35 @@ public class MazeInterface {
 		if(current instanceof WallTile){
 			return TileType.WALL;
 		}
-		return TileType.DOOR;
+		if(current instanceof DoorTile){
+			return TileType.DOOR;
+		}
+		if(current == null){
+			return TileType.DOOR;
+		}
+		return TileType.WALL;
+		//TODO
+	}
+	
+	/**
+	 * Returns the color of a door at x and y
+	 * 
+	 * @param x
+	 * @param y
+	 * @return the door color
+	 */
+	public Color getDoorColor(int x, int y) {
+		if(maze.getTiles()[0].length <= x) {
+			return null;
+		}
+		if(maze.getTiles().length <= y) {
+			return null;
+		}
+		//needs to check if it's actually a door
+		//Tile current = maze.getTiles()[x][y];
+		//DoorTile c = (DoorTile) current;
+		return new Color(0,0,0);
+		//TODO
 	}
 	
 	/**
