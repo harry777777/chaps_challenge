@@ -295,7 +295,7 @@ public class MazeInterface {
 	 * @return actor x position
 	 */
 	public int getActorX(int i) {
-			return actors.get(i).getX();
+		return actors.get(i).getX();
 	}
 	
 	/**
@@ -306,7 +306,7 @@ public class MazeInterface {
 	 * @return actor y position
 	 */
 	public int getActorY(int i) {
-			return actors.get(i).getY();
+		return actors.get(i).getY();
 	}
 	
 	/**
@@ -317,7 +317,10 @@ public class MazeInterface {
 	 * @return actor offset
 	 */
 	public int getActorOffset(int i) {
-			return actors.get(i).getMove().getDistance();
+		if(actors.get(i).getMove() == null) {
+			return 0;
+		}
+		return actors.get(i).getMove().getDistance();
 	}
 	
 	/**
@@ -328,7 +331,7 @@ public class MazeInterface {
 	 * @return actor threshold
 	 */
 	public int getActorThreshold(int i) {
-			return actors.get(i).getMove().THRESHOLD;
+		return actors.get(i).getMove().THRESHOLD;
 	}
 	
 	
