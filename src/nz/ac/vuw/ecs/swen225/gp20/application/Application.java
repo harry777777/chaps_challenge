@@ -1,6 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp20.application;
 
-import javax.swing.border.Border;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Recorder;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Replay;
 import nz.ac.vuw.ecs.swen225.gp20.Record.TickEvent;
@@ -18,8 +17,7 @@ import java.io.IOException;
 
 /**
  * @author Owen
- * <p>
- * Application class, this runs the game loop,creates the GUI and manages the key listeners
+ * Application class, this runs the game loop,creates and manages the GUI
  */
 
 public class Application {
@@ -47,8 +45,8 @@ public class Application {
 
   /**
    * @author Owen
-   * <p>
-   * Application class, this runs the game loop and creates the GUI
+   * The main method used to run the game
+   * @param args
    */
 
   public static void main(String[] args) {
@@ -56,7 +54,8 @@ public class Application {
   }
 
   /**
-   * initialise Application and run the loop
+   * @author Owen
+   * Loads the game/level, creates the gui and begins the run loop
    */
   public Application() {
     loadGame(null);
@@ -78,7 +77,8 @@ public class Application {
 
 
   /**
-   * Initialises the Gui and creates the key listeners
+   * @author Owen
+   * Initialises the Gui
    */
   private void initialiseGui() {
     frame = new JFrame("Chaps Challenge");
@@ -281,18 +281,29 @@ public class Application {
 
   }
 
+  /**
+   * @author Owen
+   * Gives the renderer the Graphics2d object
+   * @param g the graphics object from the frame used by the renderer
+   */
   private void redraw(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
     renderer.draw(g2);
   }
 
+  /**
+   * @author Owen
+   * Redraw with no param to redraw the frame
+   */
   private void redraw() {
     frame.repaint();
   }
 
   /**
-   * Runs the game loop, its runs at 60hz and is created from a tutorial I followed here
+   * @author Owen
+   * Runs the game loop, it runs at 60hz and is created from a tutorial I followed here
    * https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
+   * It manages when to update and to render and does so at the right speed
    */
   private void run() {
     int timerFrameCounter = 0;
@@ -388,10 +399,18 @@ public class Application {
     }
   }
 
+  /**
+   * @author Owen
+   * exits the application
+   */
   private void exit() {
     System.exit(0);
   }
 
+  /**
+   * @author Owen
+   * saves the current game state and exits
+   */
   private void saveAndExit() {
     try {
       Level newSave = new Level(maze, timer);
@@ -402,6 +421,10 @@ public class Application {
     System.exit(0);
   }
 
+  /**
+   * @author Owen
+   * saves the recording of player actions and exits
+   */
   private void recordAndExit() {
     try {
       Object recordingName = JOptionPane.showInputDialog(frame, "Choose a recording name");
@@ -412,6 +435,10 @@ public class Application {
     System.exit(0);
   }
 
+  /**
+   * @author Owen
+   * Loads a user selected save file
+   */
   private void loadSave() {
     JFileChooser fc = new JFileChooser();
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
@@ -425,10 +452,18 @@ public class Application {
 
   }
 
+  /**
+   * @author Owen
+   * starts the game again from level 1
+   */
   private void startNew() {
     loadGame(null);
   }
 
+  /**
+   * @author Owen
+   * starts the game from the last unfinished level
+   */
   private void startUnfin() {
     File file = new File("levels/l1c.txt");
     boolean exists = file.exists();
@@ -439,11 +474,19 @@ public class Application {
     }
   }
 
+  /**
+   * @author Owen
+   * pauses the game
+   */
   private void pause() {
     paused = true;
     JOptionPane.showMessageDialog(null, "The Game is Paused", "", JOptionPane.ERROR_MESSAGE);
   }
 
+  /**
+   * @author Owen
+   * lets the user choose the type of replay and the replay file then begins the replay
+   */
   private void replay() {
     try {
       JFileChooser fc = new JFileChooser();
@@ -490,6 +533,11 @@ public class Application {
     }
   }
 
+  /**
+   * @author Owen
+   * loads the game level again or uses fileName to load a user selected save or level
+   * @param fileName Name of file selected by user
+   */
   private void loadGame(String fileName) {
     Maze m = null;
     manager = new LevelManager();
@@ -506,6 +554,9 @@ public class Application {
         timer = level.getTimer();
         if (fileName.equals("level2.json")) {
           r = new Recorder(2);
+        }
+        if (fileName.equals("level1.json")) {
+          r = new Recorder(1);
         }
       } catch (Exception E) {
         System.out.println("Error loading chosen level: " + E.getMessage());
@@ -525,6 +576,7 @@ public class Application {
   }
 
   /**
+   * @author Owen
    * Updates every tick to move the player and at the tickEvent to the recording, but only if
    * something occurred that tick
    */
