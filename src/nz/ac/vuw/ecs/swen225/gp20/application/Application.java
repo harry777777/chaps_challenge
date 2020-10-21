@@ -175,7 +175,7 @@ public class Application {
           File file = new File("levels/l1c.txt");
           boolean exists = file.exists();
           if (exists) {
-            loadGame("levels/level2.json");
+            loadGame("level2.json");
           } else {
             loadGame(null);
           }
