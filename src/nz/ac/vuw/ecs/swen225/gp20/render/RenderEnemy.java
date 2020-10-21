@@ -1,5 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
@@ -15,7 +16,8 @@ import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.InterfaceDirection;
 public class RenderEnemy {
 	
 
-	private static final Color BACKGROUND_COLOR = new Color(0,180,0);
+	private static final Color ENEMY_COLOR = new Color(50,50,50);
+	private static final Color ENEMY_COLOR_DARK = new Color(100, 100, 100);
 	
 	/**
 	 * Draws an enemy onto the view plane
@@ -58,7 +60,13 @@ public class RenderEnemy {
 	}
 	
 	private void drawFront(double x, double y, int tileSize, Graphics2D g2) {
-		g2.setColor(BACKGROUND_COLOR);
+		double rightEdge = x+tileSize;
+		g2.setStroke(new BasicStroke(1));
+		g2.setColor(ENEMY_COLOR);
 		g2.fill(new Rectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
+		g2.draw(new Rectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
+		g2.setColor(ENEMY_COLOR_DARK);
+		g2.fill(new Rectangle2D.Double(x+tileSize/3, y+tileSize/3, tileSize/8, tileSize/8));
+		g2.fill(new Rectangle2D.Double(rightEdge-tileSize/3-tileSize/8, y+tileSize/3, tileSize/8, tileSize/8));
 	}
 }
