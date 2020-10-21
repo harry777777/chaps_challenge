@@ -25,7 +25,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 public class LevelManager {
 
   Gson gson; // For testing purposes to use GSON in this class.
-  JSONHandler<Maze> handler; // Handles our JSON level files. Saves/loads Maze objects.
+  JSONHandler<Level> handler; // Handles our JSON level files. Saves/loads Level objects.
 
   public LevelManager(){
     gson = new Gson();
@@ -66,8 +66,11 @@ public class LevelManager {
     Player player = new Player(0,0);
     // Maze
     Maze maze = new Maze(tiles, player);
+    // Level
+    int timer = 60;
+    Level level = new Level(maze, timer);
     // Writing object to JSON file
-    handler.write(filepath, maze);
+    handler.write(filepath, level);
   }
 
   /**
@@ -114,10 +117,13 @@ public class LevelManager {
       }
     }
 
+    // maze
     Maze mazeToSave = new Maze(tiles, player, actors);
-
+    // Level
+    int timer = 60;
+    Level level = new Level(mazeToSave, timer);
     // Writing object to JSON file
-    handler.write(filepath, mazeToSave);
+    handler.write(filepath, level);
   }
 
   /**
@@ -127,7 +133,7 @@ public class LevelManager {
    * @param level
    * @throws IOException
    */
-  public void saveLevel(String filepath, Maze level) throws IOException {
+  public void saveLevel(String filepath, Level level) throws IOException {
     // Writing object to JSON file
     handler.write(filepath, level);
   }
@@ -137,9 +143,12 @@ public class LevelManager {
    * @param filepath
    * @throws IOException
    */
-  public Maze loadLevel(String filepath) throws IOException {
-    Maze loadedMaze = handler.read(filepath, Maze.class);
-    return new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer(), loadedMaze.getActors());
+  public Level loadLevel(String filepath) throws IOException {
+    Level loadedLevel = handler.read(filepath, Level.class);
+    Maze loadedMaze = loadedLevel.getMaze();
+    Maze newMaze = new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer(), loadedMaze.getActors());
+    int timer = loadedLevel.getTimer();
+    return new Level(newMaze, timer);
   }
 
   public static void main(String[] args) throws IOException {
