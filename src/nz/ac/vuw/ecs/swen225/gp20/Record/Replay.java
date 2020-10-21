@@ -34,7 +34,7 @@ public class Replay {
      */
     private Recording loadRecording(String fileName) throws IOException {
         JSONHandler<Recording> p = new JSONHandler<Recording>();
-        Recording R = p.read("recordings/" + fileName + ".json", Recording.class);
+        Recording R = p.read("recordings/" + fileName , Recording.class);
         return R;
     }
      /**
