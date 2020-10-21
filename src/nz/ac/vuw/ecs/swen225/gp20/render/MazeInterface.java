@@ -82,15 +82,12 @@ public class MazeInterface {
 		Tile current = maze.getTiles()[x][y];
 		if(current instanceof FreeTile) {
 			return TileType.FREE;
-		}
-		if(current instanceof WallTile){
+		}else if(current instanceof WallTile){
 			return TileType.WALL;
-		}
-		if(current instanceof DoorTile){
+		}else if(current instanceof DoorTile){
 			return TileType.DOOR;
 		}
-		return TileType.WALL;
-		//TODO
+		return null;
 	}
 	
 	/**
@@ -107,12 +104,12 @@ public class MazeInterface {
 		if(maze.getTiles().length <= y) {
 			return null;
 		}
-		//needs to check if it's actually a door
-		DoorTile current = (DoorTile) maze.getTiles()[x][y];
-		if(current == null) {
-			return new Color(100,0,0); //TODO: tile shouldn't be null
+		Tile current = maze.getTiles()[x][y];
+		if(current instanceof DoorTile){
+			DoorTile currentDoor = (DoorTile) maze.getTiles()[x][y];
+			return currentDoor.getColor();
 		}
-		return current.getColor();
+		return null;
 	}
 	
 	/**
@@ -123,8 +120,19 @@ public class MazeInterface {
 	 * @return the door color
 	 */
 	public boolean getDoorLocked(int x, int y) {
-		DoorTile current = (DoorTile) maze.getTiles()[x][y];
-		return current.isLocked(); //TODO
+		if(maze.getTiles()[0].length <= x) {
+			return false;
+		}
+		if(maze.getTiles().length <= y) {
+			return false;
+		}
+		Tile current = maze.getTiles()[x][y];
+		if(current instanceof DoorTile){
+			DoorTile currentDoor = (DoorTile) maze.getTiles()[x][y];
+			return currentDoor.isLocked();
+		}
+		return false;
+		
 	}
 	
 	/**

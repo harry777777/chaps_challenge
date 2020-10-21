@@ -17,13 +17,8 @@ public class RenderTreasure {
 	
 	private static final Color CHAP_BODY_LIGHT = new Color(234, 222, 189);
 	private static final Color CHAP_BODY_MEDIUM = new Color(166,157,134);
-	private static final Color CHAP_BODY = new Color(128, 121, 103); //(166, 157, 134);
-	private static final Color CHAP_BODY_DARK = new Color(77,73,62);
 	private static final Color SHADOW = new Color(0,0,0,30);
 
-	private double centerX;
-	private double centerY;
-	private double rightEdge;
 	private double bottomEdge;
 	
 	private double height = 0;
@@ -43,9 +38,6 @@ public class RenderTreasure {
 		
 		
 		
-		centerX = x+tileSize/2;
-		centerY = y+tileSize/2;
-		rightEdge = x+tileSize;
 		bottomEdge = y+tileSize;
 		
 		BufferedImage bi = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
