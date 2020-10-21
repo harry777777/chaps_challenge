@@ -157,7 +157,7 @@ public class ViewPort {
 			int actorX = mazeInterface.getActorX(i);
 			int actorY = mazeInterface.getActorY(i);
 			//if (!(actor instanceof Player)) {
-				//rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actors.get(i), mazeInterface, i);
+				rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actors.get(i), mazeInterface, i);
 			//}
 		}
 		
@@ -166,7 +166,7 @@ public class ViewPort {
 			int actorY = actor.getY();
 			
 			if (!(actor instanceof Player)) {
-				rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actor, mazeInterface, 0);
+				//rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actor, mazeInterface, 0);
 			}
 		}
 		

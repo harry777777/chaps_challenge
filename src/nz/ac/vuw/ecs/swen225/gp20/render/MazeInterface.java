@@ -1,9 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
@@ -22,6 +24,8 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
  */
 public class MazeInterface {
 	private Maze maze;
+	private List<Actor> actors = new ArrayList<Actor>();
+	
 	
 	/**
 	 * 
@@ -31,6 +35,12 @@ public class MazeInterface {
 	 */
 	public MazeInterface(Maze maze) {
 		this.maze = maze;
+		List<Actor> tempActors = maze.getActors();
+		for(Actor actor: tempActors) {
+			if (!(actor instanceof Player)) {
+				actors.add(actor);
+			}
+		}
 	}
 	
 	//------------Maze-----------------
@@ -200,7 +210,7 @@ public class MazeInterface {
 	 * @return number of actors that aren't the player
 	 */
 	public int getNumberActors() {
-		return maze.getActors().size()-1;
+		return actors.size();
 	}
 	
 	/**
@@ -215,10 +225,10 @@ public class MazeInterface {
 		if(i < 0) {
 			return null;
 		}
-		if(maze.getActors().size() <= i) {
+		if(actors.size() <= i) { 
 			return null;
 		}
-		Direction direction = maze.getActors().get(i).getFacing();
+		Direction direction = actors.get(i).getFacing();
 		
 		switch (direction) {
 			case LEFT: 
@@ -243,8 +253,8 @@ public class MazeInterface {
 	 */
 	public int getActorX(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() <= i) {
-			return maze.getActors().get(i).getX();
+		if(actors.size() <= i) {
+			return actors.get(i).getX();
 		}
 		return 0;
 	}
@@ -258,8 +268,8 @@ public class MazeInterface {
 	 */
 	public int getActorY(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() <= i) {
-			return maze.getActors().get(i).getY();
+		if(actors.size() <= i) {
+			return actors.get(i).getY();
 		}
 		return 0;
 	}
@@ -273,8 +283,8 @@ public class MazeInterface {
 	 */
 	public int getActorOffset(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() <= i) {
-			return maze.getActors().get(i).getMove().getDistance();
+		if(actors.size() <= i) {
+			return actors.get(i).getMove().getDistance();
 		}
 		return 0;
 	}
@@ -288,8 +298,8 @@ public class MazeInterface {
 	 */
 	public int getActorThreshold(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() <= i) {
-			return maze.getActors().get(i).getMove().THRESHOLD;
+		if(actors.size() <= i) {
+			return actors.get(i).getMove().THRESHOLD;
 		}
 		return 0;
 	}
