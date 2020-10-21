@@ -169,7 +169,6 @@ public class Maze {
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (player.isStationary()) {
       player.setFacing(direction);
-
       if (player.canAccess(destination)) {
         player.startMove(direction);
         sound = SoundNotifier.PLAYER_MOVE;

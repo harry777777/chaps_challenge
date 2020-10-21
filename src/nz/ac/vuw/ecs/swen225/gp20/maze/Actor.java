@@ -21,6 +21,5 @@ public interface Actor {
 
   int getY();
 
-
 }
 
