@@ -151,6 +151,12 @@ public class ViewPort {
 	    			}
 	    		}else if(maze.getTileType(row, col).equals(TileType.WALL)){
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    		}else{
+	    			//drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    		}
+	    		if(maze.getTileType(row, col).equals(TileType.DOOR)) {
+
+	    			System.out.println("yup");
 	    		}
 	    	}
 	    }

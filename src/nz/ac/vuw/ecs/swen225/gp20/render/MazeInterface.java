@@ -11,8 +11,10 @@ import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 
 /**
@@ -80,9 +82,11 @@ public class MazeInterface {
 		Tile current = maze.getTiles()[x][y];
 		if(current instanceof FreeTile) {
 			return TileType.FREE;
-		}else {
+		}
+		if(current instanceof WallTile){
 			return TileType.WALL;
 		}
+		return TileType.DOOR;
 	}
 	
 	/**
@@ -404,6 +408,10 @@ public class MazeInterface {
 		 * WallTile
 		 */
 		WALL,
+		/**
+		 * DoorTile
+		 */
+		DOOR
 	}
 	
 	/**
