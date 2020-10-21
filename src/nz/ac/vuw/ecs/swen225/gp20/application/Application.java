@@ -343,9 +343,9 @@ public class Application {
                                     paused = true;
                                 }
                                 if(replay.isFinished()) {
-                                    Object replayChoice = JOptionPane.showInputDialog("The recording is finished");
+                                    JOptionPane.showMessageDialog(frame, "The recording is finished");
                                     paused = true;
-                                    replaying = true;
+                                    replaying = false;
                                 }
                             }
                         } else if (loadingSave) {
