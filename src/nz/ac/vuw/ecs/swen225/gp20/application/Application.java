@@ -166,9 +166,7 @@ public class Application {
                     System.exit(0);
                 }
                 if (e.getKeyCode() == 83 && ctrlPressed) { //S pressed - Saves and Exists the Game
-                    // try{r.saveRecording("SavedGame");}catch (Exception E){
-                    //     System.out.println("Error saving recording:"+ E.getMessage());
-                    // }
+
                     try {
                         manager.saveLevel("levels/savedGame.json", level);
                     } catch (IOException ioException) {
@@ -177,7 +175,6 @@ public class Application {
                     System.exit(0);
                 }
                 if (e.getKeyCode() == 82 && ctrlPressed) { //R pressed - Resume a Saved Game
-                    //resumeSavedGame();
                     JFileChooser fc = new JFileChooser();
                     FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
                     fc.setFileFilter(filter);
