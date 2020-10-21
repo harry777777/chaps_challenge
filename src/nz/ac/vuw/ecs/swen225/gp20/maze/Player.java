@@ -47,16 +47,6 @@ public class Player implements Actor{
 
 
   /**
-   * Check the player may access a given tile.
-   *
-   * @param destination the tile checked for access by player.
-   * @return if the player may access a given tile.
-   */
-  public boolean canAccess(Tile destination) {
-    return destination instanceof Accessible;
-  }
-
-  /**
    * Get the player's location.
    *
    * @return The location object of the player.
@@ -129,4 +119,5 @@ public class Player implements Actor{
   public void setFacing(Direction facing) {
     this.facing = facing;
   }
+
 }

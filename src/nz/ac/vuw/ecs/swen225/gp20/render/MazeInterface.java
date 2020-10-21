@@ -331,6 +331,9 @@ public class MazeInterface {
 	 * @return actor threshold
 	 */
 	public int getActorThreshold(int i) {
+		if(actors.get(i).getMove() == null) {
+			return 0;
+		}
 		return actors.get(i).getMove().THRESHOLD;
 	}
 	

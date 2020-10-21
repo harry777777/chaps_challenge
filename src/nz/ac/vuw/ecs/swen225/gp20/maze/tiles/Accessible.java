@@ -14,7 +14,7 @@ public interface Accessible {
    *
    * @param player The Actor whom shall be granted access
    */
-  void admit(Actor player);
+  void entryOperations(Actor player);
 
   boolean isAccessibleBy(Actor actor);
 
