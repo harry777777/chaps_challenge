@@ -26,7 +26,7 @@ public class RenderDoor {
 	 * @param y
 	 * @param tileSize
 	 * @param doorColor
-	 * @param unlocked
+	 * @param locked
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, Color doorColor, boolean locked){
 		ballDiam = tileSize/5;
@@ -77,12 +77,4 @@ public class RenderDoor {
 		g2.setColor(WALL_COLOR_DARK);
 		g2.fill(new Ellipse2D.Double(-ballDiam/2, -ballDiam/2, ballDiam, ballDiam));
 	}
-	
-	//private void drawLocked(Graphics2D g2, double x, double y, int tileSize, Color doorColor) {
-		
-	//}
-	
-	//private void drawUnlocked(Graphics2D g2, double x, double y, int tileSize, Color doorColor) {
-		
-	//}
 }
