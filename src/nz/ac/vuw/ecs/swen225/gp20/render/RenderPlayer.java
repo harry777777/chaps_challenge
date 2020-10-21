@@ -62,62 +62,35 @@ public class RenderPlayer {
 	 * @param mazeInterface
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface mazeInterface){
-		//Direction direction = player.getFacing();
 		InterfaceDirection direction = mazeInterface.getPlayerDirection();
 		int offset = mazeInterface.getPlayerOffset();
 		
-		//calculate player offset
-		//double xOffset = 0;
-		//double yOffset = 0;
-		//if(player.getMove() != null) {
-			//int offset = player.getMove().getDistance();
-			if(offset != 0) { //increment wheel rotation and body angle
-				wheelAngle -= 10;
-				bodyAngle = lerp(bodyAngle, BODY_ANGLE_MAX, BODY_ANGLE_LERP);
-			//}
-			//double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
-			//if(direction.equals(Direction.LEFT)) {
-			//	xOffset = -(offset/divisor);
-			//}
-			//if(direction.equals(Direction.RIGHT)) {
-			//	xOffset = (offset/divisor);
-			//}
-			//if(direction.equals(Direction.UP)) {
-			//	yOffset = -(offset/divisor);
-			//}
-			//if(direction.equals(Direction.DOWN)) {
-			//	yOffset = (offset/divisor);
-			//}
+		if(offset != 0) { //increment wheel rotation and body angle
+			wheelAngle -= 10;
+			bodyAngle = lerp(bodyAngle, BODY_ANGLE_MAX, BODY_ANGLE_LERP);
+
 		}else {
 			bodyAngle = lerp(bodyAngle, 0, BODY_ANGLE_LERP); //increment body angle back to resting position
 		}
-		
-		//xOffset = 0;
-		//yOffset = 0;
 		
 		g2.setStroke(new BasicStroke(1));
 		
 		if(direction != null) {
 			switch (direction) {
 				case LEFT: 
-					//drawLeft(x+xOffset, y+yOffset, tileSize, g2);
 					drawLeft(x, y, tileSize, g2);
 					break;
 				case RIGHT: 
-					//drawRight(x+xOffset, y+yOffset, tileSize, g2);
 					drawRight(x, y, tileSize, g2);
 					break;
 				case UP: 
-					//drawBack(x+xOffset, y+yOffset, tileSize, g2);
 					drawBack(x, y, tileSize, g2);
 					break;
 				case DOWN: 
-					//drawFront(x+xOffset, y+yOffset, tileSize, g2);
 					drawFront(x, y, tileSize, g2);
 					break;
 			}
 		}else {
-			//drawFront(x+xOffset, y+yOffset, tileSize, g2);
 			drawFront(x, y, tileSize, g2);
 		}
 		

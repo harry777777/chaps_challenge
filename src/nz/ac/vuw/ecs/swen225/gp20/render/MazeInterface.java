@@ -221,13 +221,6 @@ public class MazeInterface {
 	 * @return actor direction
 	 */
 	public InterfaceDirection getActorDirection(int i) {
-		//TODO make sure player is always at position 0;
-		if(i < 0) {
-			return null;
-		}
-		if(actors.size() <= i) { 
-			return null;
-		}
 		Direction direction = actors.get(i).getFacing();
 		
 		switch (direction) {
@@ -252,11 +245,7 @@ public class MazeInterface {
 	 * @return actor x position
 	 */
 	public int getActorX(int i) {
-		//TODO make sure player is always at position 0;
-		if(actors.size() <= i) {
 			return actors.get(i).getX();
-		}
-		return 0;
 	}
 	
 	/**
@@ -267,11 +256,7 @@ public class MazeInterface {
 	 * @return actor y position
 	 */
 	public int getActorY(int i) {
-		//TODO make sure player is always at position 0;
-		if(actors.size() <= i) {
 			return actors.get(i).getY();
-		}
-		return 0;
 	}
 	
 	/**
@@ -282,11 +267,7 @@ public class MazeInterface {
 	 * @return actor offset
 	 */
 	public int getActorOffset(int i) {
-		//TODO make sure player is always at position 0;
-		if(actors.size() <= i) {
 			return actors.get(i).getMove().getDistance();
-		}
-		return 0;
 	}
 	
 	/**
@@ -297,11 +278,7 @@ public class MazeInterface {
 	 * @return actor threshold
 	 */
 	public int getActorThreshold(int i) {
-		//TODO make sure player is always at position 0;
-		if(actors.size() <= i) {
 			return actors.get(i).getMove().THRESHOLD;
-		}
-		return 0;
 	}
 	
 	
@@ -350,6 +327,36 @@ public class MazeInterface {
 		Item item = inventory.get(i);
 		if(item instanceof Key) {
 			return ((Key) item).getColor();
+		}
+		return null;
+	}
+	
+	
+	//--------------Sound------------------
+	
+	/**
+	 * Returns an enum for a sound effect that should be played, or null if no sound effect should be played
+	 * 
+	 * @return An enum for sound to be played 
+	 */
+	public SoundType getSound() {
+		Maze.SoundNotifier sound = maze.getSound();
+	    if(sound == null) {
+	    	return null;
+	    }
+		switch (sound) {
+    		case PLAYER_MOVE: 
+    			return SoundType.PLAYER_MOVE;
+    		case WALL_COLLISION: 
+    			return SoundType.WALL_COLLISION;
+    		case PICKUP_ITEM: 
+    			return SoundType.PICKUP_ITEM;
+    		case PLAYER_DEATH: 
+    			return SoundType.PLAYER_DEATH;
+    		case DOOR_UNLOCK: 
+    			return SoundType.DOOR_UNLOCK;
+    		case END_LEVEL: 
+    			return SoundType.END_LEVEL;
 		}
 		return null;
 	}
@@ -414,5 +421,38 @@ public class MazeInterface {
 		 * Treasure item
 		 */
 		TREASURE,
+	}
+	
+	/**
+	 * @author Marco
+	 * 
+	 * An enum for the types of sound triggers in the maze module
+	 *
+	 */
+	public enum SoundType {
+		/**
+		 * Player move sound
+		 */
+		PLAYER_MOVE,
+		/**
+		 * Collide with wall sound
+		 */
+		WALL_COLLISION,
+		/**
+		 * Pickup item sound
+		 */
+		PICKUP_ITEM,
+		/**
+		 * Player dies sound
+		 */
+		PLAYER_DEATH,
+		/**
+		 * Unlock a door sound
+		 */
+		DOOR_UNLOCK,
+		/**
+		 * Level complete sound
+		 */
+		END_LEVEL
 	}
 }

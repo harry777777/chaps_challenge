@@ -5,16 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.List;
 import java.awt.geom.Line2D;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.InterfaceDirection;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.ItemType;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.TileType;
@@ -31,7 +22,6 @@ public class ViewPort {
 	private RenderEnemy rEnemy = new RenderEnemy();
 	private RenderTreasure rTreasure;
 	private RenderKey rKey;
-	private List<Actor> actors;
 	
 	//Maze
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
@@ -48,10 +38,9 @@ public class ViewPort {
 	 * @param actors 
 	 * 
 	 */
-	public ViewPort(RenderTreasure rTreasure, RenderKey rKey, List<Actor> actors) {
+	public ViewPort(RenderTreasure rTreasure, RenderKey rKey) {
 		this.rTreasure = rTreasure;
 		this.rKey = rKey;
-		this.actors = actors;
 	}
 	
 	/**
@@ -65,7 +54,7 @@ public class ViewPort {
 	 * @param viewWidth 
 	 * @param viewHeight 
 	 */
-	public void draw(Graphics2D g2, MazeInterface mazeInterface, int x, int y, int tileSize, int viewWidth, int viewHeight) { //Tile[][] tiles
+	public void draw(Graphics2D g2, MazeInterface mazeInterface, int x, int y, int tileSize, int viewWidth, int viewHeight) {
 
 		int playerX = mazeInterface.getPlayerX();
 		int playerY = mazeInterface.getPlayerY();
@@ -156,23 +145,9 @@ public class ViewPort {
 		for(int i = 0; i < mazeInterface.getNumberActors(); i++) {
 			int actorX = mazeInterface.getActorX(i);
 			int actorY = mazeInterface.getActorY(i);
-			//if (!(actor instanceof Player)) {
-			
-				rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actors.get(i), mazeInterface, i);
-			//}
+			rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, mazeInterface, i);
 		}
-		
-		for(Actor actor: actors) {
-			int actorX = actor.getX();
-			int actorY = actor.getY();
-			
-			if (!(actor instanceof Player)) {
-				//System.out.println(actorX);
-				rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actor, mazeInterface, 0);
-			}
-		}
-		
-		//System.out.println(actors.size());
+
 		
 		rPlayer.draw(g2, centerX, centerY, tileSize, mazeInterface);
 		

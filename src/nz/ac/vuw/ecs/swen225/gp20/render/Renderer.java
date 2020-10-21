@@ -3,12 +3,9 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.util.List;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
+
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+
 
 /**
  * @author Marco
@@ -17,8 +14,6 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
  *
  */
 public class Renderer {
-	
-	Maze maze;													//TODO: remove this
 	MazeInterface mazeInterface;
 	ViewPort viewPort;
 	RenderInventory rInventory;
@@ -32,7 +27,6 @@ public class Renderer {
 	 * 
 	 */
 	public Renderer(Maze maze) {
-		this.maze = maze; 										//TODO: remove this
 		this.viewX = 70; 
 		this.viewY = 70; 
 		this.tileSize = 50;
@@ -42,8 +36,7 @@ public class Renderer {
 		this.mazeInterface = new MazeInterface(maze);
 		RenderTreasure rTreasure = new RenderTreasure();
 		RenderKey rKey = new RenderKey();
-		List<Actor> actors = maze.getActors();					//TODO: remove this
-		this.viewPort = new ViewPort(rTreasure, rKey, actors);
+		this.viewPort = new ViewPort(rTreasure, rKey);
 		this.rInventory = new RenderInventory(rKey);
 		this.rAudio = new RenderAudio();
 		
@@ -80,7 +73,7 @@ public class Renderer {
 	}
 	
 	private void playSound() {
-		Maze.SoundNotifier sound = maze.getSound();
+		MazeInterface.SoundType sound = mazeInterface.getSound();
 	    if(sound == null) {
 	    	return;
 	    }
