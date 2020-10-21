@@ -32,18 +32,11 @@ public class RenderDoor {
 		ballDiam = tileSize/5;
 		lazerDiam = tileSize/8;
 		
-		//g2.setColor(doorColor);
-		//g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
-		
-		drawLazer(g2, tileSize, doorColor);
-		
-		
-		
 		//push matrix - lazer top left
 		Graphics2D gTemp = (Graphics2D) g2.create();
 		g2.translate(x+ballDiam/2, y+ballDiam/2);
 		g2.rotate(Math.toRadians(45));
-		drawLazer(g2,tileSize, doorColor);	
+		drawLazer(g2,tileSize, doorColor, unlocked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
@@ -52,7 +45,7 @@ public class RenderDoor {
 		gTemp = (Graphics2D) g2.create();
 		g2.translate(x+tileSize-ballDiam/2, y+ballDiam/2);
 		g2.rotate(Math.toRadians(135));
-		drawLazer(g2,tileSize, doorColor);	
+		drawLazer(g2,tileSize, doorColor, unlocked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
@@ -61,7 +54,7 @@ public class RenderDoor {
 		gTemp = (Graphics2D) g2.create();
 		g2.translate(x+ballDiam/2, y+tileSize-ballDiam/2);
 		g2.rotate(Math.toRadians(-45));
-		drawLazer(g2,tileSize, doorColor);	
+		drawLazer(g2,tileSize, doorColor, unlocked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
@@ -70,13 +63,13 @@ public class RenderDoor {
 		gTemp = (Graphics2D) g2.create();
 		g2.translate(x+tileSize-ballDiam/2, y+tileSize-ballDiam/2);
 		g2.rotate(Math.toRadians(-135));
-		drawLazer(g2,tileSize, doorColor);	
+		drawLazer(g2,tileSize, doorColor, unlocked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 	}
 	
-	private void drawLazer(Graphics2D g2, int tileSize, Color doorColor) {
+	private void drawLazer(Graphics2D g2, int tileSize, Color doorColor, boolean unlocked) {
 		g2.setColor(doorColor);
 		g2.fill(new Rectangle2D.Double(ballDiam/2, -lazerDiam/2, tileSize/2, lazerDiam));
 		g2.setColor(WALL_COLOR_DARK);
