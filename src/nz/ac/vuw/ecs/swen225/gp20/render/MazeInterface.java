@@ -116,6 +116,18 @@ public class MazeInterface {
 	}
 	
 	/**
+	 * Returns the locked status of a door at x and y
+	 * 
+	 * @param x
+	 * @param y
+	 * @return the door color
+	 */
+	public boolean getDoorLocked(int x, int y) {
+		DoorTile current = (DoorTile) maze.getTiles()[x][y];
+		return true; //TODO
+	}
+	
+	/**
 	 * Returns an enum for type of item on tile at x and y
 	 * 
 	 * @param x
