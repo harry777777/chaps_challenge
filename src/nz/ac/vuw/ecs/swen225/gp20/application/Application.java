@@ -1,4 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.application;
+
+import javax.swing.border.Border;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Recorder;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Replay;
 import nz.ac.vuw.ecs.swen225.gp20.Record.TickEvent;
@@ -19,8 +21,6 @@ import java.io.IOException;
  * <p>
  * Application class, this runs the game loop,creates the GUI and manages the key listeners
  */
-
-//todo make timer prettier, stop the game at the start witha pop up saying are you ready and a start button
 
 public class Application {
 
@@ -70,7 +70,7 @@ public class Application {
         null,
         options,
         options[0]);
-    if(n == 0){
+    if (n == 0) {
       paused = false;
     }
     run();
@@ -78,7 +78,7 @@ public class Application {
 
 
   /**
-   * Initialises the Gui and creates the key listener
+   * Initialises the Gui and creates the key listeners
    */
   private void initialiseGui() {
     frame = new JFrame("Chaps Challenge");
@@ -175,7 +175,8 @@ public class Application {
         if (e.getKeyCode() == 82 && ctrlPressed) { //R pressed - Resume a Saved Game
           loadSave();
         }
-        if (e.getKeyCode() == 80 && ctrlPressed) { //P pressed - Start a New Game at the last unfinished Level
+        if (e.getKeyCode() == 80
+            && ctrlPressed) { //P pressed - Start a New Game at the last unfinished Level
           startUnfin();
         }
         if (e.getKeyCode() == 49 && ctrlPressed) { //1 pressed - Start Game at Level 1
@@ -202,6 +203,7 @@ public class Application {
           }
         }
       }
+
       @Override
       public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == 17) {
@@ -219,14 +221,17 @@ public class Application {
     drawing.setVisible(true);
     frame.add(drawing, BorderLayout.CENTER);
 
-    JPanel gameInfo = new JPanel();
     JLabel newTimer = new JLabel("Time:" + timer);
+    newTimer.setFont(new Font("", Font.BOLD,24));
     JLabel level = new JLabel("Level:");
+    level.setFont(new Font("", Font.BOLD,24));
 
-    gameInfo.add(newTimer);
+    JPanel gameInfo = new JPanel();
+    gameInfo.setLayout(new BorderLayout());
+
+    gameInfo.add(newTimer,BorderLayout.PAGE_START);
     timerLabel = newTimer;
-
-    gameInfo.add(level);
+    gameInfo.add(level,BorderLayout.PAGE_END);
 
     frame.add(gameInfo, BorderLayout.EAST);
 
@@ -361,9 +366,10 @@ public class Application {
           if (timer == 0) {
             gameOver = true;
             JOptionPane.showMessageDialog(frame, "Game Over, you ran out of time");
-            break;
           }
-          timer -= 1;
+          if(!gameOver){
+            timer -= 1;
+          }
           timerLabel.setText("Time: " + timer);
           timerFrameCounter = 0;
         }
@@ -382,10 +388,11 @@ public class Application {
     }
   }
 
-  private void exit(){
+  private void exit() {
     System.exit(0);
   }
-  private void saveAndExit(){
+
+  private void saveAndExit() {
     try {
       Level newSave = new Level(maze, timer);
       manager.saveLevel("levels/savedGame.json", newSave);
@@ -394,7 +401,8 @@ public class Application {
     }
     System.exit(0);
   }
-  private void recordAndExit(){
+
+  private void recordAndExit() {
     try {
       Object recordingName = JOptionPane.showInputDialog(frame, "Choose a recording name");
       r.saveRecording(recordingName.toString());
@@ -403,7 +411,8 @@ public class Application {
     }
     System.exit(0);
   }
-  private void loadSave(){
+
+  private void loadSave() {
     JFileChooser fc = new JFileChooser();
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
     fc.setFileFilter(filter);
@@ -415,10 +424,12 @@ public class Application {
     }
 
   }
-  private void startNew(){
+
+  private void startNew() {
     loadGame(null);
   }
-  private void startUnfin(){
+
+  private void startUnfin() {
     File file = new File("levels/l1c.txt");
     boolean exists = file.exists();
     if (exists) {
@@ -427,11 +438,13 @@ public class Application {
       loadGame(null);
     }
   }
-  private void pause(){
+
+  private void pause() {
     paused = true;
     JOptionPane.showMessageDialog(null, "The Game is Paused", "", JOptionPane.ERROR_MESSAGE);
   }
-  private void replay(){
+
+  private void replay() {
     try {
       JFileChooser fc = new JFileChooser();
       FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
@@ -499,13 +512,9 @@ public class Application {
       }
     } else {
       try {
-
         level = manager.loadLevel("levels/level1.json");
-        System.out.println("asd");
         m = level.getMaze();
         r = new Recorder(1);
-        //timer = level.getTimer();
-
       } catch (Exception E) {
         System.out.println("Error loading level 1: " + E.getMessage());
       }
