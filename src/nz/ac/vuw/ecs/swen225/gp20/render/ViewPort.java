@@ -74,11 +74,10 @@ public class ViewPort {
 		int centerX = x+(viewWidth/2)*tileSize;
 		int centerY = y+(viewHeight/2)*tileSize;
 		
+		//calculate offset for smooth player movement (used for smooth viewport movement)
 		Direction direction = player.getFacing();
 		double xOffset = 0;
 		double yOffset = 0;
-		
-		
 		if(player.getMove() != null) {
 			int offset = player.getMove().getDistance();
 			double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
@@ -165,7 +164,11 @@ public class ViewPort {
 		
 		//System.out.println(actors.size());
 		
-		rPlayer.draw(g2, centerX, centerY, tileSize, player); 
+		rPlayer.draw(g2, centerX, centerY, tileSize, player);
+		
+		//update item animations
+		rTreasure.step();
+		rKey.step();
 		
 	}
 	

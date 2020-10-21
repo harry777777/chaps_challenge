@@ -39,21 +39,6 @@ public class RenderKey {
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, Color keyColor){
 		
-		//do animation
-		if(up) {
-			if(height < 10) {
-				height+=0.25;
-			}else {
-				up = !up;
-			}
-		}else {
-			if(height > 0) {
-				height-=0.25;
-			}else {
-				up = !up;
-			}
-		}
-		
 		bottomEdge = y+tileSize;
 		
 		BufferedImage bi = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
@@ -116,5 +101,25 @@ public class RenderKey {
 		
 		//g2.setColor(keyColor);
 		//g2.fill(new RoundRectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2, tileSize/5, tileSize/5));
+	}
+	
+	/**
+	 * Steps the animation
+	 */
+	public void step() {
+		//do animation
+		if(up) {
+			if(height < 10) {
+				height+=0.25;
+			}else {
+				up = !up;
+			}
+		}else {
+			if(height > 0) {
+				height-=0.25;
+			}else {
+				up = !up;
+			}
+		}
 	}
 }

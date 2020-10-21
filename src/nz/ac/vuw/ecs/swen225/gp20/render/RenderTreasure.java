@@ -29,6 +29,7 @@ public class RenderTreasure {
 	private double height = 0;
 	private boolean up;
 	
+	
 	/**
 	 * 
 	 * Draws an instance of the treasure item on the graphics plane
@@ -40,20 +41,7 @@ public class RenderTreasure {
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize){
 		
-		//do animation
-		if(up) {
-			if(height < 10) {
-				height+=0.25;
-			}else {
-				up = !up;
-			}
-		}else {
-			if(height > 0) {
-				height-=0.25;
-			}else {
-				up = !up;
-			}
-		}
+		
 		
 		centerX = x+tileSize/2;
 		centerY = y+tileSize/2;
@@ -100,5 +88,25 @@ public class RenderTreasure {
 		g2 = (Graphics2D) gTemp.create();
 
 
+	}
+	
+	/**
+	 * Steps the animation
+	 */
+	public void step() {
+		//do animation
+		if(up) {
+			if(height < 10) {
+				height+=0.25;
+			}else {
+				up = !up;
+			}
+		}else {
+			if(height > 0) {
+				height-=0.25;
+			}else {
+				up = !up;
+			}
+		}
 	}
 }
