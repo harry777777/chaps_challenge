@@ -28,9 +28,8 @@ public class Renderer {
 	/**
 	 * Initializes the renderer passing it the maze
 	 * 
-	 * This one gives the renderer control over sizing and placement, use it in early development
+	 * @param maze 
 	 * 
-	 * @param m
 	 */
 	public Renderer(Maze maze) {
 		this.maze = maze; 										//TODO: remove this
@@ -67,16 +66,13 @@ public class Renderer {
 	    g2.setRenderingHints(rh);
 	    
 		//access maze and draw
-	    Tile[][] tiles = maze.getTiles();					//TODO: remove this
-	    Player player = maze.getPlayer();					//TODO: remove this
 	    //push matrix - viewport
 		Graphics2D gTemp = (Graphics2D) g2.create();
-	    viewPort.draw(g2, tiles, player, viewX, viewY, tileSize, viewWidth, viewHeight);
+	    viewPort.draw(g2, mazeInterface, viewX, viewY, tileSize, viewWidth, viewHeight);
 	    //pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
-	    List<Item> inventory = player.getInventory();
-	    rInventory.draw(g2, inventory, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
+	    rInventory.draw(g2, mazeInterface, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
 	    
 	    //sounds
 	    playSound();

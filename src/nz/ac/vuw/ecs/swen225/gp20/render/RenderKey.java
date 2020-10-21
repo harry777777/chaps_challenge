@@ -99,8 +99,6 @@ public class RenderKey {
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 		
-		//g2.setColor(keyColor);
-		//g2.fill(new RoundRectangle2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2, tileSize/5, tileSize/5));
 	}
 	
 	/**
