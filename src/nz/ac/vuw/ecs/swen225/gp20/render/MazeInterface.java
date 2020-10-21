@@ -381,6 +381,15 @@ public class MazeInterface {
 		return null;
 	}
 	
+	/**
+	 * Returns the current score (chips collected)
+	 * 
+	 * @return player treasure
+	 */
+	public int getTreasure() {
+		return maze.getPlayer().getTreasure();
+	}
+	
 	
 	//--------------Sound------------------
 	

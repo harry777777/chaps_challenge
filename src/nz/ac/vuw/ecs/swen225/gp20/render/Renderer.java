@@ -37,7 +37,7 @@ public class Renderer {
 		RenderTreasure rTreasure = new RenderTreasure();
 		RenderKey rKey = new RenderKey();
 		this.viewPort = new ViewPort(rTreasure, rKey);
-		this.rInventory = new RenderInventory(rKey);
+		this.rInventory = new RenderInventory(rTreasure, rKey);
 		this.rAudio = new RenderAudio();
 		
 		//Plays sound for start of level
