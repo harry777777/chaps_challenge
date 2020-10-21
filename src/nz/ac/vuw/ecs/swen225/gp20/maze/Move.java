@@ -13,7 +13,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  */
 public class Move {
 
-  public static final int THRESHOLD = 152;
+  public static final int THRESHOLD = 25;
 
   private int distance;
   private final Direction direction;
