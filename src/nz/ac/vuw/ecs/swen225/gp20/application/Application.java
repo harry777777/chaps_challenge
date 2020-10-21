@@ -100,7 +100,7 @@ public class Application {
     } else {
       try {
 
-        level = manager.loadLevel("levels/level1.json");
+        level = manager.loadLevel("levels/testLevel.json");
         System.out.println("asd");
         m = level.getMaze();
         //timer = level.getTimer();

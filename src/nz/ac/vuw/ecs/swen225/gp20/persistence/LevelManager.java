@@ -109,6 +109,7 @@ public class LevelManager {
             break;
           case "K":
             col = COLORS[Integer.parseInt(s.substring(1,2))];
+//            System.out.println(col + " key");
             tiles[i][j] = new FreeTile(new Location(i, j), new Key(col));
             break;
           case "T":
@@ -116,6 +117,7 @@ public class LevelManager {
             break;
           case "D":
             col = COLORS[Integer.parseInt(s.substring(1,2))];
+//            System.out.println(col + " door");
             tiles[i][j] = new DoorTile(col, new Location(i,j));
             break;
           default:
@@ -163,23 +165,23 @@ public class LevelManager {
     LevelManager lm = new LevelManager();
     lm.saveLevel("levels/testLevel.json", lm.testLevel);
     lm.loadLevel("levels/testLevel.json");
-    lm.saveLevel("levels/level1.json", lm.level1);
-    lm.loadLevel("levels/level1.json");
-    lm.saveLevel("levels/level2.json", lm.level2);
-    lm.loadLevel("levels/level2.json");
+//    lm.saveLevel("levels/level1.json", lm.level1);
+//    lm.loadLevel("levels/level1.json");
+//    lm.saveLevel("levels/level2.json", lm.level2);
+//    lm.loadLevel("levels/level2.json");
   }
 
   // Textual level representations
   private final String[][] testLevel = {
             {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
-            {"W", "C", "D0", "K1", "N", "F", "F", "F", "N", "W"},
+            {"W", "C", "D0", "F", "N", "F", "F", "F", "N", "W"},
             {"W", "K0", "W", "W", "W", "F", "W", "W", "W", "W"},
-            {"W", "D1", "F", "T", "W", "F", "W", "F", "F", "W"},
+            {"W", "D0", "F", "T", "W", "F", "W", "F", "F", "W"},
             {"W", "N", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "N", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "F", "F", "F", "F", "F", "W"},
-            {"W", "K0", "F", "F", "F", "F", "F", "F", "F", "W"},
+            {"W", "F", "F", "F", "F", "F", "F", "F", "F", "W"},
             {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"}
         };
 

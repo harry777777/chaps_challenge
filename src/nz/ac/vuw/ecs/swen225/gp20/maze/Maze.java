@@ -155,7 +155,7 @@ public class Maze {
     if (destination != null) { // fixme this is gross
       if(destination instanceof  Accessible){
       Accessible accessible = (Accessible) destination;
-      accessible.admit(actor);
+
       actor.setLocation(destination.getLocation());
       }
     }

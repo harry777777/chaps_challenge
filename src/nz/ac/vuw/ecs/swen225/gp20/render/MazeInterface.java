@@ -89,9 +89,6 @@ public class MazeInterface {
 		if(current instanceof DoorTile){
 			return TileType.DOOR;
 		}
-		if(current == null){
-			return TileType.DOOR;
-		}
 		return TileType.WALL;
 		//TODO
 	}
@@ -111,10 +108,23 @@ public class MazeInterface {
 			return null;
 		}
 		//needs to check if it's actually a door
-		//Tile current = maze.getTiles()[x][y];
-		//DoorTile c = (DoorTile) current;
-		return new Color(0,0,0);
-		//TODO
+		DoorTile current = (DoorTile) maze.getTiles()[x][y];
+		if(current == null) {
+			return new Color(100,0,0); //TODO: tile shouldn't be null
+		}
+		return current.getColor();
+	}
+	
+	/**
+	 * Returns the locked status of a door at x and y
+	 * 
+	 * @param x
+	 * @param y
+	 * @return the door color
+	 */
+	public boolean getDoorLocked(int x, int y) {
+		DoorTile current = (DoorTile) maze.getTiles()[x][y];
+		return true; //TODO
 	}
 	
 	/**
