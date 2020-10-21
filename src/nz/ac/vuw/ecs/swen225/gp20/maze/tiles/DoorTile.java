@@ -13,6 +13,10 @@ public class DoorTile implements Tile, Accessible {
   Color color;
   private final Location location;
 
+  public Color getColor() {
+    return color;
+  }
+
   public DoorTile(Color color, Location location) {
     this.color = color;
     this.location = location;
