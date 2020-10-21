@@ -54,8 +54,8 @@ public class FreeTile implements Tile, Accessible {
   }
 
   @Override
-  public boolean isAccessible() {
-    return false; // FIXME: 21/10/20 
+  public boolean isAccessibleBy(Actor actor) {
+    return true;
   }
 
   private void removeItem() {
