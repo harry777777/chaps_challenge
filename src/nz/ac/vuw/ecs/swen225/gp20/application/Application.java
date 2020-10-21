@@ -11,6 +11,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.Level;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.LevelManager;
 import nz.ac.vuw.ecs.swen225.gp20.render.Renderer;
 
@@ -69,15 +70,15 @@ public class Application {
 //        };
 //        Maze m = new Maze(testMap);
 
-        Maze m = null;
-        LevelManager l = new LevelManager();
+        Level level = null;
+        LevelManager lm = new LevelManager();
         try {
-            m = l.loadLevel("levels/level1.json");
+            level = lm.loadLevel("levels/level1.json");
         } catch (Exception E) {
             System.out.println("Error loading level: " + E.getMessage());
         }
-        if (m != null) {
-            Application A = new Application(m);
+        if (level != null) {
+            Application A = new Application(level.getMaze());
         }
 
     }
