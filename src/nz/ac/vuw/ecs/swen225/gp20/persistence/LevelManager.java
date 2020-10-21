@@ -172,10 +172,10 @@ public class LevelManager {
   // Textual level representations
   private final String[][] testLevel = {
             {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
-            {"W", "C", "F", "N", "F", "F", "F", "F", "N", "W"},
-            {"W", "F", "W", "W", "W", "F", "W", "W", "W", "W"},
-            {"W", "F", "F", "T", "W", "F", "W", "F", "F", "W"},
-            {"W", "F", "F", "F", "W", "F", "W", "F", "F", "W"},
+            {"W", "C", "D0", "K1", "N", "F", "F", "F", "N", "W"},
+            {"W", "K0", "W", "W", "W", "F", "W", "W", "W", "W"},
+            {"W", "D1", "F", "T", "W", "F", "W", "F", "F", "W"},
+            {"W", "N", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "N", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "F", "F", "F", "F", "F", "W"},
