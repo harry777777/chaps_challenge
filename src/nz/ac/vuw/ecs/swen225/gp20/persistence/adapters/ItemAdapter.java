@@ -15,6 +15,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 
 /**
+ * @author Matt/CrunchyPancakes
  * Adapter to deserialise Tile objects from JSON (since tile is an interface).
  */
 public class ItemAdapter implements JsonSerializer<Item>, JsonDeserializer<Item> {
