@@ -11,8 +11,8 @@ public class Recorder {
 
   private Recording recording;
 
-  public Recorder() {
-    this.recording = new Recording("test");
+  public Recorder(int level) {
+    this.recording = new Recording("test",level);
 
   }
 

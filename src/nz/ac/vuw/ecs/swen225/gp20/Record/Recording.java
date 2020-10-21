@@ -13,14 +13,16 @@ public class Recording {
 
   private ArrayList<TickEvent> tickEvents; // List of events that happening on each tick of a game.
   private String name;
+  private int level;
 
   /**
    * @param name name of the recording
    * @author Harry constructor for a recording.
    */
-  public Recording(String name) {
+  public Recording(String name,int level) {
     this.name = name;
     this.tickEvents = new ArrayList<TickEvent>();
+    this.level =level;
 
   }
 
@@ -59,5 +61,8 @@ public class Recording {
     return s.toString();
   }
 
+  public int getLevel(){
+    return this.level;
+  }
 }
 

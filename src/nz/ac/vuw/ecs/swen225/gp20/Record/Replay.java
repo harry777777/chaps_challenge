@@ -39,8 +39,8 @@ public class Replay {
   }
 
   /**
-   * * @author Harry
-   * Returns the next Tickevent of a replay object and updates the position of the
+   * * @author Harry Returns the next Tickevent of a replay object and updates the position of the
+   *
    * @return TickEvent at current Positon of the recording.
    */
   public TickEvent getNextTick() {
@@ -54,8 +54,7 @@ public class Replay {
   }
 
   /**
-   * @author Harry
-   * Increment recording index, and update the current tickEvent that the recording is
+   * @author Harry Increment recording index, and update the current tickEvent that the recording is
    * waiting at, Checks if the recording is at the end of the recording, updates the finished
    * boolean if this is the case
    */
@@ -82,6 +81,9 @@ public class Replay {
   public void testRecording() {
     System.out.println(this.recording.toString());
   }
+
+
+  public int recordingLevel() {
+    return recording.getLevel();
+  }
 }
-
-

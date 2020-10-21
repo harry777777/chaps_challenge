@@ -111,7 +111,7 @@ public class Application {
     }
     this.maze = m;
     renderer = new Renderer(m);
-    r = new Recorder();
+    r = new Recorder(1);
     timer = 60;
   }
 
