@@ -70,7 +70,6 @@ public class Application {
         loadGame(null);
         initialiseGui();
         run();
-
     }
 
     private void loadGame(String fileName) {
@@ -96,7 +95,7 @@ public class Application {
         } else {
             try {
 
-                level = manager.loadLevel("levels/testLevel.json");
+                level = manager.loadLevel("levels/level1.json");
                 System.out.println("asd");
                 m = level.getMaze();
                 r = new Recorder(1);
