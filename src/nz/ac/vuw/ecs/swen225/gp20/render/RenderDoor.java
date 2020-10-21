@@ -28,7 +28,7 @@ public class RenderDoor {
 	 * @param doorColor
 	 * @param unlocked
 	 */
-	public void draw(Graphics2D g2, double x, double y, int tileSize, Color doorColor, boolean unlocked){
+	public void draw(Graphics2D g2, double x, double y, int tileSize, Color doorColor, boolean locked){
 		ballDiam = tileSize/5;
 		lazerDiam = tileSize/8;
 		
@@ -36,7 +36,7 @@ public class RenderDoor {
 		Graphics2D gTemp = (Graphics2D) g2.create();
 		g2.translate(x+ballDiam/2, y+ballDiam/2);
 		g2.rotate(Math.toRadians(45));
-		drawLazer(g2,tileSize, doorColor, unlocked);	
+		drawLazer(g2,tileSize, doorColor, locked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
@@ -45,7 +45,7 @@ public class RenderDoor {
 		gTemp = (Graphics2D) g2.create();
 		g2.translate(x+tileSize-ballDiam/2, y+ballDiam/2);
 		g2.rotate(Math.toRadians(135));
-		drawLazer(g2,tileSize, doorColor, unlocked);	
+		drawLazer(g2,tileSize, doorColor, locked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
@@ -54,7 +54,7 @@ public class RenderDoor {
 		gTemp = (Graphics2D) g2.create();
 		g2.translate(x+ballDiam/2, y+tileSize-ballDiam/2);
 		g2.rotate(Math.toRadians(-45));
-		drawLazer(g2,tileSize, doorColor, unlocked);	
+		drawLazer(g2,tileSize, doorColor, locked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
@@ -63,15 +63,17 @@ public class RenderDoor {
 		gTemp = (Graphics2D) g2.create();
 		g2.translate(x+tileSize-ballDiam/2, y+tileSize-ballDiam/2);
 		g2.rotate(Math.toRadians(-135));
-		drawLazer(g2,tileSize, doorColor, unlocked);	
+		drawLazer(g2,tileSize, doorColor, locked);	
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 	}
 	
-	private void drawLazer(Graphics2D g2, int tileSize, Color doorColor, boolean unlocked) {
-		g2.setColor(doorColor);
-		g2.fill(new Rectangle2D.Double(ballDiam/2, -lazerDiam/2, tileSize/2, lazerDiam));
+	private void drawLazer(Graphics2D g2, int tileSize, Color doorColor, boolean locked) {
+		if(locked) {
+			g2.setColor(doorColor);
+			g2.fill(new Rectangle2D.Double(ballDiam/2, -lazerDiam/2, tileSize/2, lazerDiam));
+		}
 		g2.setColor(WALL_COLOR_DARK);
 		g2.fill(new Ellipse2D.Double(-ballDiam/2, -ballDiam/2, ballDiam, ballDiam));
 	}
