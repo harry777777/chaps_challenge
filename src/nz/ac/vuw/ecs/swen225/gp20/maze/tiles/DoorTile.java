@@ -9,6 +9,10 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 public class DoorTile implements Tile, Accessible {
 
+  public boolean isLocked() {
+    return isLocked;
+  }
+
   boolean isLocked = true;
   Color color;
   private final Location location;
