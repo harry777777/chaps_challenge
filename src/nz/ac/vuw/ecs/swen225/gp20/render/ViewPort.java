@@ -161,14 +161,14 @@ public class ViewPort {
 			//}
 		}
 		
-		for(Actor actor: actors) {
-			int actorX = actor.getX();
-			int actorY = actor.getY();
+		//for(Actor actor: actors) {
+			//int actorX = actor.getX();
+			//int actorY = actor.getY();
 			
-			if (!(actor instanceof Player)) {
+			//if (!(actor instanceof Player)) {
 				//rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, actor, mazeInterface, 0);
-			}
-		}
+			//}
+		//}
 		
 		//System.out.println(actors.size());
 		
