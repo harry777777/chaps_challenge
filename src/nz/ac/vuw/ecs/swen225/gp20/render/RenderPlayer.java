@@ -7,8 +7,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.InterfaceDirection;
 
 /**
  * @author Marco
@@ -60,20 +59,22 @@ public class RenderPlayer {
 	 * @param x
 	 * @param y
 	 * @param tileSize
-	 * @param player
+	 * @param mazeInterface
 	 */
-	public void draw(Graphics2D g2, double x, double y, int tileSize, Player player){
-		Direction direction = player.getFacing();
+	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface mazeInterface){
+		//Direction direction = player.getFacing();
+		InterfaceDirection direction = mazeInterface.getPlayerDirection();
+		int offset = mazeInterface.getPlayerOffset();
 		
 		//calculate player offset
 		//double xOffset = 0;
 		//double yOffset = 0;
-		if(player.getMove() != null) {
-			int offset = player.getMove().getDistance();
+		//if(player.getMove() != null) {
+			//int offset = player.getMove().getDistance();
 			if(offset != 0) { //increment wheel rotation and body angle
 				wheelAngle -= 10;
 				bodyAngle = lerp(bodyAngle, BODY_ANGLE_MAX, BODY_ANGLE_LERP);
-			}
+			//}
 			//double divisor = (double)(player.getMove().THRESHOLD)/tileSize;
 			//if(direction.equals(Direction.LEFT)) {
 			//	xOffset = -(offset/divisor);

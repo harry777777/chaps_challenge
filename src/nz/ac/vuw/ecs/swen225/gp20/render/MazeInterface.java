@@ -3,6 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 
+import java.awt.Color;
 import java.util.List;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
@@ -40,7 +41,7 @@ public class MazeInterface {
 	 * @return the width of the current level
 	 */
 	public int getMazeWidth() {
-		return maze.getTiles().length;
+		return maze.getTiles()[0].length;
 	}
 	
 	/**
@@ -49,7 +50,7 @@ public class MazeInterface {
 	 * @return the height of the current level
 	 */
 	public int getMazeHeight() {
-		return maze.getTiles()[0].length;
+		return maze.getTiles().length;
 	}
 	
 	/**
@@ -60,10 +61,10 @@ public class MazeInterface {
 	 * @return the type of tile
 	 */
 	public TileType getTileType(int x, int y) {
-		if(maze.getTiles().length <= x) {
+		if(maze.getTiles()[0].length <= x) {
 			return null;
 		}
-		if(maze.getTiles()[0].length <= y) {
+		if(maze.getTiles().length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -82,10 +83,10 @@ public class MazeInterface {
 	 * @return the type of item on a tile
 	 */
 	public ItemType getItemType(int x, int y) {
-		if(maze.getTiles().length <= x) {
+		if(maze.getTiles()[0].length <= x) {
 			return null;
 		}
-		if(maze.getTiles()[0].length <= y) {
+		if(maze.getTiles().length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -96,6 +97,23 @@ public class MazeInterface {
 			}
 			if(currentFree.getItem() instanceof Key) {
 				return ItemType.KEY;
+			}
+		}
+		return null;
+	}
+	
+	public Color getKeyColor(int x, int y) {
+		if(maze.getTiles()[0].length <= x) {
+			return null;
+		}
+		if(maze.getTiles().length <= y) {
+			return null;
+		}
+		Tile current = maze.getTiles()[x][y];
+		if(current instanceof FreeTile) {
+			FreeTile currentFree = (FreeTile) current;
+			if(currentFree.getItem() instanceof Key) {
+				return ((Key)currentFree.getItem()).getColor();
 			}
 		}
 		return null;
@@ -296,6 +314,18 @@ public class MazeInterface {
 		Item item = inventory.get(i);
 		if(item instanceof Key) {
 			return ItemType.KEY;
+		}
+		return null;
+	}
+	
+	public Color getKeyColorInventory(int i) {
+		List<Item> inventory = maze.getPlayer().getInventory();
+		if(inventory.size() < i) {
+			return null;
+		}
+		Item item = inventory.get(i);
+		if(item instanceof Key) {
+			return ((Key) item).getColor();
 		}
 		return null;
 	}
