@@ -15,11 +15,11 @@ public interface Actor {
 
   Move getMove();
 
+  Direction getFacing();
 
   int getX();
 
   int getY();
-
 
 }
 

@@ -32,6 +32,11 @@ public class NPC implements Actor {
   }
 
   @Override
+  public Direction getFacing() {
+    return facing;
+  }
+
+  @Override
   public int getX() {
     return location.x;
   }
@@ -63,6 +68,7 @@ public class NPC implements Actor {
 
   @Override
   public void startMove(Direction direction) {
+    facing = direction;
     move = new Move(direction);
   }
 
@@ -72,7 +78,8 @@ public class NPC implements Actor {
   }
 
   public static void main(String[] args) {
-
     NPC npc = new NPC(1L, new Location(1,1));
+    System.out.println(npc.getFacing());
+
   }
 }

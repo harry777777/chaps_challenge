@@ -53,6 +53,11 @@ public class FreeTile implements Tile, Accessible {
     }
   }
 
+  @Override
+  public boolean isAccessible() {
+    return false; // FIXME: 21/10/20 
+  }
+
   private void removeItem() {
     item = null;
   }
