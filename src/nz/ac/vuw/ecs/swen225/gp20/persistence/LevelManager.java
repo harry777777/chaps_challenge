@@ -4,9 +4,7 @@ import com.google.gson.Gson;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
@@ -20,6 +18,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
+ * @author Matt/CrunchyPancakes
  * Class for handling the saving and loading of levels.
  * Works with the JSONHandler class to save and load levels in JSON format.
  */
@@ -37,7 +36,7 @@ public class LevelManager {
   /**
    * Saves a level as a JSON file.
    * Hardcoded for now to test saving a file.
-   * @param filepath
+   * @param filepath location to save level.
    * @throws IOException
    */
   public void saveLevel(String filepath) throws IOException {
@@ -78,8 +77,8 @@ public class LevelManager {
   /**
    * Saves a level as a JSON file.
    * Takes in a char array to build a level from.
-   * @param filepath
-   * @param textLevel
+   * @param filepath location to save level.
+   * @param textLevel a textual representation of a level.
    * @throws IOException
    */
   public void saveLevel(String filepath, String[][] textLevel) throws IOException {
@@ -136,9 +135,9 @@ public class LevelManager {
 
   /**
    * Saves a level as a JSON file.
-   * Takes in a maze to save to JSON.
-   * @param filepath
-   * @param level
+   * Takes in a Level to save to JSON.
+   * @param filepath location to save level.
+   * @param level Level object to be saved.
    * @throws IOException
    */
   public void saveLevel(String filepath, Level level) throws IOException {
@@ -148,7 +147,7 @@ public class LevelManager {
 
   /**
    * Loads a level from a JSON file.
-   * @param filepath
+   * @param filepath location to load Level from.
    * @throws IOException
    */
   public Level loadLevel(String filepath) throws IOException {
@@ -180,7 +179,7 @@ public class LevelManager {
             {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'}
         };
 
-  private final String[][] level1 = {
+  public final String[][] level1 = {
       {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
       {"W", "T", "F", "K0", "F", "W", "F", "F", "F", "W", "W", "T", "F", "T", "W"},
       {"W", "F", "F", "F", "F", "W", "F", "F", "F", "W", "W", "F", "T", "F", "W"},

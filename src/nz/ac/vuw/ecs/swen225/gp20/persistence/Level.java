@@ -3,6 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp20.persistence;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 
 /**
+ * @author Matt/CrunchyPancakes
  * Class to hold information on a level, so that it can be saved and loaded.
  */
 public class Level {

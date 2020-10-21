@@ -13,6 +13,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 
 /**
+ * @author Matt/CrunchyPancakes
  * Adapter to deserialise Tile objects from JSON (since tile is an interface).
  */
 public class TileAdapter implements JsonSerializer<Tile>, JsonDeserializer<Tile> {

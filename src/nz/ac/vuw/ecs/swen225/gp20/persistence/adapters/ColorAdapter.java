@@ -15,6 +15,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 
 /**
+ * @author Matt/CrunchyPancakes
  * Adapter to deserialise Color objects.
  */
 public class ColorAdapter implements JsonSerializer<Color>, JsonDeserializer<Color> {

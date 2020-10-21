@@ -18,14 +18,15 @@ import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.ItemAdapter;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.adapters.TileAdapter;
 
 /**
+ * @author Matt/CrunchyPancakes
  * Class for hanling JSON files.
  * Can handle a generic object, for which the type is serlialised/deserialised into JSON.
  * @param <T>
  */
 public class JSONHandler<T> {
 
-  Gson gson; // access to most gson library methods
-  GsonBuilder builder; // additional gson methods
+  private Gson gson; // access to most gson library methods
+  private GsonBuilder builder; // additional gson methods
 
   public JSONHandler(){
     builder = new GsonBuilder();
