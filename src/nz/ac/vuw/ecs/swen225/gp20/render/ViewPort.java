@@ -154,11 +154,15 @@ public class ViewPort {
 	    		}else if(maze.getTileType(row, col).equals(TileType.WALL)){
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}else if(maze.getTileType(row, col).equals(TileType.DOOR)) {
+	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    			//get color
 	    			Color doorColor = maze.getDoorColor(row, col);
-						System.out.println();
+	    			//System.out.println();
 	    			//get locked status
+	    			Graphics2D gTemp = (Graphics2D) g2.create();
 	    			rDoor.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, doorColor, false);
+	    			g2.dispose();
+	    			g2 = (Graphics2D) gTemp.create();
 	    		}
 	    	}
 	    }
