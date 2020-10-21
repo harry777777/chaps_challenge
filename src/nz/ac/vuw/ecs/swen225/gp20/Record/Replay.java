@@ -41,10 +41,7 @@ public class Replay {
   /**
    * * @author Harry
    * Returns the next Tickevent of a replay object and updates the position of the
-   * replay object in its replay process when finished will return null to alert application that
-   * the recording is over.
-   *
-   * @return TickEvent or null if the recording has finished.
+   * @return TickEvent at current Positon of the recording.
    */
   public TickEvent getNextTick() {
     if (finished) {
