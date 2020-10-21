@@ -121,6 +121,18 @@ public class LevelManager {
   }
 
   /**
+   * Saves a level as a JSON file.
+   * Takes in a maze to save to JSON.
+   * @param filepath
+   * @param level
+   * @throws IOException
+   */
+  public void saveLevel(String filepath, Maze level) throws IOException {
+    // Writing object to JSON file
+    handler.write(filepath, level);
+  }
+
+  /**
    * Loads a level from a JSON file.
    * @param filepath
    * @throws IOException
