@@ -11,12 +11,16 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+import nz.ac.vuw.ecs.swen225.gp20.persistence.Level;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.LevelManager;
 import nz.ac.vuw.ecs.swen225.gp20.render.Renderer;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 
 
@@ -26,18 +30,18 @@ import java.io.IOException;
  * Application class, this runs the game loop,creates the GUI and manages the key listeners
  */
 
-     //todo number of treasures to still be collected, make all keystrokes functional and add relevant buttons and menu items.
-    //todo Ask for recording name, let user choose what recording to replay, add menu bar, add all keybinds, add relevant buttons for speeding up / slowing down recording,
+//todo number of treasures to still be collected, make all keystrokes functional and add relevant buttons and menu items.
+//todo add menu bar, add all keybinds, add relevant buttons for speeding up / slowing down recording, make time out, add game over popups
 
 public class Application {
 
     private static JFrame frame;
     private Maze maze;
-    private final Renderer renderer;
+    private Renderer renderer;
     private final boolean moving = false;
-    private final Recorder r;
+    private Recorder r;
     private TickEvent tickEvent;
-    private int timer = 60;
+    private int timer;
     private int currentTick = 0;
     private boolean running = true;
     private boolean paused = false;
@@ -49,6 +53,8 @@ public class Application {
     private boolean gameOver = false;
     private boolean loadingSave = false;
     private boolean stepByStepReplay = false;
+    private LevelManager manager;
+    private Level level;
 
     private double GAME_HERTZ = 60;
     private double TBU = 1000000000 / GAME_HERTZ; // Time before update
@@ -69,37 +75,64 @@ public class Application {
 //        };
 //        Maze m = new Maze(testMap);
 
-        Maze m = null;
-        LevelManager l = new LevelManager();
-        try {
-            m = l.loadLevel("levels/level1.json");
-        } catch (Exception E) {
-            System.out.println("Error loading level: " + E.getMessage());
-        }
-        if (m != null) {
-            Application A = new Application(m);
-        }
+        Application A = new Application();
 
     }
 
     /**
      * initialise Application and run the loop
-     *
-     * @param m the maze created by the LevelManagers loadLevel;
      */
-    public Application(Maze m) {
-        this.maze = m;
-        renderer = new Renderer(m);
-        r = new Recorder();
+    public Application() {
+        loadGame(null);
         initialiseGui();
         run();
 
     }
 
+    private void loadGame(String fileName) {
+        Maze m = null;
+        manager = new LevelManager();
+        if(fileName != null) {
+            try {
+
+                JFileChooser fc = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
+                fc.setFileFilter(filter);
+                fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int returnVal = fc.showOpenDialog(frame);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File file = fc.getSelectedFile();
+                    //m = manager.loadLevel("levels/" + fileName);
+                    level = manager.loadLevel("levels/" + fileName);
+                    m = level.getMaze();
+                    timer = level.getTimer();
+
+                }
+            } catch (Exception E) {
+                System.out.println("Error loading chosen level: " + E.getMessage());
+            }
+        }
+        else{
+            try {
+
+                level = manager.loadLevel("levels/level1.json");
+                System.out.println("asd");
+                m = level.getMaze();
+                //timer = level.getTimer();
+
+            } catch (Exception E) {
+                System.out.println("Error loading level 1: " + E.getMessage());
+            }
+        }
+        this.maze = m;
+        renderer = new Renderer(m);
+        r = new Recorder();
+        timer = 60;
+    }
+
     /**
      * Initialises the Gui and creates the key listener
      */
-
     private void initialiseGui() {
         frame = new JFrame("Chaps Challenge");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -125,36 +158,51 @@ public class Application {
 
         frame.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e){
-                if(e.getKeyCode() == 17){ //ctrl pressed
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == 17) { //ctrl pressed
                     ctrlPressed = true;
                 }
-                if(e.getKeyCode() == 88 && ctrlPressed){ // X pressed - Exits the Game
+                if (e.getKeyCode() == 88 && ctrlPressed) { // X pressed - Exits the Game
                     System.exit(0);
                 }
-                if(e.getKeyCode() == 83 && ctrlPressed){ //S pressed - Saves and Exists the Game
-                    try{r.saveRecording("SavedGame");}catch (Exception E){
-                        System.out.println("Error saving recording:"+ E.getMessage());
+                if (e.getKeyCode() == 83 && ctrlPressed) { //S pressed - Saves and Exists the Game
+                    // try{r.saveRecording("SavedGame");}catch (Exception E){
+                    //     System.out.println("Error saving recording:"+ E.getMessage());
+                    // }
+                    try {
+                        manager.saveLevel("levels/savedGame.json", level);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
                     }
                     System.exit(0);
                 }
-                if(e.getKeyCode() == 82 && ctrlPressed){ //R pressed - Resume a Saved Game
-                    resumeSavedGame();
+                if (e.getKeyCode() == 82 && ctrlPressed) { //R pressed - Resume a Saved Game
+                    //resumeSavedGame();
+                    JFileChooser fc = new JFileChooser();
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
+                    fc.setFileFilter(filter);
+                    fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    int returnVal = fc.showOpenDialog(frame);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
+                        loadGame(file.getName());
+                    }
                 }
-                if(e.getKeyCode() == 80 && ctrlPressed){ //P pressed - Start a New Game at the last unfinished Level
+                if (e.getKeyCode() == 80 && ctrlPressed) { //P pressed - Start a New Game at the last unfinished Level
 
                 }
-                if(e.getKeyCode() == 49 && ctrlPressed){ //1 pressed - Start Game at Level 1
+                if (e.getKeyCode() == 49 && ctrlPressed) { //1 pressed - Start Game at Level 1
+                    loadGame(null);
 
                 }
-                if(e.getKeyCode() == 32){ //Space Pressed - Pause and open pause window
+                if (e.getKeyCode() == 32) { //Space Pressed - Pause and open pause window
                     paused = true;
-                    JOptionPane.showMessageDialog(null,"The Game is Paused","", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "The Game is Paused", "", JOptionPane.ERROR_MESSAGE);
                 }
-                if(e.getKeyCode() == 27){ //Esc Pressed - Unpause and close pause window
+                if (e.getKeyCode() == 27) { //Esc Pressed - Unpause and close pause window
                     paused = false;
                 }
-                if(!paused) {
+                if (!paused) {
                     if ((e.getKeyCode() == 38) && !moving) {
                         tickEvent = new TickEvent(currentTick, Direction.UP);
                     }
@@ -169,9 +217,10 @@ public class Application {
                     }
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode() == 17){
+                if (e.getKeyCode() == 17) {
                     ctrlPressed = false;
                 }
             }
@@ -193,15 +242,17 @@ public class Application {
         gameInfo.add(newTimer);
         timerLabel = newTimer;
         gameInfo.add(level);
-        frame.add(gameInfo,BorderLayout.EAST);
+        frame.add(gameInfo, BorderLayout.EAST);
 
         JPanel buttons = new JPanel();
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{r.saveRecording("Recording");}catch (Exception E){
-                     System.out.println("Error saving recording:"+ E.getMessage());
+                try {
+                    r.saveRecording("Recording");
+                } catch (Exception E) {
+                    System.out.println("Error saving recording:" + E.getMessage());
                 }
                 System.exit(0);
             }
@@ -230,21 +281,31 @@ public class Application {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    replay = new Replay("Recording");
-                    replaying = true;
-                    paused = true;
-                    Object[] possibleValues = { "Normal", "Step by Step"};
-                    Object replayChoice = JOptionPane.showInputDialog(null,
-                            "What type of replay", "Input",
-                            JOptionPane.INFORMATION_MESSAGE, null,
-                            possibleValues, possibleValues[0]);
-                    if(replayChoice == "Step by Step"){
-                        stepByStepReplay = true;
+                    JFileChooser fc = new JFileChooser();
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
+                    fc.setFileFilter(filter);
+                    fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    int returnVal = fc.showOpenDialog(frame);
+
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
+                        replay = new Replay(file.getName());
+
+                        replaying = true;
+                        paused = true;
+                        Object[] possibleValues = {"Normal", "Step by Step"};
+                        Object replayChoice = JOptionPane.showInputDialog(null,
+                                "What type of replay", "Input",
+                                JOptionPane.INFORMATION_MESSAGE, null,
+                                possibleValues, possibleValues[0]);
+                        if (replayChoice == "Step by Step") {
+                            stepByStepReplay = true;
+                        }
+                        currentTick = 0;
+                        timer = 60;
+                        paused = false;
+                        tickEvent = replay.getNextTick();
                     }
-                    currentTick = 0;
-                    timer = 60;
-                    paused = false;
-                    tickEvent = replay.getNextTick();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -299,34 +360,32 @@ public class Application {
         final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
         while (running) {
-            while(!paused && !gameOver) {
+            while (!paused && !gameOver) {
                 double now = System.nanoTime();
                 int updateCount = 0;
                 while (((now - lastUpdateTime) > TBU) && updateCount < MUBR) {  //preform the update when its been long enough since last update
                     lastUpdateTime += TBU;
-                    if(tickEvent != null) {
+                    if (tickEvent != null) {
                         if (replaying) {
-                            if(tickEvent.getTick() == currentTick){
+                            if (tickEvent.getTick() == currentTick) {
                                 update();
                                 tickEvent = replay.getNextTick();
-                                if(stepByStepReplay) {
+                                if (stepByStepReplay) {
                                     paused = true;
                                 }
                             }
-                        }
-                        else if (loadingSave) {
-                            if(tickEvent.getTick() == currentTick){
+                        } else if (loadingSave) {
+                            if (tickEvent.getTick() == currentTick) {
                                 update();
                                 tickEvent = save.getNextTick();
-                                if(tickEvent == null){
+                                if (tickEvent == null) {
                                     System.out.println("yasss");
                                     GAME_HERTZ = 60;
-                                    TBU = 1000000000/GAME_HERTZ;
+                                    TBU = 1000000000 / GAME_HERTZ;
                                     loadingSave = false;
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             update();
                         }
                     }
@@ -339,16 +398,17 @@ public class Application {
 
                 lastRenderTime = now;
 
-                if(!paused) {
+                if (!paused) {
                     maze.tick();
                     redraw();
                     currentTick++;
                     timerFrameCounter++;
                 }
 
-                if(timerFrameCounter == 60) {
-                    if(timer == 0){
+                if (timerFrameCounter == 60) {
+                    if (timer == 0) {
                         gameOver = true;
+                        JOptionPane.showMessageDialog(frame, "Game Over, you ran out of time");
                         break;
                     }
                     timer -= 1;
