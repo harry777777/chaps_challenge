@@ -59,6 +59,8 @@ public class Application {
 
     private double GAME_HERTZ = 60;
     private double TBU = 1000000000 / GAME_HERTZ; // Time before update
+    private double TARGET_FPS = 60;
+    private double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
     /**
      * @author Owen
@@ -194,16 +196,16 @@ public class Application {
                     paused = false;
                 }
                 if (!paused) {
-                    if ((e.getKeyCode() == 38) && !moving) {
+                    if ((e.getKeyCode() == 38) && maze.getPlayer().isStationary()) {
                         tickEvent = new TickEvent(currentTick, Direction.UP);
                     }
-                    if ((e.getKeyCode() == 40) && !moving) {
+                    if ((e.getKeyCode() == 40) && maze.getPlayer().isStationary()) {
                         tickEvent = new TickEvent(currentTick, Direction.DOWN);
                     }
-                    if ((e.getKeyCode() == 37) && !moving) {
+                    if ((e.getKeyCode() == 37) && maze.getPlayer().isStationary()) {
                         tickEvent = new TickEvent(currentTick, Direction.LEFT);
                     }
-                    if ((e.getKeyCode() == 39) && !moving) {
+                    if ((e.getKeyCode() == 39) && maze.getPlayer().isStationary()) {
                         tickEvent = new TickEvent(currentTick, Direction.RIGHT);
                     }
                 }
@@ -294,10 +296,14 @@ public class Application {
                         if (replayChoice == "Half Speed") {
                             GAME_HERTZ = 30;
                             TBU = 1000000000 / GAME_HERTZ;
+                            TARGET_FPS = 30;
+                            TTBR = 1000000000 / TARGET_FPS;
                         }
-                        if (replayChoice == "Double") {
+                        if (replayChoice == "Double Speed") {
                             GAME_HERTZ = 120;
                             TBU = 1000000000 / GAME_HERTZ;
+                            TARGET_FPS = 120;
+                            TTBR = 1000000000 / TARGET_FPS;
                         }
 
                         loadGame(null);
@@ -342,9 +348,6 @@ public class Application {
         double lastUpdateTime = System.nanoTime();
         double lastRenderTime;
 
-        final double TARGET_FPS = 60;
-        final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
-
         while (running) {
             while (!paused && !gameOver) {
                 double now = System.nanoTime();
@@ -362,6 +365,8 @@ public class Application {
                                 if(replay.isFinished()) {
                                     GAME_HERTZ = 60;
                                     TBU = 1000000000 / GAME_HERTZ;
+                                    TARGET_FPS = 60;
+                                    TTBR = 1000000000 / TARGET_FPS;
                                     JOptionPane.showMessageDialog(frame, "The recording is finished");
                                     paused = true;
                                     replaying = false;
