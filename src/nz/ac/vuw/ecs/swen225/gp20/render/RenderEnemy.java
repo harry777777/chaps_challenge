@@ -24,7 +24,7 @@ public class RenderEnemy {
 	 * @param x
 	 * @param y
 	 * @param tileSize
-	 * @param mazeInterface 
+	 * @param maze
 	 * @param i Enemy number in the actors array
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface maze, int i){

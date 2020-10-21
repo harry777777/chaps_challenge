@@ -59,7 +59,7 @@ public class RenderPlayer {
 	 * @param x
 	 * @param y
 	 * @param tileSize
-	 * @param mazeInterface
+	 * @param maze
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface maze){
 		InterfaceDirection direction = maze.getPlayerDirection();

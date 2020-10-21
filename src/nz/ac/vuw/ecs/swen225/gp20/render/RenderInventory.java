@@ -33,7 +33,7 @@ public class RenderInventory {
 	 * Draws the inventory
 	 * 
 	 * @param g2
-	 * @param mazeInterface
+	 * @param maze
 	 * @param x
 	 * @param y
 	 * @param tileSize

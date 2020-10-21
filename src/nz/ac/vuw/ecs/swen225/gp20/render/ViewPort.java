@@ -47,7 +47,7 @@ public class ViewPort {
 	 * Draws the view port
 	 * 
 	 * @param g2 
-	 * @param mazeInterface
+	 * @param maze
 	 * @param x 
 	 * @param y 
 	 * @param tileSize 
