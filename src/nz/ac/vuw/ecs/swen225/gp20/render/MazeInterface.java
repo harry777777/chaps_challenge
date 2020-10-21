@@ -102,6 +102,13 @@ public class MazeInterface {
 		return null;
 	}
 	
+	/**
+	 * Returns the color of a key at a given position
+	 * 
+	 * @param x
+	 * @param y
+	 * @return Color of key at specified position
+	 */
 	public Color getKeyColor(int x, int y) {
 		if(maze.getTiles()[0].length <= x) {
 			return null;
@@ -208,10 +215,10 @@ public class MazeInterface {
 		if(i < 0) {
 			return null;
 		}
-		if(maze.getActors().size() < i+1) {
+		if(maze.getActors().size() <= i) {
 			return null;
 		}
-		Direction direction = maze.getActors().get(i+1).getFacing();
+		Direction direction = maze.getActors().get(i).getFacing();
 		
 		switch (direction) {
 			case LEFT: 
@@ -236,8 +243,8 @@ public class MazeInterface {
 	 */
 	public int getActorX(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getX();
+		if(maze.getActors().size() <= i) {
+			return maze.getActors().get(i).getX();
 		}
 		return 0;
 	}
@@ -251,8 +258,8 @@ public class MazeInterface {
 	 */
 	public int getActorY(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getY();
+		if(maze.getActors().size() <= i) {
+			return maze.getActors().get(i).getY();
 		}
 		return 0;
 	}
@@ -266,8 +273,8 @@ public class MazeInterface {
 	 */
 	public int getActorOffset(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getMove().getDistance();
+		if(maze.getActors().size() <= i) {
+			return maze.getActors().get(i).getMove().getDistance();
 		}
 		return 0;
 	}
@@ -281,8 +288,8 @@ public class MazeInterface {
 	 */
 	public int getActorThreshold(int i) {
 		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getMove().THRESHOLD;
+		if(maze.getActors().size() <= i) {
+			return maze.getActors().get(i).getMove().THRESHOLD;
 		}
 		return 0;
 	}
@@ -318,6 +325,13 @@ public class MazeInterface {
 		return null;
 	}
 	
+	/**
+	 * Returns a color for a key at a given position in the inventory
+	 * 
+	 * @param i position of item in the items List
+	 * 
+	 * @return The color for the specified key
+	 */
 	public Color getKeyColorInventory(int i) {
 		List<Item> inventory = maze.getPlayer().getInventory();
 		if(inventory.size() < i) {
