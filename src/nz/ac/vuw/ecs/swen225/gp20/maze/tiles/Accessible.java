@@ -16,6 +16,6 @@ public interface Accessible {
    */
   void admit(Actor player);
 
-  boolean isAccessible();
+  boolean isAccessibleBy(Actor actor);
 
 }

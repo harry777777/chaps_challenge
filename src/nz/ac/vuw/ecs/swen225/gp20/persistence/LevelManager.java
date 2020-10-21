@@ -147,6 +147,7 @@ public class LevelManager {
     Level loadedLevel = handler.read(filepath, Level.class);
     Maze loadedMaze = loadedLevel.getMaze();
     Maze newMaze = new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer(), loadedMaze.getActors());
+//    System.out.println(loadedMaze.getActors());
     int timer = loadedLevel.getTimer();
     return new Level(newMaze, timer);
   }
@@ -183,7 +184,7 @@ public class LevelManager {
       {'W', 'W', 'W', 'W', 'F', 'W', 'F', 'F', 'F', 'W', 'W', 'F', 'T', 'F', 'W'},
       {'W', 'F', 'F', 'F', 'T', 'W', 'F', 'F', 'F', 'W', 'W', 'T', 'F', 'T', 'W'},
       {'W', 'F', 'W', 'W', 'W', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'W', 'W', 'W'},
-      {'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'T', 'W'},
+      {'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'N', 'F', 'F', 'F', 'F', 'T', 'W'},
       {'W', 'W', 'W', 'W', 'W', 'W', 'F', 'F', 'F', 'W', 'F', 'F', 'F', 'T', 'W'},
       {'W', 'W', 'W', 'W', 'W', 'W', 'F', 'C', 'F', 'W', 'K', 'F', 'F', 'T', 'W'},
       {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'}

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -62,7 +63,7 @@ public class Maze {
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
-    this.actors.add(0, player);
+    this.actors.add(this.player);
   }
 
   /**
@@ -97,6 +98,9 @@ public class Maze {
             break;
           case 'T':
             tiles[i][j] = new FreeTile(new Location(i, j), new Treasure(1));
+            break;
+          case 'D':
+            tiles[i][j] = new DoorTile(Color.cyan, new Location(i, j));
             break;
           default:
             throw new IllegalStateException("Unexpected value: " + c);
@@ -170,8 +174,13 @@ public class Maze {
     if (player.isStationary()) {
       player.setFacing(direction);
       if (player.canAccess(destination)) {
-        player.startMove(direction);
-        sound = SoundNotifier.PLAYER_MOVE;
+        Accessible accessible = (Accessible) destination;
+        if (accessible.isAccessibleBy(player)) {
+          accessible.admit(player);
+          player.startMove(direction);
+          sound = SoundNotifier.PLAYER_MOVE;
+        }
+
       }
     }
   }
@@ -231,5 +240,6 @@ public class Maze {
     DOOR_UNLOCK,
     END_LEVEL,
   }
+
 
 }

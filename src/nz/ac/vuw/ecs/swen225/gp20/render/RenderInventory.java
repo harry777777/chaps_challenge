@@ -3,10 +3,7 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.List;
-
-import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
+import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.ItemType;
 
 /**
  * @author Marco
@@ -36,22 +33,22 @@ public class RenderInventory {
 	 * Draws the inventory
 	 * 
 	 * @param g2
-	 * @param inventory
+	 * @param maze
 	 * @param x
 	 * @param y
 	 * @param tileSize
 	 */
-	public void draw(Graphics2D g2, List<Item> inventory, double x, double y, int tileSize) {
+	public void draw(Graphics2D g2, MazeInterface maze, double x, double y, int tileSize) {
 		for(int row = 0; row <8; row++) {
 			drawTile(g2, x, y+tileSize*row, tileSize);
-			if(inventory.size() > row) {
-				Item current = inventory.get(row);
-				if(current instanceof Key) {
+			if(maze.getInventorySize() > row) {
+				ItemType type = maze.getFromInventory(row);
+				if(type.equals(ItemType.KEY)) {
 					//draw the key
-					Key k = (Key) current;
+					Color keyColor = maze.getKeyColorInventory(row);
 					//push matrix - key movement
 					Graphics2D gTemp = (Graphics2D) g2.create();
-					rKey.draw(g2, x, y+tileSize*row-tileSize/9, tileSize, k.getColor());
+					rKey.draw(g2, x, y+tileSize*row-tileSize/9, tileSize, keyColor);
 					//pop matrix
 					g2.dispose();
 					g2 = (Graphics2D) gTemp.create();

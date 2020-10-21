@@ -4,8 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.InterfaceDirection;
 
 /**
  * @author Marco
@@ -25,30 +24,19 @@ public class RenderEnemy {
 	 * @param x
 	 * @param y
 	 * @param tileSize
-	 * @param actor
+	 * @param maze
+	 * @param i Enemy number in the actors array
 	 */
-	public void draw(Graphics2D g2, double x, double y, int tileSize, Actor actor){
-		Direction direction = actor.getFacing();
+	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface maze, int i){
+		InterfaceDirection direction = maze.getActorDirection(i);
+		int offset = maze.getActorOffset(i);
 		
 		//calculate enemy offset
 		double xOffset = 0;
 		double yOffset = 0;
-		if(actor.getMove() != null) {
-			int offset = actor.getMove().getDistance();
-			
-			double divisor = (double)(actor.getMove().THRESHOLD)/tileSize;
-			//if(direction.equals(Direction.LEFT)) {
-			//	xOffset = -(offset/divisor);
-			//}
-			//if(direction.equals(Direction.RIGHT)) {
-			//	xOffset = (offset/divisor);
-			//}
-			//if(direction.equals(Direction.UP)) {
-			//	yOffset = -(offset/divisor);
-			//}
-			//if(direction.equals(Direction.DOWN)) {
-			//	yOffset = (offset/divisor);
-			//}
+		if(offset != 0) {
+ 
+			double divisor = (double)(maze.getActorThreshold(i))/tileSize;
 			
 			switch (direction) {
 				case LEFT: 
@@ -65,11 +53,6 @@ public class RenderEnemy {
 					break;
 			}
 		}
-		
-		//System.out.println(direction);
-		
-		//xOffset = 0;
-		//yOffset = 0;
 		
 		drawFront(x+xOffset, y+yOffset, tileSize, g2);
 	}

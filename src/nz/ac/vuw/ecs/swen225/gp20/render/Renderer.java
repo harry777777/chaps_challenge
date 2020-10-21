@@ -3,12 +3,9 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.util.List;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
+
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
+
 
 /**
  * @author Marco
@@ -17,9 +14,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
  *
  */
 public class Renderer {
-	
-	Maze maze;													//TODO: remove this
-	MazeInterface mazeInterface;
+	MazeInterface maze;
 	ViewPort viewPort;
 	RenderInventory rInventory;
 	RenderAudio rAudio;
@@ -28,23 +23,20 @@ public class Renderer {
 	/**
 	 * Initializes the renderer passing it the maze
 	 * 
-	 * This one gives the renderer control over sizing and placement, use it in early development
+	 * @param maze 
 	 * 
-	 * @param m
 	 */
 	public Renderer(Maze maze) {
-		this.maze = maze; 										//TODO: remove this
 		this.viewX = 70; 
 		this.viewY = 70; 
 		this.tileSize = 50;
 		this.viewHeight = 9;
 		this.viewWidth = 9;
 		
-		this.mazeInterface = new MazeInterface(maze);
+		this.maze = new MazeInterface(maze);
 		RenderTreasure rTreasure = new RenderTreasure();
 		RenderKey rKey = new RenderKey();
-		List<Actor> actors = maze.getActors();					//TODO: remove this
-		this.viewPort = new ViewPort(rTreasure, rKey, actors);
+		this.viewPort = new ViewPort(rTreasure, rKey);
 		this.rInventory = new RenderInventory(rKey);
 		this.rAudio = new RenderAudio();
 		
@@ -67,16 +59,13 @@ public class Renderer {
 	    g2.setRenderingHints(rh);
 	    
 		//access maze and draw
-	    Tile[][] tiles = maze.getTiles();					//TODO: remove this
-	    Player player = maze.getPlayer();					//TODO: remove this
 	    //push matrix - viewport
 		Graphics2D gTemp = (Graphics2D) g2.create();
-	    viewPort.draw(g2, tiles, player, viewX, viewY, tileSize, viewWidth, viewHeight);
+	    viewPort.draw(g2, maze, viewX, viewY, tileSize, viewWidth, viewHeight);
 	    //pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
-	    List<Item> inventory = player.getInventory();
-	    rInventory.draw(g2, inventory, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
+	    rInventory.draw(g2, maze, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
 	    
 	    //sounds
 	    playSound();
@@ -84,7 +73,7 @@ public class Renderer {
 	}
 	
 	private void playSound() {
-		Maze.SoundNotifier sound = maze.getSound();
+		MazeInterface.SoundType sound = maze.getSound();
 	    if(sound == null) {
 	    	return;
 	    }

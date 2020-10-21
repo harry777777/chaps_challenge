@@ -1,8 +1,11 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
@@ -21,6 +24,8 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
  */
 public class MazeInterface {
 	private Maze maze;
+	private List<Actor> actors = new ArrayList<Actor>();
+	
 	
 	/**
 	 * 
@@ -30,6 +35,12 @@ public class MazeInterface {
 	 */
 	public MazeInterface(Maze maze) {
 		this.maze = maze;
+		List<Actor> tempActors = maze.getActors();
+		for(Actor actor: tempActors) {
+			if (!(actor instanceof Player)) {
+				actors.add(actor);
+			}
+		}
 	}
 	
 	//------------Maze-----------------
@@ -40,7 +51,7 @@ public class MazeInterface {
 	 * @return the width of the current level
 	 */
 	public int getMazeWidth() {
-		return maze.getTiles().length;
+		return maze.getTiles()[0].length;
 	}
 	
 	/**
@@ -49,7 +60,7 @@ public class MazeInterface {
 	 * @return the height of the current level
 	 */
 	public int getMazeHeight() {
-		return maze.getTiles()[0].length;
+		return maze.getTiles().length;
 	}
 	
 	/**
@@ -60,10 +71,10 @@ public class MazeInterface {
 	 * @return the type of tile
 	 */
 	public TileType getTileType(int x, int y) {
-		if(maze.getTiles().length <= x) {
+		if(maze.getTiles()[0].length <= x) {
 			return null;
 		}
-		if(maze.getTiles()[0].length <= y) {
+		if(maze.getTiles().length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -82,10 +93,10 @@ public class MazeInterface {
 	 * @return the type of item on a tile
 	 */
 	public ItemType getItemType(int x, int y) {
-		if(maze.getTiles().length <= x) {
+		if(maze.getTiles()[0].length <= x) {
 			return null;
 		}
-		if(maze.getTiles()[0].length <= y) {
+		if(maze.getTiles().length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -96,6 +107,30 @@ public class MazeInterface {
 			}
 			if(currentFree.getItem() instanceof Key) {
 				return ItemType.KEY;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the color of a key at a given position
+	 * 
+	 * @param x
+	 * @param y
+	 * @return Color of key at specified position
+	 */
+	public Color getKeyColor(int x, int y) {
+		if(maze.getTiles()[0].length <= x) {
+			return null;
+		}
+		if(maze.getTiles().length <= y) {
+			return null;
+		}
+		Tile current = maze.getTiles()[x][y];
+		if(current instanceof FreeTile) {
+			FreeTile currentFree = (FreeTile) current;
+			if(currentFree.getItem() instanceof Key) {
+				return ((Key)currentFree.getItem()).getColor();
 			}
 		}
 		return null;
@@ -175,7 +210,7 @@ public class MazeInterface {
 	 * @return number of actors that aren't the player
 	 */
 	public int getNumberActors() {
-		return maze.getActors().size()-1;
+		return actors.size();
 	}
 	
 	/**
@@ -186,14 +221,7 @@ public class MazeInterface {
 	 * @return actor direction
 	 */
 	public InterfaceDirection getActorDirection(int i) {
-		//TODO make sure player is always at position 0;
-		if(i < 0) {
-			return null;
-		}
-		if(maze.getActors().size() < i+1) {
-			return null;
-		}
-		Direction direction = maze.getActors().get(i+1).getFacing();
+		Direction direction = actors.get(i).getFacing();
 		
 		switch (direction) {
 			case LEFT: 
@@ -217,11 +245,7 @@ public class MazeInterface {
 	 * @return actor x position
 	 */
 	public int getActorX(int i) {
-		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getX();
-		}
-		return 0;
+			return actors.get(i).getX();
 	}
 	
 	/**
@@ -232,11 +256,7 @@ public class MazeInterface {
 	 * @return actor y position
 	 */
 	public int getActorY(int i) {
-		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getY();
-		}
-		return 0;
+			return actors.get(i).getY();
 	}
 	
 	/**
@@ -247,11 +267,7 @@ public class MazeInterface {
 	 * @return actor offset
 	 */
 	public int getActorOffset(int i) {
-		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getMove().getDistance();
-		}
-		return 0;
+			return actors.get(i).getMove().getDistance();
 	}
 	
 	/**
@@ -262,11 +278,7 @@ public class MazeInterface {
 	 * @return actor threshold
 	 */
 	public int getActorThreshold(int i) {
-		//TODO make sure player is always at position 0;
-		if(maze.getActors().size() >= i+1) {
-			return maze.getActors().get(i+1).getMove().THRESHOLD;
-		}
-		return 0;
+			return actors.get(i).getMove().THRESHOLD;
 	}
 	
 	
@@ -296,6 +308,55 @@ public class MazeInterface {
 		Item item = inventory.get(i);
 		if(item instanceof Key) {
 			return ItemType.KEY;
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns a color for a key at a given position in the inventory
+	 * 
+	 * @param i position of item in the items List
+	 * 
+	 * @return The color for the specified key
+	 */
+	public Color getKeyColorInventory(int i) {
+		List<Item> inventory = maze.getPlayer().getInventory();
+		if(inventory.size() < i) {
+			return null;
+		}
+		Item item = inventory.get(i);
+		if(item instanceof Key) {
+			return ((Key) item).getColor();
+		}
+		return null;
+	}
+	
+	
+	//--------------Sound------------------
+	
+	/**
+	 * Returns an enum for a sound effect that should be played, or null if no sound effect should be played
+	 * 
+	 * @return An enum for sound to be played 
+	 */
+	public SoundType getSound() {
+		Maze.SoundNotifier sound = maze.getSound();
+	    if(sound == null) {
+	    	return null;
+	    }
+		switch (sound) {
+    		case PLAYER_MOVE: 
+    			return SoundType.PLAYER_MOVE;
+    		case WALL_COLLISION: 
+    			return SoundType.WALL_COLLISION;
+    		case PICKUP_ITEM: 
+    			return SoundType.PICKUP_ITEM;
+    		case PLAYER_DEATH: 
+    			return SoundType.PLAYER_DEATH;
+    		case DOOR_UNLOCK: 
+    			return SoundType.DOOR_UNLOCK;
+    		case END_LEVEL: 
+    			return SoundType.END_LEVEL;
 		}
 		return null;
 	}
@@ -360,5 +421,38 @@ public class MazeInterface {
 		 * Treasure item
 		 */
 		TREASURE,
+	}
+	
+	/**
+	 * @author Marco
+	 * 
+	 * An enum for the types of sound triggers in the maze module
+	 *
+	 */
+	public enum SoundType {
+		/**
+		 * Player move sound
+		 */
+		PLAYER_MOVE,
+		/**
+		 * Collide with wall sound
+		 */
+		WALL_COLLISION,
+		/**
+		 * Pickup item sound
+		 */
+		PICKUP_ITEM,
+		/**
+		 * Player dies sound
+		 */
+		PLAYER_DEATH,
+		/**
+		 * Unlock a door sound
+		 */
+		DOOR_UNLOCK,
+		/**
+		 * Level complete sound
+		 */
+		END_LEVEL
 	}
 }
