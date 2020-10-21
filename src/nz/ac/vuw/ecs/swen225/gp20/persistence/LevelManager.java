@@ -13,6 +13,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
+import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
@@ -23,9 +24,10 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
  * Works with the JSONHandler class to save and load levels in JSON format.
  */
 public class LevelManager {
+  private final Color[] COLORS = {Color.pink, Color.cyan};
 
-  Gson gson; // For testing purposes to use GSON in this class.
-  JSONHandler<Level> handler; // Handles our JSON level files. Saves/loads Level objects.
+  private Gson gson; // For testing purposes to use GSON in this class.
+  private JSONHandler<Level> handler; // Handles our JSON level files. Saves/loads Level objects.
 
   public LevelManager(){
     gson = new Gson();
@@ -80,39 +82,45 @@ public class LevelManager {
    * @param textLevel
    * @throws IOException
    */
-  public void saveLevel(String filepath, char[][] textLevel) throws IOException {
+  public void saveLevel(String filepath, String[][] textLevel) throws IOException {
     int width = textLevel.length;
     int height = textLevel[0].length;
     Tile[][] tiles = new Tile[height][width];
     Player player = null;
+    Color col = null;
     List<Actor> actors = new ArrayList<>();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
-        char c = textLevel[j][i];
-        switch (c) {
-          case 'F':
+        String s = textLevel[j][i];
+        switch (s.substring(0,1)) {
+          case "F":
             tiles[i][j] = new FreeTile(new Location(i, j));
             break;
-          case 'W':
+          case "W":
             tiles[i][j] = new WallTile(new Location(i, j));
             break;
-          case 'C':
+          case "C":
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i,j);
             break;
-          case 'N':
+          case "N":
             tiles[i][j] = new FreeTile(new Location(i, j));
             NPC npc = new NPC(10L, new Location(i, j));
             actors.add(npc);
             break;
-          case 'K':
-            tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0,255,255)));
+          case "K":
+            col = COLORS[Integer.parseInt(s.substring(1,2))];
+            tiles[i][j] = new FreeTile(new Location(i, j), new Key(col));
             break;
-          case 'T':
+          case "T":
             tiles[i][j] = new FreeTile(new Location(i, j), new Treasure(1));
             break;
+          case "D":
+            col = COLORS[Integer.parseInt(s.substring(1,2))];
+            tiles[i][j] = new DoorTile(col, new Location(i,j));
+            break;
           default:
-            throw new IllegalStateException("Unexpected value: " + c);
+            throw new IllegalStateException("Unexpected value: " + s);
         }
       }
     }
@@ -172,21 +180,21 @@ public class LevelManager {
             {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'}
         };
 
-  private final char[][] level1 = {
-      {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'},
-      {'W', 'T', 'F', 'K', 'F', 'W', 'F', 'F', 'F', 'W', 'W', 'T', 'F', 'T', 'W'},
-      {'W', 'F', 'F', 'F', 'F', 'W', 'F', 'F', 'F', 'W', 'W', 'F', 'T', 'F', 'W'},
-      {'W', 'F', 'F', 'W', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'T', 'F', 'T', 'W'},
-      {'W', 'F', 'W', 'W', 'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'T', 'F', 'W'},
-      {'W', 'F', 'W', 'W', 'T', 'F', 'F', 'F', 'F', 'F', 'F', 'T', 'F', 'T', 'W'},
-      {'W', 'F', 'W', 'W', 'W', 'W', 'F', 'F', 'F', 'W', 'W', 'F', 'T', 'F', 'W'},
-      {'W', 'T', 'F', 'F', 'T', 'W', 'F', 'F', 'F', 'W', 'W', 'T', 'F', 'T', 'W'},
-      {'W', 'W', 'W', 'W', 'F', 'W', 'F', 'F', 'F', 'W', 'W', 'F', 'T', 'F', 'W'},
-      {'W', 'F', 'F', 'F', 'T', 'W', 'F', 'F', 'F', 'W', 'W', 'T', 'F', 'T', 'W'},
-      {'W', 'F', 'W', 'W', 'W', 'W', 'W', 'W', 'F', 'W', 'W', 'W', 'W', 'W', 'W'},
-      {'W', 'F', 'F', 'F', 'F', 'F', 'F', 'F', 'N', 'F', 'F', 'F', 'F', 'T', 'W'},
-      {'W', 'W', 'W', 'W', 'W', 'W', 'F', 'F', 'F', 'W', 'F', 'F', 'F', 'T', 'W'},
-      {'W', 'W', 'W', 'W', 'W', 'W', 'F', 'C', 'F', 'W', 'K', 'F', 'F', 'T', 'W'},
-      {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'}
+  private final String[][] level1 = {
+      {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
+      {"W", "T", "F", "K0", "F", "W", "F", "F", "F", "W", "W", "T", "F", "T", "W"},
+      {"W", "F", "F", "F", "F", "W", "F", "F", "F", "W", "W", "F", "T", "F", "W"},
+      {"W", "F", "F", "W", "W", "W", "W", "D1", "W", "W", "W", "T", "F", "T", "W"},
+      {"W", "F", "W", "W", "W", "F", "F", "F", "F", "D0", "D1", "F", "T", "F", "W"},
+      {"W", "F", "W", "W", "T", "F", "F", "F", "F", "D0", "D1", "T", "F", "T", "W"},
+      {"W", "F", "W", "W", "W", "W", "F", "F", "F", "W", "W", "F", "T", "F", "W"},
+      {"W", "T", "F", "F", "T", "W", "F", "F", "F", "W", "W", "T", "F", "T", "W"},
+      {"W", "W", "W", "W", "F", "W", "F", "F", "F", "W", "W", "F", "T", "F", "W"},
+      {"W", "F", "F", "F", "T", "W", "F", "F", "F", "W", "W", "T", "F", "T", "W"},
+      {"W", "F", "W", "W", "W", "W", "W", "W", "F", "W", "W", "W", "W", "W", "W"},
+      {"W", "F", "F", "F", "F", "F", "F", "F", "N", "D0", "F", "F", "F", "T", "W"},
+      {"W", "W", "W", "W", "W", "W", "F", "F", "F", "W", "F", "F", "F", "T", "W"},
+      {"W", "W", "W", "W", "W", "W", "F", "C", "F", "W", "K1", "F", "F", "T", "W"},
+      {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W"}
   };
 }

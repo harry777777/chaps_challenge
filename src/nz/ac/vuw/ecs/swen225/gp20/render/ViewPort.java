@@ -71,9 +71,7 @@ public class ViewPort {
 		double yOffset = 0;
 		int offset = maze.getPlayerOffset();
 		if(offset != 0) {
-
 			double divisor = (double)(maze.getPlayerThreshold())/tileSize;
-			
 			switch (direction) {
 				case LEFT: 
 					xOffset = -(offset/divisor);
@@ -90,26 +88,6 @@ public class ViewPort {
 			}
 		}
 		
-		//prevent checking and rendering for things out of view
-		int topEdge = playerY-viewHeight/2-1;
-		int bottomEdge = playerY+viewHeight/2+2;
-		int leftEdge = playerX-viewWidth/2-1;
-		int rightEdge = playerX+viewHeight/2+2;
-		if(topEdge < 0) {
-			topEdge = 0;
-		}
-		if(leftEdge < 0) {
-			leftEdge = 0;
-		}
-		if(bottomEdge > maze.getMazeWidth()) {
-			bottomEdge = maze.getMazeWidth();
-		}
-		if(rightEdge > maze.getMazeHeight()) {
-			rightEdge = maze.getMazeHeight();
-		}
-		//System.out.println(topEdge);
-		
-		
 		//crop the drawing plane for level grid
 		g2.clip(new RoundRectangle2D.Double(x-tileSize*1.25, y-tileSize*1.25, viewWidth*tileSize+tileSize*2.5, viewHeight*tileSize+tileSize*2.5, 20, 20));
 		
@@ -117,7 +95,6 @@ public class ViewPort {
 		g2.setStroke(new BasicStroke(1));
 		for(int row = 0; row < maze.getMazeHeight(); row++) {  //maze.getMazeHeight()
 	    	for(int col = 0; col < maze.getMazeWidth(); col++) { //maze.getMazeWidth()
-	    		
 	    		g2.setColor(GRID_COLOR);
     			g2.draw(new Rectangle2D.Double(centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, tileSize));
     			if(maze.getTileType(row, col).equals(TileType.FREE)) {
@@ -134,11 +111,28 @@ public class ViewPort {
 		//draw background
 		g2.setColor(SPACE_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
+	  	
+	  	//prevent looping through things out of view things out of view
+	  	int topEdge = playerY-viewHeight/2-1;
+	  	int bottomEdge = playerY+viewHeight/2+2;
+	  	int leftEdge = playerX-viewWidth/2-1;
+	  	int rightEdge = playerX+viewHeight/2+2;
+	  	if(topEdge < 0) {
+	  		topEdge = 0;
+	  	}
+	  	if(leftEdge < 0) {
+	  		leftEdge = 0;
+	  	}
+	  	if(bottomEdge > maze.getMazeWidth()) {
+	  		bottomEdge = maze.getMazeWidth();
+	  	}
+	  	if(rightEdge > maze.getMazeHeight()) {
+	  		rightEdge = maze.getMazeHeight();
+	  	}
 		
 	  	//draw the maze in the view port
 		for(int row = leftEdge; row < rightEdge; row++) {
 	    	for(int col = topEdge; col < bottomEdge; col++) {
-
 	    		if(maze.getTileType(row, col).equals(TileType.FREE)) {
 	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    			if(maze.getItemType(row, col) != null) {
@@ -158,7 +152,6 @@ public class ViewPort {
 	    		}else if(maze.getTileType(row, col).equals(TileType.WALL)){
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}
-	    		
 	    	}
 	    }
 		
@@ -168,7 +161,7 @@ public class ViewPort {
 			rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, maze, i);
 		}
 
-		
+		//draw the player
 		rPlayer.draw(g2, centerX, centerY, tileSize, maze);
 		
 		//update item animations
