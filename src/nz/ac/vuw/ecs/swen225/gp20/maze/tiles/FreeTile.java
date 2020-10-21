@@ -43,7 +43,7 @@ public class FreeTile implements Tile, Accessible {
   }
 
   @Override
-  public void admit(Actor actor) {
+  public void entryOperations(Actor actor) {
     if (actor instanceof Player) {
       if (item != null) {
         Player player = (Player) actor;

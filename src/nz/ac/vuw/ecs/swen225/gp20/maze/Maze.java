@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
 import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
@@ -155,6 +154,13 @@ public class Maze {
         if (move.isAtThreshold()) {
           executeMove(actor, move.getDirection());
           actor.endMove();
+          if (actor instanceof NPC) {
+            NPC npc = (NPC) actor;
+            Direction nextDirection =  npc.getNextDirection();
+            if (isValidMove(getTileAdjacentTo(actor.getLocation(), nextDirection), npc)) {
+              npc.startMove(nextDirection);
+            }
+          }
         }
       }
     }
@@ -166,8 +172,14 @@ public class Maze {
     if (destination != null) { // fixme this is gross
       if(destination instanceof  Accessible){
       Accessible accessible = (Accessible) destination;
-
       actor.setLocation(destination.getLocation());
+      }
+      if (isActorOnTile(destination)) {
+        Actor actorOnTile = getActorOnTile(destination);
+        if (actor.equals(player) || actorOnTile instanceof Player) {
+          isAlive = false;
+          System.out.println("endgame");
+        }
       }
     }
 
@@ -180,20 +192,28 @@ public class Maze {
    */
   public void movePlayer(Direction direction) {
     LOGGER.info(String.format("Attempting to move %s", direction));
+    if(player.isStationary()) {
+      player.setFacing(direction);
+    }
     Location currentLocation = player.getLocation();
     Tile destination = getTileAdjacentTo(currentLocation, direction);
-    if (player.isStationary()) {
-      player.setFacing(direction);
-      if (player.canAccess(destination)) {
-        Accessible accessible = (Accessible) destination;
-        if (accessible.isAccessibleBy(player)) {
-          accessible.admit(player);
-          player.startMove(direction);
-          sound = SoundNotifier.PLAYER_MOVE;
-        }
+    if (isValidMove(destination, player)) {
+      Accessible accessible = (Accessible) destination;
+      accessible.entryOperations(player);
+      player.startMove(direction);
+      sound = SoundNotifier.PLAYER_MOVE;
+    }
+  }
 
+
+  boolean isValidMove(Tile destination, Actor actor) {
+    if (actor.isStationary() && destination instanceof Accessible) {
+      Accessible accessible = (Accessible) destination;
+      if (accessible.isAccessibleBy(actor)) {
+        return true;
       }
     }
+    return false;
   }
 
   public Tile getTileAt(Location location) {
@@ -252,5 +272,21 @@ public class Maze {
     END_LEVEL,
   }
 
+  Actor getActorOnTile(Tile tile) {
+    for (Actor actor : actors) {
+      if (actor.getLocation().equals(tile.getLocation())) {
+        return actor;
+      }
+    }
+    return null;
+  }
 
+  boolean isActorOnTile(Tile tile) {
+    for (Actor actor : actors) {
+      if (actor.getLocation().equals(tile.getLocation())) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

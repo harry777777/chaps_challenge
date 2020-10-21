@@ -21,5 +21,6 @@ public interface Actor {
 
   int getY();
 
+  boolean isStationary();
 }
 

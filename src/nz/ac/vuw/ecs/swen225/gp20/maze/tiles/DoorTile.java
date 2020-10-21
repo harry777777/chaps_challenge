@@ -27,7 +27,7 @@ public class DoorTile implements Tile, Accessible {
   }
 
   @Override
-  public void admit(Actor actor) {
+  public void entryOperations(Actor actor) {
     // FIXME: 21/10/20 remove key from inventory
     unlock();
   }

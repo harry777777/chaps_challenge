@@ -46,6 +46,11 @@ public class NPC implements Actor {
     return location.y;
   }
 
+  @Override
+  public boolean isStationary() {
+    return move == null;
+  }
+
   public long getSeed() {
     return seed;
   }
@@ -53,7 +58,6 @@ public class NPC implements Actor {
   @Override
   public void endMove() {
     move = null;
-    startMove(getRandomDirection());
   }
 
   @Override
@@ -72,14 +76,13 @@ public class NPC implements Actor {
     move = new Move(direction);
   }
 
+  Direction getNextDirection() {
+    return getRandomDirection();
+  }
+
   @Override
   public String toString() {
     return "N";
   }
 
-  public static void main(String[] args) {
-    NPC npc = new NPC(1L, new Location(1,1));
-    System.out.println(npc.getFacing());
-
-  }
 }
