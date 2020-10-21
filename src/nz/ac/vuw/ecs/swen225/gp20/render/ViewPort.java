@@ -156,7 +156,6 @@ public class ViewPort {
 	    		}
 	    		if(maze.getTileType(row, col).equals(TileType.DOOR)) {
 
-	    			System.out.println("yup");
 	    		}
 	    	}
 	    }
