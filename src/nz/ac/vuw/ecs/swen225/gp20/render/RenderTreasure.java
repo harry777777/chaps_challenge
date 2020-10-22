@@ -37,6 +37,8 @@ public class RenderTreasure {
 	public void draw(Graphics2D g2, double x, double y, int tileSize){
 		bottomEdge = y+tileSize;
 		
+		//all of this below is used to render a pattern to a shape, it's why the stripe on the treasure orbs doesn't stick over the edge of the orb
+		
 		BufferedImage bi = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
 		Graphics2D big = bi.createGraphics();
 		Rectangle r = new Rectangle(0, 0, tileSize, tileSize);

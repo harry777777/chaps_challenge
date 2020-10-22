@@ -30,16 +30,15 @@ public class RenderEnemy {
 	 * @param i Enemy number in the actors array
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface maze, int i){
+		//get relevant information from maze
 		InterfaceDirection direction = maze.getActorDirection(i);
 		int offset = maze.getActorOffset(i);
 		
-		//calculate enemy offset
+		//calculate enemy offset (offset is used for smooth movement between tiles)
 		double xOffset = 0;
 		double yOffset = 0;
 		if(offset != 0) {
- 
 			double divisor = (double)(maze.getActorThreshold(i))/tileSize;
-			
 			switch (direction) {
 				case LEFT: 
 					xOffset = -(offset/divisor);
@@ -56,10 +55,12 @@ public class RenderEnemy {
 			}
 		}
 		
+		//draw the enemy passing the draw method all the information collected above
 		drawFront(x+xOffset, y+yOffset, tileSize, g2);
 	}
 	
 	private void drawFront(double x, double y, int tileSize, Graphics2D g2) {
+		//draw the enemy (no other sides because of time constraints)
 		double rightEdge = x+tileSize;
 		g2.setStroke(new BasicStroke(1));
 		g2.setColor(ENEMY_COLOR);

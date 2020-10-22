@@ -39,6 +39,8 @@ public class RenderKey {
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, Color keyColor){
 		
+		//all of this below is used to render a pattern to a shape, it's why the colored square doesn't stick out beyond the edge of the rounded rectangle
+		
 		bottomEdge = y+tileSize;
 		
 		BufferedImage bi = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);

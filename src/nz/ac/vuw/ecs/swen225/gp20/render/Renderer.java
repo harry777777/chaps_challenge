@@ -27,6 +27,7 @@ public class Renderer {
 	 * 
 	 */
 	public Renderer(Maze maze) {
+		//Initialize values used to draw the maze and renderer classes
 		this.viewX = 70; 
 		this.viewY = 70; 
 		this.tileSize = 50; //50 is the scale that works best for the way Application is layed out, but the renderer is fully scalable
@@ -67,12 +68,13 @@ public class Renderer {
 		g2 = (Graphics2D) gTemp.create();
 	    rInventory.draw(g2, maze, viewX+tileSize*viewWidth+4, viewY, tileSize/2);
 	    
-	    //sounds
+	    //play sounds
 	    playSound();
 	    
 	}
 	
 	private void playSound() {
+		//play a sound using the render audio class
 		MazeInterface.SoundType sound = maze.getSound();
 	    if(sound == null) {
 	    	return;

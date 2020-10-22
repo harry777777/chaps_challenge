@@ -12,6 +12,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.WallTile;
@@ -86,6 +87,8 @@ public class MazeInterface {
 			return TileType.WALL;
 		}else if(current instanceof DoorTile){
 			return TileType.DOOR;
+		}else if(current instanceof ExitTile){
+			return TileType.EXIT;
 		}
 		return null;
 	}
@@ -472,7 +475,11 @@ public class MazeInterface {
 		/**
 		 * DoorTile
 		 */
-		DOOR
+		DOOR,
+		/**
+		 * ExitTile
+		 */
+		EXIT
 	}
 	
 	/**
