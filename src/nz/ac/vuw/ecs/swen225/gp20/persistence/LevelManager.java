@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
@@ -47,7 +49,7 @@ public class LevelManager {
     Tile[][] tiles = new Tile[height][width];
     Player player = null;
     Color col = null;
-    List<Actor> actors = new ArrayList<>();
+    Map<String, Actor> actors = new HashMap<>();
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         String s = textLevel[j][i];
@@ -61,12 +63,12 @@ public class LevelManager {
           case "C":
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i,j);
-            actors.add(player);
+            actors.put("Player", player);
             break;
           case "N":
             tiles[i][j] = new FreeTile(new Location(i, j));
             NPC npc = new NPC(10L, new Location(i, j));
-            actors.add(npc);
+            actors.put("NPC", npc);
             break;
           case "K":
             col = COLORS[Integer.parseInt(s.substring(1,2))];
@@ -91,7 +93,7 @@ public class LevelManager {
     }
 
     // maze
-    Maze mazeToSave = new Maze(tiles, player, actors);
+    Maze mazeToSave = new Maze(tiles, actors);
     // Level
     int timer = 60;
     Level level = new Level(mazeToSave, timer);
@@ -119,7 +121,7 @@ public class LevelManager {
   public Level loadLevel(String filepath) throws IOException {
     Level loadedLevel = handler.read(filepath, Level.class);
     Maze loadedMaze = loadedLevel.getMaze();
-    Maze newMaze = new Maze(loadedMaze.getTiles(), loadedMaze.getPlayer(), loadedMaze.getActors());
+    Maze newMaze = new Maze(loadedMaze.getTiles(), loadedMaze.getActors());
 //    System.out.println(loadedMaze.getActors());
     int timer = loadedLevel.getTimer();
     return new Level(newMaze, timer);
@@ -133,21 +135,20 @@ public class LevelManager {
     l = lm.loadLevel("levels/testLevel.json");
     System.out.println(l.getMaze().getPlayer());
     System.out.println(l.getMaze().getActors());
-//
-//    lm.saveLevel("levels/level1.json", lm.level1);
-//    lm.loadLevel("levels/level1.json");
-//    lm.saveLevel("levels/level2.json", lm.level2);
-//    lm.loadLevel("levels/level2.json");
+    lm.saveLevel("levels/level1.json", lm.level1);
+    lm.loadLevel("levels/level1.json");
+    lm.saveLevel("levels/level2.json", lm.level2);
+    lm.loadLevel("levels/level2.json");
   }
 
   // Textual level representations
   private final String[][] testLevel = {
             {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
-            {"W", "C", "D0", "F", "N", "F", "F", "F", "N", "W"},
+            {"W", "C", "D0", "F", "N", "F", "F", "F", "F", "W"},
             {"W", "K0", "W", "W", "W", "F", "W", "W", "W", "W"},
             {"W", "D0", "F", "T", "W", "F", "W", "F", "F", "W"},
             {"W", "E", "F", "F", "W", "F", "W", "F", "F", "W"},
-            {"W", "F", "N", "F", "W", "F", "W", "F", "F", "W"},
+            {"W", "F", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "F", "F", "F", "F", "F", "W"},
             {"W", "F", "F", "F", "F", "F", "F", "F", "F", "W"},

@@ -4,7 +4,9 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -19,39 +21,37 @@ public class Maze {
   public final int HEIGHT;
   public final int WIDTH;
   private final Tile[][] tiles;
-  private final Player player;
+//  private final Player player;
   private SoundNotifier sound;
   private boolean isAlive = true;
   private boolean isLevelComplete = false;
-  private List<Actor> actors = new ArrayList<>();
+//  private List<Actor> actors = new ArrayList<>();
+  private Map<String, Actor> actors = new HashMap<>();
+//  /**
+//   * Most Constructs a new Maze with a Player Actor and Tiles.
+//   *
+//   * @param tiles  array of tile objects
+//   * @param player the player
+//   */
+//  public Maze(Tile[][] tiles, Player player) {
+//    this.HEIGHT = tiles.length;
+//    this.WIDTH = tiles[0].length;
+//    this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
+//    this.player = player; // fixme: look at error on spotBugs
+//    actors.add(player);
+//  }
 
   /**
    * Most Constructs a new Maze with a Player Actor and Tiles.
    *
    * @param tiles  array of tile objects
-   * @param player the player
-   */
-  public Maze(Tile[][] tiles, Player player) {
-    this.HEIGHT = tiles.length;
-    this.WIDTH = tiles[0].length;
-    this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
-    this.player = player; // fixme: look at error on spotBugs
-    actors.add(player);
-  }
-
-  /**
-   * Most Constructs a new Maze with a Player Actor and Tiles.
-   *
-   * @param tiles  array of tile objects
-   * @param player the player
    * @param actors the actors (i.e player and NPCS)
    */
-  public Maze(Tile[][] tiles, Player player, List<Actor> actors) {
-    System.out.println("constructor called");
+  public Maze(Tile[][] tiles, Map<String, Actor> actors) {
     this.HEIGHT = tiles.length;
     this.WIDTH = tiles[0].length;
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
-    this.player = player; // fixme: look at error on spotBugs
+//    this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
   }
 
@@ -78,11 +78,12 @@ public class Maze {
             break;
           case 'C':
             tiles[i][j] = new FreeTile(new Location(i, j));
-            player = new Player(i, j);
+//            player = new Player(i, j);
+            actors.put("Player", player);
             break;
           case 'N':
             tiles[i][j] = new FreeTile(new Location(i, j));
-            actors.add(new NPC(10L, new Location(i, j)));
+            actors.put("NPC", new NPC(10L, new Location(i, j)));
             break;
           case 'K':
             tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0, 255, 255)));
@@ -98,11 +99,11 @@ public class Maze {
         }
       }
     }
-    this.player = player;
+//    this.player = player;
     this.tiles = tiles;
     this.HEIGHT = input.length;
     this.WIDTH = input[0].length;
-    actors.add(player);
+//    actors.add(player);
   }
 
   /** Check if te the player is alive.
@@ -127,8 +128,8 @@ public class Maze {
    *
    * @return the actors in the maze
    */
-  public List<Actor> getActors() {
-    return actors;
+  public Map<String, Actor> getActors() {
+    return this.actors;
   }
 
   /**
@@ -146,7 +147,7 @@ public class Maze {
    * @return The player
    */
   public Player getPlayer() {
-    return player;
+    return (Player) actors.get("Player");
   }
 
   /**
@@ -154,7 +155,7 @@ public class Maze {
    * complete the move.
    */
   public void tick() {
-    for (Actor actor : actors) {
+    for (Actor actor : actors.values()) {
       if (actor.getMove() != null) {
         Move move = actor.getMove();
         move.incrementDistance();
@@ -182,7 +183,7 @@ public class Maze {
       }
       if (isActorOnTile(destination)) {
         Actor actorOnTile = getActorOnTile(destination);
-        if (actor.equals(player) ^ actorOnTile instanceof Player) {
+        if (actor.equals(actors.get("Player")) ^ actorOnTile instanceof Player) {
           isAlive = false;
           isLevelComplete = false;
           sound = SoundNotifier.PLAYER_DEATH;
@@ -198,6 +199,7 @@ public class Maze {
    */
   public void movePlayer(Direction direction) {
     LOGGER.info(String.format("Attempting to move %s", direction));
+    Player player = getPlayer();
     if (player.isStationary()) {
       player.setFacing(direction);
     }
@@ -242,13 +244,14 @@ public class Maze {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
+    Player player = getPlayer();
     int x = player.getLocation().x;
     int y = player.getLocation().y;
 
     for (int i = 0; i < HEIGHT; i++) {
       for (int j = 0; j < WIDTH; j++) {
         Actor atLoc = null;
-        for (Actor actor : actors) {
+        for (Actor actor : actors.values()) {
           if (actor.getLocation().y == i && actor.getLocation().x == j) {
             atLoc = actor;
           }
@@ -274,7 +277,7 @@ public class Maze {
   }
 
   Actor getActorOnTile(Tile tile) {
-    for (Actor actor : actors) {
+    for (Actor actor : actors.values()) {
       if (actor.getLocation().equals(tile.getLocation())) {
         return actor;
       }
@@ -283,7 +286,7 @@ public class Maze {
   }
 
   boolean isActorOnTile(Tile tile) {
-    for (Actor actor : actors) {
+    for (Actor actor : actors.values()) {
       if (actor.getLocation().equals(tile.getLocation())) {
         return true;
       }
