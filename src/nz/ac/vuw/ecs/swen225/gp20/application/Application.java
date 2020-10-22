@@ -510,11 +510,11 @@ public class Application {
           stepByStepReplay = true;
         }
         if (replayChoice == "Half Speed") {
-          GAME_HERTZ = 30;
+          GAME_HERTZ = 40;
           TBU = 1000000000 / GAME_HERTZ;
         }
         if (replayChoice == "Double Speed") {
-          GAME_HERTZ = 60 * 60;
+          GAME_HERTZ = 60 * 4;
           TBU = 1000000000 / GAME_HERTZ;
         }
 

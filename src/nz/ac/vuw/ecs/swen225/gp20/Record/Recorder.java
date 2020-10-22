@@ -28,7 +28,7 @@ public class Recorder {
    */
   public void saveRecording(String fileName) throws IOException {
     JSONHandler<Recording> p = new JSONHandler<Recording>();
-    p.write("recordings/" + fileName + ".json", this.recording);
+    p.write("recordings/" + fileName + this.recording.getLevel() + ".json", this.recording);
 
   }
 

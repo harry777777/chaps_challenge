@@ -1,8 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.Record;
 
 
-
-
 import java.util.ArrayList;
 
 
@@ -19,10 +17,10 @@ public class Recording {
    * @param name name of the recording
    * @author Harry constructor for a recording.
    */
-  public Recording(String name,int level) {
+  public Recording(String name, int level) {
     this.name = name;
     this.tickEvents = new ArrayList<TickEvent>();
-    this.level =level;
+    this.level = level;
 
   }
 
@@ -61,7 +59,7 @@ public class Recording {
     return s.toString();
   }
 
-  public int getLevel(){
+  public int getLevel() {
     return this.level;
   }
 }
