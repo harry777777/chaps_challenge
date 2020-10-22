@@ -9,6 +9,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.WallTile;
@@ -40,6 +41,8 @@ public class TileAdapter implements JsonSerializer<Tile>, JsonDeserializer<Tile>
           return context.deserialize(jsonObject.get("data"), WallTile.class);
         case "DoorTile":
           return context.deserialize(jsonObject.get("data"), DoorTile.class);
+        case "ExitTile":
+          return context.deserialize(jsonObject.get("data"), ExitTile.class);
       }
     }
     return null;

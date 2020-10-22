@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
+import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
@@ -120,6 +121,9 @@ public class LevelManager {
 //            System.out.println(col + " door");
             tiles[i][j] = new DoorTile(col, new Location(i,j));
             break;
+          case "E":
+            tiles[i][j] = new ExitTile(new Location(i,j));
+            break;
           default:
             throw new IllegalStateException("Unexpected value: " + s);
         }
@@ -177,7 +181,7 @@ public class LevelManager {
             {"W", "C", "D0", "F", "N", "F", "F", "F", "N", "W"},
             {"W", "K0", "W", "W", "W", "F", "W", "W", "W", "W"},
             {"W", "D0", "F", "T", "W", "F", "W", "F", "F", "W"},
-            {"W", "N", "F", "F", "W", "F", "W", "F", "F", "W"},
+            {"W", "E", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "N", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "W", "F", "W", "F", "F", "W"},
             {"W", "F", "F", "F", "F", "F", "F", "F", "F", "W"},
@@ -187,7 +191,7 @@ public class LevelManager {
 
   public final String[][] level1 = {
       {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
-      {"W", "T", "F", "K0", "F", "W", "F", "F", "F", "W", "W", "T", "F", "T", "W"},
+      {"W", "T", "F", "K0", "F", "W", "F", "E", "F", "W", "W", "T", "F", "T", "W"},
       {"W", "F", "F", "F", "F", "W", "F", "F", "F", "W", "W", "F", "T", "F", "W"},
       {"W", "F", "F", "W", "W", "W", "W", "D1", "W", "W", "W", "T", "F", "T", "W"},
       {"W", "F", "W", "W", "W", "F", "F", "F", "F", "D0", "D1", "F", "T", "F", "W"},
@@ -210,7 +214,7 @@ public class LevelManager {
       {"W", "F", "W", "W", "W", "F", "F", "F", "F", "F", "F", "F", "F", "F", "W"},
       {"W", "F", "W", "T", "W", "W", "F", "F", "F", "F", "F", "F", "F", "T", "W"},
       {"W", "F", "W", "F", "T", "W", "W", "F", "T", "W", "W", "W", "W", "W", "W"},
-      {"W", "F", "W", "F", "F", "F", "W", "W", "F", "W", "W", "W", "W", "W", "W"},
+      {"W", "F", "W", "E", "F", "F", "W", "W", "F", "W", "W", "W", "W", "W", "W"},
       {"W", "C", "W", "F", "F", "F", "D1", "D0", "F", "W", "W", "W", "W", "W", "W"},
       {"W", "F", "W", "F", "F", "F", "W", "W", "F", "W", "W", "W", "W", "W", "W"},
       {"W", "F", "W", "F", "T", "W", "W", "F", "F", "W", "T", "F", "D0", "T", "W"},
