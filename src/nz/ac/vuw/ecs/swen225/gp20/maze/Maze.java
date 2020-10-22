@@ -285,6 +285,12 @@ public class Maze {
     return sound;
   }
 
+
+  public void setDead() {
+    isAlive = false;
+    sound = SoundNotifier.PLAYER_DEATH;
+  }
+
   Actor getActorOnTile(Tile tile) {
     for (Actor actor : actors) {
       if (actor.getLocation().equals(tile.getLocation())) {
