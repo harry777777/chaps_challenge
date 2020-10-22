@@ -1,7 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp20.render;
 
-import java.util.HashMap;
-import java.util.Map;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
@@ -41,8 +39,8 @@ public class MazeInterface {
 	 */
 	public MazeInterface(Maze maze) {
 		this.maze = maze;
-		Map<String, Actor> tempActors = maze.getActors();
-		for(Actor actor: tempActors.values()) {
+		List<Actor> tempActors = maze.getActors();
+		for(Actor actor: tempActors) {
 			if (!(actor instanceof Player)) {
 				actors.add(actor);
 			}
