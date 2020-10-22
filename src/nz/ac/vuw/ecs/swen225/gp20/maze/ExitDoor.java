@@ -47,6 +47,12 @@ public class ExitDoor implements Accessible, Tile {
   }
 
   @Override
+  public void exitOperations(Maze maze) {
+
+  }
+
+
+  @Override
   public String toString() {
     return "X";
   }

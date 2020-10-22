@@ -22,4 +22,8 @@ public interface Accessible {
    */
   boolean isAccessibleBy(Actor actor, Maze maze);
 
+  /**
+   * Perform the required operations prior to leaving a tile.
+   */
+  void exitOperations(Maze maze);
 }

@@ -46,6 +46,12 @@ public class DoorTile implements Tile, Accessible {
     return !isLocked || hasKey(actor);
   }
 
+  @Override
+  public void exitOperations(Maze maze) {
+
+  }
+
+
   /**
    * Change the door state to unlocked.
    */

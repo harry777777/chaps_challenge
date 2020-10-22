@@ -21,6 +21,12 @@ public class LavaTile implements Accessible, Tile {
   }
 
   @Override
+  public void exitOperations(Maze maze) {
+
+  }
+
+
+  @Override
   public Location getLocation() {
     return location;
   }

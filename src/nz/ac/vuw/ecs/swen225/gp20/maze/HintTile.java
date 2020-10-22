@@ -22,6 +22,12 @@ public class HintTile implements Tile, Accessible {
   }
 
   @Override
+  public void exitOperations(Maze maze) {
+    maze.setMessage(null);
+  }
+
+
+  @Override
   public Location getLocation() {
     return location;
   }

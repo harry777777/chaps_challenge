@@ -53,6 +53,11 @@ public class FreeTile implements Tile, Accessible {
     return true;
   }
 
+  @Override
+  public void exitOperations(Maze maze) {
+
+  }
+
   /**
    * Remove the Item held on the tile.
    */

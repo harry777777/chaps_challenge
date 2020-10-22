@@ -35,19 +35,6 @@ public class Maze {
   private List<Actor> actors = new ArrayList<>();
   private String message;
 
-  /**
-   * Most Constructs a new Maze with a Player Actor and Tiles.
-   *
-   * @param tiles  array of tile objects
-   * @param player the player
-   */
-  public Maze(Tile[][] tiles, Player player) {
-    this.HEIGHT = tiles.length;
-    this.WIDTH = tiles[0].length;
-    this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
-    this.player = player; // fixme: look at error on spotBugs
-    actors.add(player);
-  }
 
   /**
    * Most Constructs a new Maze with a Player Actor and Tiles.
@@ -60,10 +47,9 @@ public class Maze {
     this.HEIGHT = tiles.length;
     this.WIDTH = tiles[0].length;
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
-    this.player = player; // fixme: look at error on spotBugs
+    this.player = player;
     this.actors = actors;
-    this.actors
-        .removeIf(a -> a instanceof Player);    // Janky fix for duplicate player on loading a maze.
+    this.actors.removeIf(a -> a instanceof Player);    // Janky fix for duplicate player on loading a maze.
     this.actors.add(this.player);
   }
 
@@ -195,14 +181,14 @@ public class Maze {
   }
 
   private void executeMove(Actor actor, Direction direction) {
+    Tile currentTile = getTileAt(actor.getLocation());
+    Accessible current = (Accessible) currentTile;
+    current.exitOperations(this);
     Tile destination = getTileAdjacentTo(actor.getLocation(), direction);
     if (destination != null) {
       if (destination instanceof Accessible) {
         Accessible accessible = (Accessible) destination;
         actor.setLocation(destination.getLocation());
-        if (actor instanceof Player) {
-          message = null;
-        }
         if (anotherActorIsOnTile(actor)) {
           Actor actorOnTile = getOtherActorOnTile(actor, destination);
           if (
