@@ -31,6 +31,6 @@ public class RenderExitDoor {
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		g2.setColor(CHAP_BODY_LIGHT );
-		g2.fill(new Ellipse2D.Double(0, 0, tileSize/2, tileSize/2)); //ball
+		g2.fill(new Ellipse2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2)); //ball
 	}
 }
