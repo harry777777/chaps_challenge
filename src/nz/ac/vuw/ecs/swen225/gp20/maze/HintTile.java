@@ -23,6 +23,6 @@ public class HintTile implements Tile, Accessible {
 
   @Override
   public Location getLocation() {
-    return null;
+    return location;
   }
 }
