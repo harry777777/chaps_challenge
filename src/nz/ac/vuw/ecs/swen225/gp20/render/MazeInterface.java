@@ -12,6 +12,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.ExitDoor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
@@ -89,10 +90,9 @@ public class MazeInterface {
 			return TileType.DOOR;
 		}else if(current instanceof ExitTile){
 			return TileType.EXIT;
-		}//else if(current instanceof ExitDoorTile){
-			//return TileType.EXITDOOR;
-		//}
-		//TODO
+		}else if(current instanceof ExitDoor){
+			return TileType.EXITDOOR;
+		}
 		return null;
 	}
 	
@@ -149,20 +149,20 @@ public class MazeInterface {
 	 * @param y
 	 * @return exit door locked status
 	 */
-	public boolean getExitDoorLocked(int x, int y) {
+	public int getExitDoorAmount(int x, int y) {
 		if(maze.getTiles().length <= x) {
-			return true;
+			return 0;
 		}
 		if(maze.getTiles()[0].length <= y) {
-			return true;
+			return 0;
 		}
 		Tile current = maze.getTiles()[x][y];
-		//TODO:
-		//if(current instanceof ExitDoorTile){
-			//ExitDoorTile currentExitDoor = (ExitDoorTile) maze.getTiles()[x][y];
-			//return currentExitDoor.isLocked();
-		//}
-		return true;
+		if(current instanceof ExitDoor){
+			ExitDoor currentExitDoor = (ExitDoor) maze.getTiles()[x][y];
+			//TODO:
+			//return currentExitDoor.getAmount();
+		}
+		return 0;
 	}
 	
 	/**
@@ -510,8 +510,10 @@ public class MazeInterface {
 		 * ExitTile
 		 */
 		EXIT,
-		EXITDOOR 
-		//TODO
+		/**
+		 * ExitDoor
+		 */
+		EXITDOOR
 	}
 	
 	/**
