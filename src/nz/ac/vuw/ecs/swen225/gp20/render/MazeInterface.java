@@ -11,6 +11,7 @@ import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
+import nz.ac.vuw.ecs.swen225.gp20.maze.LavaTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.ExitDoor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
@@ -95,6 +96,8 @@ public class MazeInterface {
 			return TileType.EXITDOOR;
 		}else if(current instanceof HintTile) {
 			return TileType.HINT;
+		}else if(current instanceof LavaTile) {
+			return TileType.LAVA;
 		}
 		return null;
 	}
@@ -519,7 +522,11 @@ public class MazeInterface {
 		/**
 		 * HintTile
 		 */
-		HINT
+		HINT,
+		/**
+		 * LavaTile
+		 */
+		LAVA
 	}
 	
 	/**

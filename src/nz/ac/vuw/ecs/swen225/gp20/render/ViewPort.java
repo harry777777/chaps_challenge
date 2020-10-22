@@ -185,6 +185,8 @@ public class ViewPort {
 	    			}else {
 	    				drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    			}
+	    		}else if(maze.getTileType(row, col).equals(TileType.LAVA)) {
+	    			drawLava(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}
 	    	}
 	    }
@@ -257,6 +259,15 @@ public class ViewPort {
 		g2.fill(new Ellipse2D.Double(x+tileSize/6, y+tileSize/6, tileSize-tileSize/3, tileSize-tileSize/3));
 		g2.setColor(END_COLOR);
 		g2.fill(new Ellipse2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
+	}
+	
+	private void drawLava(Graphics2D g2, double x, double y, int tileSize) {
+		//draw a lava (void) tile
+		g2.setColor(SPACE_COLOR);
+		g2.setStroke(new BasicStroke(1));
+		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		
 	}
 
 }
