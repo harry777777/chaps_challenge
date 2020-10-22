@@ -35,6 +35,7 @@ public class Application {
   private boolean replaying = false;
   private boolean ctrlPressed = false;
   private JLabel timerLabel;
+  private JLabel levelLabel;
   private boolean gameOver = false;
   private boolean stepByStepReplay = false;
   private LevelManager manager;
@@ -223,15 +224,16 @@ public class Application {
 
     JLabel newTimer = new JLabel("Time:" + timer);
     newTimer.setFont(new Font("", Font.BOLD,24));
-    JLabel level = new JLabel("Level:");
-    level.setFont(new Font("", Font.BOLD,24));
+    JLabel newLevel = new JLabel("Level:");
+    newLevel.setFont(new Font("", Font.BOLD,24));
 
     JPanel gameInfo = new JPanel();
     gameInfo.setLayout(new BorderLayout());
 
     gameInfo.add(newTimer,BorderLayout.PAGE_START);
     timerLabel = newTimer;
-    gameInfo.add(level,BorderLayout.PAGE_END);
+    gameInfo.add(newLevel,BorderLayout.PAGE_END);
+    levelLabel = newLevel;
 
     frame.add(gameInfo, BorderLayout.EAST);
 
@@ -554,9 +556,11 @@ public class Application {
         timer = level.getTimer();
         if (fileName.equals("level2.json")) {
           r = new Recorder(2);
+          levelLabel.setText("Level: 2");
         }
         if (fileName.equals("level1.json")) {
           r = new Recorder(1);
+          levelLabel.setText("Level: 1");
         }
       } catch (Exception E) {
         System.out.println("Error loading chosen level: " + E.getMessage());
@@ -566,6 +570,7 @@ public class Application {
         level = manager.loadLevel("levels/level1.json");
         m = level.getMaze();
         r = new Recorder(1);
+        levelLabel.setText("Level: 1");
       } catch (Exception E) {
         System.out.println("Error loading level 1: " + E.getMessage());
       }
