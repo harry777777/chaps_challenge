@@ -1,10 +1,5 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
-
 /**
  * An object's Move component. This is similar to a vector, with a direction and magnitude, but
  * limited to the enumerated directions.

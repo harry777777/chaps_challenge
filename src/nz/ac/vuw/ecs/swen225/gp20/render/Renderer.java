@@ -29,7 +29,7 @@ public class Renderer {
 	public Renderer(Maze maze) {
 		this.viewX = 70; 
 		this.viewY = 70; 
-		this.tileSize = 50;
+		this.tileSize = 50; //50 is the scale that works best for the way Application is layed out, but the renderer is fully scalable
 		this.viewHeight = 9;
 		this.viewWidth = 9;
 		

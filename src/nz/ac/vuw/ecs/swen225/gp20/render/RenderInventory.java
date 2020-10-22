@@ -84,8 +84,7 @@ public class RenderInventory {
 	
 	private void drawTile(Graphics2D g2, double x, double y, int tileSize) {
 		g2.setColor(FLOOR_COLOR);
-		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize-tileSize/5, tileSize-tileSize/5, 10, 10));
-		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize-tileSize/5, tileSize-tileSize/5, tileSize/5, tileSize/5));
 	}
 	
 }

@@ -11,11 +11,11 @@ import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.WallTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Direction;
 
 /**
  * @author Marco
