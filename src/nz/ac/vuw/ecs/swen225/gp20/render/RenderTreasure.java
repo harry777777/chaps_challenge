@@ -35,9 +35,6 @@ public class RenderTreasure {
 	 * @param tileSize
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize){
-		
-		
-		
 		bottomEdge = y+tileSize;
 		
 		BufferedImage bi = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
@@ -78,7 +75,6 @@ public class RenderTreasure {
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
-
 
 	}
 	

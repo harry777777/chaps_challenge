@@ -44,10 +44,13 @@ public class RenderPlayer {
 	private double bodyAngle = 0;
 	private static final double BODY_ANGLE_MAX = 10;
 	private static final double BODY_ANGLE_LERP = 0.25;
+	private double bodyMovement = 0;
+	private double bodyMovementMax = 10;
+	private double bodyLerp = 0.25;
 	
 	private static final Color CHAP_BODY_LIGHT = new Color(234, 222, 189);
 	private static final Color CHAP_BODY_MEDIUM = new Color(166,157,134);
-	private static final Color CHAP_BODY = new Color(128, 121, 103); //(166, 157, 134);
+	private static final Color CHAP_BODY = new Color(128, 121, 103);
 	private static final Color CHAP_BODY_DARK = new Color(77,73,62);
 	private static final Color SHADOW = new Color(0,0,0,30);
 
@@ -62,15 +65,22 @@ public class RenderPlayer {
 	 * @param maze
 	 */
 	public void draw(Graphics2D g2, double x, double y, int tileSize, MazeInterface maze){
+		//adjust front/back animation for current render scale
+		bodyMovementMax = (double)tileSize/5;
+		bodyLerp = (double)tileSize/200;
+		
+		//get player information
 		InterfaceDirection direction = maze.getPlayerDirection();
 		int offset = maze.getPlayerOffset();
 		
 		if(offset != 0) { //increment wheel rotation and body angle
 			wheelAngle -= 10;
 			bodyAngle = lerp(bodyAngle, BODY_ANGLE_MAX, BODY_ANGLE_LERP);
+			bodyMovement = lerp(bodyMovement, bodyMovementMax, bodyLerp);
 
 		}else {
 			bodyAngle = lerp(bodyAngle, 0, BODY_ANGLE_LERP); //increment body angle back to resting position
+			bodyMovement = lerp(bodyMovement, 0, bodyLerp);
 		}
 		
 		g2.setStroke(new BasicStroke(1));
@@ -107,11 +117,11 @@ public class RenderPlayer {
 		g2 = (Graphics2D) gTemp.create();
 		
 		g2.setColor(CHAP_BODY_LIGHT);
-		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, bodySize/2, 5, 5)); //main body (to block antenna)
+		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, bodySize/2, tileSize/10, tileSize/10)); //main body (to block antenna)
 		
 		g2.setColor(CHAP_BODY);
-		g2.fill(new Ellipse2D.Double(centerX-eyeDiam*1.1, centerY-eyeDiam*1.1-bodyAngle/5, eyeDiam, eyeDiam)); //left eye
-		g2.fill(new Ellipse2D.Double(centerX+eyeDiam*0.1, centerY-eyeDiam*1.1-bodyAngle/5, eyeDiam, eyeDiam)); //right eye
+		g2.fill(new Ellipse2D.Double(centerX-eyeDiam*1.1, centerY-eyeDiam*1.1-bodyMovement/5, eyeDiam, eyeDiam)); //left eye
+		g2.fill(new Ellipse2D.Double(centerX+eyeDiam*0.1, centerY-eyeDiam*1.1-bodyMovement/5, eyeDiam, eyeDiam)); //right eye
 		
 	}
 	
@@ -123,7 +133,7 @@ public class RenderPlayer {
 		g2 = (Graphics2D) gTemp.create();
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
-		g2.fill(new RoundRectangle2D.Double(centerX-(bodySize/1.5)/2, centerY-bodySize/2.5+bodyAngle/5, bodySize/1.5, bodySize/2, 5, 5));
+		g2.fill(new RoundRectangle2D.Double(centerX-(bodySize/1.5)/2, centerY-bodySize/2.5+bodyMovement/5, bodySize/1.5, bodySize/2, tileSize/10, tileSize/10));
 		
 	}
 	
@@ -176,7 +186,7 @@ public class RenderPlayer {
 		g2.fill(new Rectangle2D.Double(centerX-rodDiam/2, y, rodDiam, rodLength)); //antenna rod
 		
 		g2.setColor(CHAP_BODY_LIGHT);
-		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2.2, y+tileSize/6, bodySize*0.8, bodySize, 5, 5)); //main body
+		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2.2, y+tileSize/6, bodySize*0.8, bodySize, tileSize/10, tileSize/10)); //main body
 		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y, ballDiam, ballDiam)); //antenna ball
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
@@ -187,10 +197,10 @@ public class RenderPlayer {
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX-armDiam/2, centerY-shoulderDiam*0.8, armDiam, armLength)); //arm
 		g2.setColor(CHAP_BODY_LIGHT);
-		g2.fill(new RoundRectangle2D.Double(centerX-handSize/2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //hand
+		g2.fill(new RoundRectangle2D.Double(centerX-handSize/2, centerY+handSize*0.5, handSize, handSize, tileSize/16.6, tileSize/16.6)); //hand
 		g2.setColor(CHAP_BODY_MEDIUM);
 		g2.fill(new Ellipse2D.Double(centerX-shoulderDiam/2, centerY-shoulderDiam*1.5, shoulderDiam, shoulderDiam)); //shoulder
-		g2.draw(new RoundRectangle2D.Double(centerX-handSize/2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //hand
+		g2.draw(new RoundRectangle2D.Double(centerX-handSize/2, centerY+handSize*0.5, handSize, handSize, tileSize/16.6, tileSize/16.6)); //hand
 		
 		//pop matrix
 		g2.dispose();
@@ -248,7 +258,7 @@ public class RenderPlayer {
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX-bodySize/2-armDiam*1.5, centerY-shoulderDiam*0.5, armDiam, armLength)); //left arm
 		g2.setColor(CHAP_BODY_LIGHT);
-		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2-handSize*1.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //left hand
+		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2-handSize*1.2, centerY+handSize*0.5, handSize, handSize, tileSize/16.6, tileSize/16.6)); //left hand
 		
 		//pop matrix
 		g2.dispose();
@@ -261,33 +271,33 @@ public class RenderPlayer {
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX+bodySize/2+armDiam*0.5, centerY-shoulderDiam*0.5, armDiam, armLength)); //right arm
 		g2.setColor(CHAP_BODY_LIGHT);
-		g2.fill(new RoundRectangle2D.Double(centerX+bodySize/2+handSize*0.2, centerY+handSize*0.5, handSize, handSize, 3, 3)); //right hand
+		g2.fill(new RoundRectangle2D.Double(centerX+bodySize/2+handSize*0.2, centerY+handSize*0.5, handSize, handSize, tileSize/16.6, tileSize/16.6)); //right hand
 		
 		//pop matrix
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
-		g2.fill(new RoundRectangle2D.Double(centerX-shoulderWidth/2, centerY-shoulderDiam*1.5, shoulderWidth, shoulderDiam, 3, 3)); //shoulder
+		g2.fill(new RoundRectangle2D.Double(centerX-shoulderWidth/2, centerY-shoulderDiam*1.5, shoulderWidth, shoulderDiam, tileSize/16.6, tileSize/16.6)); //shoulder
 		
 		g2.setColor(CHAP_BODY_LIGHT);
-		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, bodySize, 5, 5)); //main body
+		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, bodySize, tileSize/10, tileSize/10)); //main body
 		
 		g2.setColor(CHAP_BODY);
 		g2.fill(new Rectangle2D.Double(centerX-supportDiam*2, centerY+tileSize/6, supportDiam, supportLength)); //left support
 		g2.fill(new Rectangle2D.Double(centerX+supportDiam*1, centerY+tileSize/6, supportDiam, supportLength)); //right support
 		
 		g2.setColor(CHAP_BODY_MEDIUM);
-		g2.fill(new RoundRectangle2D.Double(centerX-axelLength/2, bottomEdge-wheelDiam/2-axelDiam/2, axelLength, axelDiam, 3, 3)); //axel
+		g2.fill(new RoundRectangle2D.Double(centerX-axelLength/2, bottomEdge-wheelDiam/2-axelDiam/2, axelLength, axelDiam, tileSize/16.6, tileSize/16.6)); //axel
 		
 		//antenna
 		g2.setColor(CHAP_BODY);
-		g2.fill(new Rectangle2D.Double(centerX-rodDiam/2, y+bodyAngle/5, rodDiam, rodLength)); //antenna rod
+		g2.fill(new Rectangle2D.Double(centerX-rodDiam/2, y+bodyMovement/5, rodDiam, rodLength)); //antenna rod
 		g2.setColor(CHAP_BODY_LIGHT);
-		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y+bodyAngle/5, ballDiam, ballDiam)); //antenna ball
+		g2.fill(new Ellipse2D.Double(centerX-ballDiam/2, y+bodyMovement/5, ballDiam, ballDiam)); //antenna ball
 		
 		g2.setColor(CHAP_BODY_DARK);
-		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, 5, 5)); //wheel
+		g2.fill(new RoundRectangle2D.Double(centerX-wheelWidth/2, bottomEdge-wheelDiam, wheelWidth, wheelDiam, tileSize/10, tileSize/10)); //wheel
 	}
 	
 	private double lerp(double a, double b, double amount){

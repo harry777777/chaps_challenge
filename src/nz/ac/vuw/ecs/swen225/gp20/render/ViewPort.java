@@ -184,16 +184,17 @@ public class ViewPort {
 	
 	private void drawFloor(Graphics2D g2, double x, double y, int tileSize) {
 		g2.setColor(FLOOR_COLOR);
+		g2.setStroke(new BasicStroke(1));
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		
 		g2.setColor(WALL_COLOR_DARK);
-		g2.setStroke(new BasicStroke(1));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize/10, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
 		
-		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize/20, tileSize/20, 10, 10));
-		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize/10, tileSize/20, tileSize/20, 10, 10));
-		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, 10, 10));
-		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, 10, 10));
-		
+		g2.setStroke(new BasicStroke((int)(tileSize/50)));
 		g2.draw(new Line2D.Double(x+tileSize/2.5, y+tileSize/2, x+tileSize-tileSize/2.5, y+tileSize/2));
 		g2.draw(new Line2D.Double(x+tileSize/2, y+tileSize/2.5, x+tileSize/2, y+tileSize-tileSize/2.5));
 	}
@@ -207,16 +208,17 @@ public class ViewPort {
 		g2.setColor(WALL_COLOR);
 		g2.setStroke(new BasicStroke(1));
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		
 		g2.setColor(WALL_COLOR_DARK);
-		g2.setStroke(new BasicStroke(3));
+		g2.setStroke(new BasicStroke((int)(tileSize/16.6)));
 		g2.draw(new Line2D.Double(x+tileSize/2, y+1.5, x+tileSize/2, y+tileSize-1.5));
 		g2.draw(new Line2D.Double(x+1.5, y+tileSize/2, x+tileSize-1.5, y+tileSize/2));
 		
 		g2.setColor(FLOOR_COLOR);
-		g2.fill(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, 10, 10));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, tileSize/5, tileSize/5));
 		g2.setColor(WALL_COLOR_DARK);
-		g2.draw(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, 10, 10));
+		g2.draw(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, tileSize/5, tileSize/5));
 		
 	}
 
