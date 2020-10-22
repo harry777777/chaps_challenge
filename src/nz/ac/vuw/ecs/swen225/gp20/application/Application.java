@@ -37,6 +37,7 @@ public class Application {
   private boolean gameOver = false;
   private boolean stepByStepReplay = false;
   private LevelManager manager;
+  private int timerFrameCounter = 0;
 
   private double GAME_HERTZ = 60;
   private double TBU = 1000000000 / GAME_HERTZ; // Time before update
@@ -251,7 +252,12 @@ public class Application {
     pauseButton.setFocusable(false);
 
     JButton unPauseButton = new JButton("UnPause");
-    unPauseButton.addActionListener(e -> paused = false);
+    unPauseButton.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        paused = false;
+      }
+    });
     unPauseButton.setFocusable(false);
 
     JButton replayButton = new JButton("Replay");
@@ -289,7 +295,6 @@ public class Application {
    * It manages when to update and to render and does so at the right speed
    */
   private void run() {
-    int timerFrameCounter = 0;
 
     final double MUBR = 1; //Most update before render
 
@@ -382,6 +387,11 @@ public class Application {
           }
           now = System.nanoTime();
         }
+      }
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
       }
     }
   }
