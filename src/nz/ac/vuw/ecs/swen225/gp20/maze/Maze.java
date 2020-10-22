@@ -13,6 +13,15 @@ import java.util.logging.Logger;
  * @author Arie Bates-Hermans
  */
 public class Maze {
+  public enum SoundNotifier {
+    PLAYER_MOVE,
+    WALL_COLLISION,
+    PICKUP_ITEM,
+    PLAYER_DEATH,
+    DOOR_UNLOCK,
+    END_LEVEL,
+  }
+
 
   private static final Logger LOGGER = Logger.getLogger(Maze.class.getName());
 
@@ -53,7 +62,8 @@ public class Maze {
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
-    this.actors.removeIf(a -> a instanceof Player);    // Janky fix for duplicate player on loading a maze.
+    this.actors
+        .removeIf(a -> a instanceof Player);    // Janky fix for duplicate player on loading a maze.
     this.actors.add(this.player);
   }
 
@@ -175,8 +185,8 @@ public class Maze {
         if (move.isAtThreshold()) {
           executeMove(actor, move.getDirection());
           actor.endMove();
-          }
         }
+      }
       if (actor instanceof NPC) {
         NPC npc = (NPC) actor;
         Direction nextDirection = npc.getNextDirection();
@@ -194,11 +204,11 @@ public class Maze {
         Accessible accessible = (Accessible) destination;
         actor.setLocation(destination.getLocation());
         if (anotherActorIsOnTile(actor)) {
-        Actor actorOnTile = getOtherActorOnTile(actor, destination);
+          Actor actorOnTile = getOtherActorOnTile(actor, destination);
           if (
               ((actor.equals(player) && actorOnTile instanceof NPC)
-              || !(actor.equals(player) && actorOnTile instanceof Player)
-          )) {
+                  || !(actor.equals(player) && actorOnTile instanceof Player)
+              )) {
 
             System.out.println(actor + " actor");
             System.out.println(actorOnTile + " on tile");
@@ -207,6 +217,7 @@ public class Maze {
             isLevelComplete = false;
             sound = SoundNotifier.PLAYER_DEATH;
           }
+        }
       }
     }
   }
@@ -281,6 +292,7 @@ public class Maze {
     return sb.toString();
   }
 
+
   /**
    *
    * Set the sound of the last move.
@@ -294,13 +306,20 @@ public class Maze {
   }
 
   Actor getOtherActorOnTile(Actor otherActor, Tile tile) {
+    for (Actor actor : actors) {
+      if (actor.getLocation().equals(tile.getLocation()) || !otherActor.equals(actor)) {
+        return actor;
+      }
+    }
+    return null;
+  }
 
   public void setDead() {
     isAlive = false;
     sound = SoundNotifier.PLAYER_DEATH;
   }
 
-  Actor getActorOnTile(Tile tile) {
+  Actor getActorOnTile(Tile tile, Actor otherActor) {
     for (Actor actor : actors) {
       if (actor.getLocation().equals(tile.getLocation())
       && !actor.equals(otherActor)) {
@@ -335,12 +354,5 @@ public class Maze {
     return count;
   }
 
-  public enum SoundNotifier {
-    PLAYER_MOVE,
-    WALL_COLLISION,
-    PICKUP_ITEM,
-    PLAYER_DEATH,
-    DOOR_UNLOCK,
-    END_LEVEL,
-  }
+
 }
