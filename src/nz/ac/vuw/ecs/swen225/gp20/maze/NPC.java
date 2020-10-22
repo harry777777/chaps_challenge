@@ -1,8 +1,6 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 import java.util.Random;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 public class NPC implements Actor {
 

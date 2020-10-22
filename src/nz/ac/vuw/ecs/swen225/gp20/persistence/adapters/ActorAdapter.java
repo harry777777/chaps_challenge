@@ -11,7 +11,7 @@ import java.lang.reflect.Type;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Location;
 
 /**
  * @author Matt/CrunchyPancakes

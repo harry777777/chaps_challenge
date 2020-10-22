@@ -1,11 +1,6 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
+package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 import java.awt.Color;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 public class DoorTile implements Tile, Accessible {
 
@@ -27,7 +22,7 @@ public class DoorTile implements Tile, Accessible {
   }
 
   @Override
-  public void entryOperations(Actor actor) {
+  public void entryOperations(Maze maze, Actor actor) {
     // FIXME: 21/10/20 remove key from inventory
     unlock();
   }

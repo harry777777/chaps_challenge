@@ -6,13 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * Maze holds the state of spatial objects in the game.
@@ -30,6 +23,11 @@ public class Maze {
   private SoundNotifier sound;
 
   private boolean isAlive = true;
+
+  protected void setLevelComplete(boolean levelComplete) {
+    isLevelComplete = levelComplete;
+  }
+
   private boolean isLevelComplete = false;
 
   public boolean isAlive() {
@@ -182,7 +180,6 @@ public class Maze {
         }
       }
     }
-
   }
 
   /**
@@ -199,7 +196,7 @@ public class Maze {
     Tile destination = getTileAdjacentTo(currentLocation, direction);
     if (isValidMove(destination, player)) {
       Accessible accessible = (Accessible) destination;
-      accessible.entryOperations(player);
+      accessible.entryOperations(this, player);
       player.startMove(direction);
       sound = SoundNotifier.PLAYER_MOVE;
     }

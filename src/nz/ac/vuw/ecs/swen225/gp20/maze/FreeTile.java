@@ -1,10 +1,5 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
+package nz.ac.vuw.ecs.swen225.gp20.maze;
 
-
-import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Item;
-import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * A FreeTile is a Tile with no conditions for access. A FreeTile may hold a collectable Item.
@@ -43,7 +38,7 @@ public class FreeTile implements Tile, Accessible {
   }
 
   @Override
-  public void entryOperations(Actor actor) {
+  public void entryOperations(Maze maze, Actor actor) {
     if (actor instanceof Player) {
       if (item != null) {
         Player player = (Player) actor;
