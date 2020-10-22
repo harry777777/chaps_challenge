@@ -4,7 +4,7 @@ import nz.ac.vuw.ecs.swen225.gp20.Record.Recorder;
 import nz.ac.vuw.ecs.swen225.gp20.Record.Replay;
 import nz.ac.vuw.ecs.swen225.gp20.Record.TickEvent;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Direction;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.Level;
 import nz.ac.vuw.ecs.swen225.gp20.persistence.LevelManager;
 import nz.ac.vuw.ecs.swen225.gp20.render.Renderer;

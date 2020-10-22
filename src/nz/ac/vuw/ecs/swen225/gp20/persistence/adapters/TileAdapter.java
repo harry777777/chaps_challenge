@@ -8,10 +8,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.WallTile;
 
 /**
  * @author Matt/CrunchyPancakes

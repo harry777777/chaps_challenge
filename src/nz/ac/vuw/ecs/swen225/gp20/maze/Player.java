@@ -3,10 +3,6 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Accessible;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Direction;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
 
 /**
  * The playable character 'chap'. The player may shift locations through the maze, collecting items

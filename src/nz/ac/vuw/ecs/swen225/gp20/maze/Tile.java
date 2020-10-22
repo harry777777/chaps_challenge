@@ -1,6 +1,6 @@
-package nz.ac.vuw.ecs.swen225.gp20.maze.tiles;
+package nz.ac.vuw.ecs.swen225.gp20.maze;
 
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Location;
 
 /**
  * A tile represents one unit in a 2D orthogonal grid that forms the maze.

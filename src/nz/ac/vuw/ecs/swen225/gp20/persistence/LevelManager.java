@@ -11,11 +11,11 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Player;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Treasure;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.DoorTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.FreeTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.Tile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.tiles.WallTile;
-import nz.ac.vuw.ecs.swen225.gp20.maze.utils.Location;
+import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.WallTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.Location;
 
 /**
  * @author Matt/CrunchyPancakes
