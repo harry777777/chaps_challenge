@@ -182,10 +182,9 @@ public class Maze {
       }
       if (isActorOnTile(destination)) {
         Actor actorOnTile = getActorOnTile(destination);
-        if (actor.equals(player) || actorOnTile instanceof Player) {
+        if (actor.equals(player) ^ actorOnTile instanceof Player) {
           isAlive = false;
           isLevelComplete = false;
-          System.out.println("endgame");
         }
       }
     }

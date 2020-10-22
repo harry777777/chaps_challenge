@@ -92,7 +92,9 @@ public class NPC implements Actor {
    * @return Next direction of movement.
    */
   Direction getNextDirection() {
+    System.out.println("getting new directon for actor");
     return getRandomDirection();
+
   }
 
   @Override
