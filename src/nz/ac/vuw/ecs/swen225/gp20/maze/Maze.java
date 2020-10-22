@@ -24,6 +24,7 @@ public class Maze {
   private boolean isAlive = true;
   private boolean isLevelComplete = false;
   private List<Actor> actors = new ArrayList<>();
+  private String message;
 
   /**
    * Most Constructs a new Maze with a Player Actor and Tiles.
@@ -105,7 +106,19 @@ public class Maze {
     actors.add(player);
   }
 
-  /** Check if te the player is alive.
+  public String getMessage() {
+
+    String temp = message;
+    message = null;
+    return temp;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+  /**
+   * Check if te the player is alive.
    *
    * @return if the player is alive
    */
@@ -161,8 +174,8 @@ public class Maze {
         if (move.isAtThreshold()) {
           executeMove(actor, move.getDirection());
           actor.endMove();
-          }
         }
+      }
       if (actor instanceof NPC) {
         NPC npc = (NPC) actor;
         Direction nextDirection = npc.getNextDirection();
@@ -262,7 +275,6 @@ public class Maze {
   }
 
   /**
-   *
    * Set the sound of the last move.
    *
    * @return the sound to be played by renderer.
@@ -291,15 +303,6 @@ public class Maze {
     return false;
   }
 
-  public enum SoundNotifier {
-    PLAYER_MOVE,
-    WALL_COLLISION,
-    PICKUP_ITEM,
-    PLAYER_DEATH,
-    DOOR_UNLOCK,
-    END_LEVEL,
-  }
-
   protected int computeItemCount() {
     int count = 0;
     for (int i = 0; i < tiles.length; i++) {
@@ -307,12 +310,21 @@ public class Maze {
         Tile tile = tiles[i][j];
         if (tile instanceof FreeTile) {
           FreeTile freeTile = (FreeTile) tile;
-          if (freeTile.getItem() != null && freeTile.getItem() instanceof Treasure ) {
+          if (freeTile.getItem() != null && freeTile.getItem() instanceof Treasure) {
             count++;
           }
         }
       }
     }
     return count;
+  }
+
+  public enum SoundNotifier {
+    PLAYER_MOVE,
+    WALL_COLLISION,
+    PICKUP_ITEM,
+    PLAYER_DEATH,
+    DOOR_UNLOCK,
+    END_LEVEL,
   }
 }
