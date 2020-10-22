@@ -179,16 +179,21 @@ public class Maze {
       if (destination instanceof Accessible) {
         Accessible accessible = (Accessible) destination;
         actor.setLocation(destination.getLocation());
+        if (anotherActorIsOnTile(actor)) {
+        Actor actorOnTile = getOtherActorOnTile(actor, destination);
+          if (
+              ((actor.equals(player) && actorOnTile instanceof NPC)
+              || !(actor.equals(player) && actorOnTile instanceof Player)
+          )) {
+
+            System.out.println(actor + " actor");
+            System.out.println(actorOnTile + " on tile");
+            System.out.println(this);
+            isAlive = false;
+            isLevelComplete = false;
+            sound = SoundNotifier.PLAYER_DEATH;
+          }
       }
-      if (isActorOnTile(destination)) {
-        Actor actorOnTile = getActorOnTile(destination);
-        if (actor.equals(player) ^ actorOnTile instanceof Player) {
-          System.out.println(actor+ " actor");
-          System.out.println(actorOnTile+ "on tile");
-          isAlive = false;
-          isLevelComplete = false;
-          sound = SoundNotifier.PLAYER_DEATH;
-        }
       }
     }
   }
@@ -275,18 +280,19 @@ public class Maze {
     return sound;
   }
 
-  Actor getActorOnTile(Tile tile) {
+  Actor getOtherActorOnTile(Actor otherActor, Tile tile) {
     for (Actor actor : actors) {
-      if (actor.getLocation().equals(tile.getLocation())) {
+      if (actor.getLocation().equals(tile.getLocation())
+      && !actor.equals(otherActor)) {
         return actor;
       }
     }
     return null;
   }
 
-  boolean isActorOnTile(Tile tile) {
-    for (Actor actor : actors) {
-      if (actor.getLocation().equals(tile.getLocation())) {
+  boolean anotherActorIsOnTile(Actor actor) {
+    for (Actor otherActor : actors) {
+      if (otherActor.getLocation().equals(actor.getLocation()) && !otherActor.equals(actor)) {
         return true;
       }
     }

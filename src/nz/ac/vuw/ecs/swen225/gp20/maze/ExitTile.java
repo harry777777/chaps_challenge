@@ -1,5 +1,7 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
+import com.google.gson.stream.JsonToken;
+
 /**
  * A player must move onto the same location as an exit tile
  * in order to complete the current level.
@@ -22,6 +24,7 @@ public class ExitTile implements Accessible, Tile {
   @Override
   public void entryOperations(Maze maze, Actor player) {
     maze.setLevelComplete(true);
+    System.out.println(maze);
   }
 
   @Override
