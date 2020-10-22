@@ -149,20 +149,19 @@ public class MazeInterface {
 	 * @param y
 	 * @return exit door locked status
 	 */
-	public int getExitDoorAmount(int x, int y) {
+	public boolean getExitDoorLocked(int x, int y) {
 		if(maze.getTiles().length <= x) {
-			return 0;
+			return true;
 		}
 		if(maze.getTiles()[0].length <= y) {
-			return 0;
+			return true;
 		}
 		Tile current = maze.getTiles()[x][y];
 		if(current instanceof ExitDoor){
 			ExitDoor currentExitDoor = (ExitDoor) maze.getTiles()[x][y];
-			//TODO:
-			//return currentExitDoor.getAmount();
+			return currentExitDoor.isLocked();
 		}
-		return 0;
+		return true;
 	}
 	
 	/**
