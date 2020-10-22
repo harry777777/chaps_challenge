@@ -119,6 +119,7 @@ public class Maze {
 
   protected void setLevelComplete(boolean levelComplete) {
     isLevelComplete = levelComplete;
+    sound = SoundNotifier.END_LEVEL;
   }
 
   /**
