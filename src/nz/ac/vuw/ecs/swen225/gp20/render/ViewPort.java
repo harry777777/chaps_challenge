@@ -117,7 +117,6 @@ public class ViewPort {
 		if(hint != null && !hint.equals("")) {
 			rHint.draw(g2, centerX, centerY+(viewHeight/2)*tileSize+tileSize, tileSize, hint);
 		}
-		//rHint.draw(g2, centerX, centerY+(viewHeight/2)*tileSize+tileSize, tileSize, "shit");
 		
 		//crop the drawing plane for window into level (player view)
 		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
