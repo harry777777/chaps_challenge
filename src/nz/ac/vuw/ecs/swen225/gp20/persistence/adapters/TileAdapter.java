@@ -11,6 +11,8 @@ import java.lang.reflect.Type;
 import nz.ac.vuw.ecs.swen225.gp20.maze.DoorTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.HintTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.LavaTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Tile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.WallTile;
 
@@ -43,6 +45,10 @@ public class TileAdapter implements JsonSerializer<Tile>, JsonDeserializer<Tile>
           return context.deserialize(jsonObject.get("data"), DoorTile.class);
         case "ExitTile":
           return context.deserialize(jsonObject.get("data"), ExitTile.class);
+        case "HintTile":
+          return context.deserialize(jsonObject.get("data"), HintTile.class);
+        case "LavaTile":
+          return context.deserialize(jsonObject.get("data"), LavaTile.class);
       }
     }
     return null;

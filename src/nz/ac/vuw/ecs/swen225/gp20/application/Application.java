@@ -362,7 +362,12 @@ public class Application {
           loadGame("level2.json");
         }
         if(!maze.isAlive()){
-          loadGame("level2.json");
+          int i = r.getRecording().getLevel();
+          if(i == 1){
+            loadGame("level1.json");
+          }else if(i == 2) {
+            loadGame("level2.json");
+          }
         }
 
         if (timerFrameCounter == 60) {
