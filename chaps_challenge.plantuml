@@ -75,6 +75,12 @@ title __CHAPS_CHALLENGE's Class Diagram__\n
   
 
   namespace nz.ac.vuw.ecs.swen225.gp20.maze {
+    class nz.ac.vuw.ecs.swen225.gp20.maze.HintTile {
+    }
+  }
+  
+
+  namespace nz.ac.vuw.ecs.swen225.gp20.maze {
     interface nz.ac.vuw.ecs.swen225.gp20.maze.Item {
     }
   }
@@ -82,6 +88,12 @@ title __CHAPS_CHALLENGE's Class Diagram__\n
 
   namespace nz.ac.vuw.ecs.swen225.gp20.maze {
     class nz.ac.vuw.ecs.swen225.gp20.maze.Key {
+    }
+  }
+  
+
+  namespace nz.ac.vuw.ecs.swen225.gp20.maze {
+    class nz.ac.vuw.ecs.swen225.gp20.maze.LavaTile {
     }
   }
   
@@ -295,7 +307,13 @@ title __CHAPS_CHALLENGE's Class Diagram__\n
   nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile .up.|> nz.ac.vuw.ecs.swen225.gp20.maze.Tile
   nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile o-- nz.ac.vuw.ecs.swen225.gp20.maze.Item : item
   nz.ac.vuw.ecs.swen225.gp20.maze.FreeTile o-- nz.ac.vuw.ecs.swen225.gp20.maze.Location : location
+  nz.ac.vuw.ecs.swen225.gp20.maze.HintTile .up.|> nz.ac.vuw.ecs.swen225.gp20.maze.Accessible
+  nz.ac.vuw.ecs.swen225.gp20.maze.HintTile .up.|> nz.ac.vuw.ecs.swen225.gp20.maze.Tile
+  nz.ac.vuw.ecs.swen225.gp20.maze.HintTile o-- nz.ac.vuw.ecs.swen225.gp20.maze.Location : location
   nz.ac.vuw.ecs.swen225.gp20.maze.Key .up.|> nz.ac.vuw.ecs.swen225.gp20.maze.Item
+  nz.ac.vuw.ecs.swen225.gp20.maze.LavaTile .up.|> nz.ac.vuw.ecs.swen225.gp20.maze.Accessible
+  nz.ac.vuw.ecs.swen225.gp20.maze.LavaTile .up.|> nz.ac.vuw.ecs.swen225.gp20.maze.Tile
+  nz.ac.vuw.ecs.swen225.gp20.maze.LavaTile o-- nz.ac.vuw.ecs.swen225.gp20.maze.Location : location
   nz.ac.vuw.ecs.swen225.gp20.maze.Maze o-- nz.ac.vuw.ecs.swen225.gp20.maze.Player : player
   nz.ac.vuw.ecs.swen225.gp20.maze.Maze o-- nz.ac.vuw.ecs.swen225.gp20.maze.Maze.SoundNotifier : sound
   nz.ac.vuw.ecs.swen225.gp20.maze.Move o-- nz.ac.vuw.ecs.swen225.gp20.maze.Direction : direction
