@@ -73,6 +73,7 @@ public class Application {
     if (n == 0) {
       paused = false;
     }
+    levelLabel.setText("Level: 1");
     run();
   }
 
@@ -190,16 +191,16 @@ public class Application {
           paused = false;
         }
         if (!paused) {
-          if ((e.getKeyCode() == 38) && !replaying) {
+          if ((e.getKeyCode() == 38) && !replaying && maze.getPlayer().isStationary()) {
             tickEvent = new TickEvent(currentTick, Direction.UP);
           }
-          if ((e.getKeyCode() == 40) && !replaying) {
+          if ((e.getKeyCode() == 40) && !replaying && maze.getPlayer().isStationary()) {
             tickEvent = new TickEvent(currentTick, Direction.DOWN);
           }
-          if ((e.getKeyCode() == 37) && !replaying) {
+          if ((e.getKeyCode() == 37) && !replaying && maze.getPlayer().isStationary()) {
             tickEvent = new TickEvent(currentTick, Direction.LEFT);
           }
-          if ((e.getKeyCode() == 39) && !replaying) {
+          if ((e.getKeyCode() == 39) && !replaying && maze.getPlayer().isStationary()) {
             tickEvent = new TickEvent(currentTick, Direction.RIGHT);
           }
         }
@@ -570,7 +571,6 @@ public class Application {
         level = manager.loadLevel("levels/level1.json");
         m = level.getMaze();
         r = new Recorder(1);
-        levelLabel.setText("Level: 1");
       } catch (Exception E) {
         System.out.println("Error loading level 1: " + E.getMessage());
       }
