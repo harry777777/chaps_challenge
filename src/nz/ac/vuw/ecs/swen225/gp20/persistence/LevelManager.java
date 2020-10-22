@@ -36,47 +36,6 @@ public class LevelManager {
 
   /**
    * Saves a level as a JSON file.
-   * Hardcoded for now to test saving a file.
-   * @param filepath location to save level.
-   * @throws IOException
-   */
-  public void saveLevel(String filepath) throws IOException {
-    // Maze tiles
-    int verticalBound = 10;
-    int horizontalBound = 10;
-    Tile[][] tiles = new Tile[verticalBound][horizontalBound];
-    for(int i = 0; i < verticalBound; i++){
-      for(int j = 0; j < horizontalBound; j++){
-        // Create a free tile at the space with nothing in it.
-        tiles[i][j] = new FreeTile(new Location(i, j));
-      }
-    }
-
-    // Add some variation to the level
-    tiles[0][6] = new WallTile(new Location(0,6));
-    tiles[1][6] = new WallTile(new Location(1,6));
-    tiles[2][6] = new WallTile(new Location(2,6));
-    tiles[3][6] = new WallTile(new Location(3,6));
-    tiles[4][6] = new WallTile(new Location(4,6));
-    tiles[5][6] = new WallTile(new Location(5,6));
-    tiles[6][6] = new WallTile(new Location(6,6));
-    tiles[7][6] = new WallTile(new Location(7,6));
-    tiles[8][6] = new WallTile(new Location(8, 6));
-    tiles[5][5] = new FreeTile(new Location(5, 5));
-
-    // Maze player
-    Player player = new Player(0,0);
-    // Maze
-    Maze maze = new Maze(tiles, player);
-    // Level
-    int timer = 60;
-    Level level = new Level(maze, timer);
-    // Writing object to JSON file
-    handler.write(filepath, level);
-  }
-
-  /**
-   * Saves a level as a JSON file.
    * Takes in a text array to build a level from.
    * @param filepath location to save level.
    * @param textLevel a textual representation of a level.
@@ -102,6 +61,7 @@ public class LevelManager {
           case "C":
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i,j);
+//            actors.add(player);
             break;
           case "N":
             tiles[i][j] = new FreeTile(new Location(i, j));
@@ -167,8 +127,10 @@ public class LevelManager {
 
   public static void main(String[] args) throws IOException {
     LevelManager lm = new LevelManager();
+    Level l = null;
+
     lm.saveLevel("levels/testLevel.json", lm.testLevel);
-    lm.loadLevel("levels/testLevel.json");
+    l = lm.loadLevel("levels/testLevel.json");
     lm.saveLevel("levels/level1.json", lm.level1);
     lm.loadLevel("levels/level1.json");
     lm.saveLevel("levels/level2.json", lm.level2);
@@ -204,11 +166,11 @@ public class LevelManager {
 
   public final String[][] level2 = {
       {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
-      {"W", "T", "F", "T", "W", "T", "F", "T", "K0", "W"},
+      {"W", "F", "C", "T", "W", "T", "F", "T", "K0", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "T", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
-      {"W", "C", "W", "F", "W", "F", "W", "F", "T", "W"},
+      {"W", "F", "W", "F", "W", "F", "W", "F", "T", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "T", "W", "W"},
       {"W", "N", "W", "T", "F", "T", "W", "D0", "E", "W"},

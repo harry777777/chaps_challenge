@@ -24,6 +24,7 @@ public class Maze {
   private boolean isAlive = true;
   private boolean isLevelComplete = false;
   private List<Actor> actors = new ArrayList<>();
+  private String message;
 
   /**
    * Most Constructs a new Maze with a Player Actor and Tiles.
@@ -52,6 +53,7 @@ public class Maze {
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
+    this.actors.removeIf(a -> a instanceof Player);    // Janky fix for duplicate player on loading a maze.
     this.actors.add(this.player);
   }
 
@@ -105,7 +107,19 @@ public class Maze {
     actors.add(player);
   }
 
-  /** Check if te the player is alive.
+  public String getMessage() {
+
+    String temp = message;
+    message = null;
+    return temp;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
+  /**
+   * Check if te the player is alive.
    *
    * @return if the player is alive
    */
@@ -194,7 +208,6 @@ public class Maze {
             sound = SoundNotifier.PLAYER_DEATH;
           }
       }
-      }
     }
   }
 
@@ -281,6 +294,13 @@ public class Maze {
   }
 
   Actor getOtherActorOnTile(Actor otherActor, Tile tile) {
+
+  public void setDead() {
+    isAlive = false;
+    sound = SoundNotifier.PLAYER_DEATH;
+  }
+
+  Actor getActorOnTile(Tile tile) {
     for (Actor actor : actors) {
       if (actor.getLocation().equals(tile.getLocation())
       && !actor.equals(otherActor)) {
@@ -299,15 +319,6 @@ public class Maze {
     return false;
   }
 
-  public enum SoundNotifier {
-    PLAYER_MOVE,
-    WALL_COLLISION,
-    PICKUP_ITEM,
-    PLAYER_DEATH,
-    DOOR_UNLOCK,
-    END_LEVEL,
-  }
-
   protected int computeItemCount() {
     int count = 0;
     for (int i = 0; i < tiles.length; i++) {
@@ -322,5 +333,14 @@ public class Maze {
       }
     }
     return count;
+  }
+
+  public enum SoundNotifier {
+    PLAYER_MOVE,
+    WALL_COLLISION,
+    PICKUP_ITEM,
+    PLAYER_DEATH,
+    DOOR_UNLOCK,
+    END_LEVEL,
   }
 }
