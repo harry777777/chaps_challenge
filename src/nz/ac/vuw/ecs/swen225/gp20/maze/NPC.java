@@ -2,14 +2,24 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 import java.util.Random;
 
+/**
+ * An NPC is a form of actor that may walk around the maze at ease,
+ * but will end the game if collides with the player.
+ */
 public class NPC implements Actor {
 
-  private Random random;
+  private final Random random;
   private Move move;
   private Location location;
   private Direction facing;
-  private long seed;
+  private final long seed;
 
+  /**
+   * Construct NPC at a given location with a seed for random movement.
+   *
+   * @param seed seed for random movement generation
+   * @param location location of the NPC
+   */
   public NPC(long seed, Location location) {
     this.location = location;
     this.seed = seed;
@@ -49,6 +59,9 @@ public class NPC implements Actor {
     return move == null;
   }
 
+  /** Get the NPCs random seed.
+   * @return seed
+   */
   public long getSeed() {
     return seed;
   }
@@ -59,13 +72,13 @@ public class NPC implements Actor {
   }
 
   @Override
-  public void setLocation(Location location) {
-    this.location = location;
+  public Location getLocation() {
+    return location;
   }
 
   @Override
-  public Location getLocation() {
-    return location;
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
   @Override
@@ -74,6 +87,10 @@ public class NPC implements Actor {
     move = new Move(direction);
   }
 
+  /** Get the the next direction of movement.
+   *
+   * @return Next direction of movement.
+   */
   Direction getNextDirection() {
     return getRandomDirection();
   }

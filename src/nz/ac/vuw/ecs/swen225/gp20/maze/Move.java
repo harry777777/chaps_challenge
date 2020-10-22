@@ -9,10 +9,9 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 public class Move {
 
   public static final int THRESHOLD = 25;
-
-  private int distance;
   private final Direction direction;
-  private int speed = 1;
+  private int distance;
+  private final int speed = 1;
 
 
   public Move(Direction direction) {
@@ -45,6 +44,10 @@ public class Move {
     return distance;
   }
 
+  /** Get direction of travel.
+   *
+   * @return direction of travel.
+   */
   public Direction getDirection() {
     return direction;
   }

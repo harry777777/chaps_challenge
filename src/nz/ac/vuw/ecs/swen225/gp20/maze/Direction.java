@@ -2,9 +2,9 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
 
 
 /**
- * Possible directions of movement.
+ * Enumerated egocentric coordinates.
  *
- * @author Arie Bates-Hermans
+ * @author Arie Bates-Hermans, 300288455.
  */
 public enum Direction {
   UP,

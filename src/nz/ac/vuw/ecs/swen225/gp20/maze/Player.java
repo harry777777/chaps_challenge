@@ -10,20 +10,14 @@ import java.util.logging.Logger;
  *
  * @author Arie Bates-Hermans
  */
-public class Player implements Actor{
+public class Player implements Actor {
 
   private static final Logger LOGGER = Logger.getLogger(Player.class.getName());
   private Location location;
   private Move move;
   private Direction facing;
-  private List<Item> inventory = new ArrayList<>();
-
-  public int getTreasure() {
-    return treasure;
-  }
-
+  private final List<Item> inventory = new ArrayList<>();
   private int treasure = 0;
-
 
   /**
    * Constructs a new Player object at given horizontal and vertical components of location.
@@ -34,6 +28,10 @@ public class Player implements Actor{
   public Player(int horizontalDimension, int verticalDimension) {
     location = new Location(horizontalDimension, verticalDimension);
     facing = Direction.DOWN;
+  }
+
+  public int getTreasure() {
+    return treasure;
   }
 
   @Override
@@ -67,6 +65,11 @@ public class Player implements Actor{
   }
 
   @Override
+  public Direction getFacing() {
+      return facing;
+  }
+
+  @Override
   public int getX() {
     return location.x;
   }
@@ -76,13 +79,13 @@ public class Player implements Actor{
     return location.y;
   }
 
-  /**
-   * Getter for direction.
-   *
-   * @return direction the player is currently facing
-   */
-  public Direction getFacing() {
-    return facing;
+  @Override
+  public boolean isStationary() {
+    return move == null;
+  }
+
+  public void setFacing(Direction facing) {
+    this.facing = facing;
   }
 
   @Override
@@ -90,15 +93,16 @@ public class Player implements Actor{
     LOGGER.info("Successfully moved to: " + location);
     move = null;
   }
-
-  public boolean isStationary() {
-    return move == null;
-  }
-
+  @Override
   public void startMove(Direction direction) {
     move = new Move(direction);
   }
 
+
+  /** Add an item to inventory.
+   *
+   * @param item item to add to inventory
+   */
   public void addToInventory(Item item) {
     if (item instanceof Key) {
       inventory.add(item);
@@ -108,12 +112,13 @@ public class Player implements Actor{
     }
   }
 
+  /**
+   * Get list of inventory items.
+   *
+   * @return inventory
+   */
   public List<Item> getInventory() {
     return inventory;
-  }
-
-  public void setFacing(Direction facing) {
-    this.facing = facing;
   }
 
 }

@@ -53,10 +53,19 @@ public class FreeTile implements Tile, Accessible {
     return true;
   }
 
+  /**
+   * Remove the Item held on the tile.
+   */
   private void removeItem() {
     item = null;
   }
 
+  /**
+   * Get the item held on the tile.
+   * Returns null if no item on tile.
+   *
+   * @return the item held on the tile, null.
+   */
   public Item getItem() {
     return item;
   }

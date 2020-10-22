@@ -16,32 +16,13 @@ public class Maze {
 
   private static final Logger LOGGER = Logger.getLogger(Maze.class.getName());
 
-  public final int height;
-  public final int width;
+  public final int HEIGHT;
+  public final int WIDTH;
   private final Tile[][] tiles;
   private final Player player;
   private SoundNotifier sound;
-
   private boolean isAlive = true;
-
-  protected void setLevelComplete(boolean levelComplete) {
-    isLevelComplete = levelComplete;
-  }
-
   private boolean isLevelComplete = false;
-
-  public boolean isAlive() {
-    return isAlive;
-  }
-
-  public boolean isLevelComplete() {
-    return isLevelComplete;
-  }
-
-  public List<Actor> getActors() {
-    return actors;
-  }
-
   private List<Actor> actors = new ArrayList<>();
 
   /**
@@ -51,8 +32,8 @@ public class Maze {
    * @param player the player
    */
   public Maze(Tile[][] tiles, Player player) {
-    this.height = tiles.length;
-    this.width = tiles[0].length;
+    this.HEIGHT = tiles.length;
+    this.WIDTH = tiles[0].length;
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     actors.add(player);
@@ -66,8 +47,8 @@ public class Maze {
    * @param actors the actors (i.e player and NPCS)
    */
   public Maze(Tile[][] tiles, Player player, List<Actor> actors) {
-    this.height = tiles.length;
-    this.width = tiles[0].length;
+    this.HEIGHT = tiles.length;
+    this.WIDTH = tiles[0].length;
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
@@ -76,10 +57,11 @@ public class Maze {
 
   /**
    * Construct from char array.
-   * @deprecated
+   *
    * @param input char[][] of symbolic representations of the maze.
+   * @deprecated
    */
-   public Maze(char[][] input) {
+  public Maze(char[][] input) {
     int width = input.length;
     int height = input[0].length;
     Tile[][] tiles = new Tile[height][width];
@@ -100,10 +82,10 @@ public class Maze {
             break;
           case 'N':
             tiles[i][j] = new FreeTile(new Location(i, j));
-            actors.add( new NPC(10L, new Location(i, j)));
+            actors.add(new NPC(10L, new Location(i, j)));
             break;
           case 'K':
-            tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0,255,255)));
+            tiles[i][j] = new FreeTile(new Location(i, j), new Key(new Color(0, 255, 255)));
             break;
           case 'T':
             tiles[i][j] = new FreeTile(new Location(i, j), new Treasure(1));
@@ -118,9 +100,34 @@ public class Maze {
     }
     this.player = player;
     this.tiles = tiles;
-    this.height = input.length;
-    this.width = input[0].length;
+    this.HEIGHT = input.length;
+    this.WIDTH = input[0].length;
     actors.add(player);
+  }
+
+  /** Check if te the player is alive.
+   *
+   * @return if the player is alive
+   */
+  public boolean isAlive() {
+    return isAlive;
+  }
+
+  public boolean isLevelComplete() {
+    return isLevelComplete;
+  }
+
+  protected void setLevelComplete(boolean levelComplete) {
+    isLevelComplete = levelComplete;
+  }
+
+  /**
+   * Get actors.
+   *
+   * @return the actors in the maze
+   */
+  public List<Actor> getActors() {
+    return actors;
   }
 
   /**
@@ -155,7 +162,7 @@ public class Maze {
           actor.endMove();
           if (actor instanceof NPC) {
             NPC npc = (NPC) actor;
-            Direction nextDirection =  npc.getNextDirection();
+            Direction nextDirection = npc.getNextDirection();
             if (isValidMove(getTileAdjacentTo(actor.getLocation(), nextDirection), npc)) {
               npc.startMove(nextDirection);
             }
@@ -166,17 +173,18 @@ public class Maze {
   }
 
   private void executeMove(Actor actor, Direction direction) {
-    Tile destination = getTileAdjacentTo(actor.getLocation() , direction);
+    Tile destination = getTileAdjacentTo(actor.getLocation(), direction);
 
     if (destination != null) { // fixme this is gross
-      if(destination instanceof  Accessible){
-      Accessible accessible = (Accessible) destination;
-      actor.setLocation(destination.getLocation());
+      if (destination instanceof Accessible) {
+        Accessible accessible = (Accessible) destination;
+        actor.setLocation(destination.getLocation());
       }
       if (isActorOnTile(destination)) {
         Actor actorOnTile = getActorOnTile(destination);
         if (actor.equals(player) || actorOnTile instanceof Player) {
           isAlive = false;
+          isLevelComplete = false;
           System.out.println("endgame");
         }
       }
@@ -190,7 +198,7 @@ public class Maze {
    */
   public void movePlayer(Direction direction) {
     LOGGER.info(String.format("Attempting to move %s", direction));
-    if(player.isStationary()) {
+    if (player.isStationary()) {
       player.setFacing(direction);
     }
     Location currentLocation = player.getLocation();
@@ -204,12 +212,10 @@ public class Maze {
   }
 
 
-  boolean isValidMove(Tile destination, Actor actor) {
+  private boolean isValidMove(Tile destination, Actor actor) {
     if (actor.isStationary() && destination instanceof Accessible) {
       Accessible accessible = (Accessible) destination;
-      if (accessible.isAccessibleBy(actor)) {
-        return true;
-      }
+      return accessible.isAccessibleBy(actor);
     }
     return false;
   }
@@ -228,9 +234,9 @@ public class Maze {
 
   private boolean isWithinBounds(Location location) {
     return location.x >= 0
-        && location.x < width
+        && location.x < WIDTH
         && location.y >= 0
-        && location.y < height;
+        && location.y < HEIGHT;
   }
 
   @Override
@@ -239,8 +245,8 @@ public class Maze {
     int x = player.getLocation().x;
     int y = player.getLocation().y;
 
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
+    for (int i = 0; i < HEIGHT; i++) {
+      for (int j = 0; j < WIDTH; j++) {
         Actor atLoc = null;
         for (Actor actor : actors) {
           if (actor.getLocation().y == i && actor.getLocation().x == j) {
@@ -255,19 +261,16 @@ public class Maze {
     return sb.toString();
   }
 
+  /**
+   *
+   * Set the sound of the last move.
+   *
+   * @return the sound to be played by renderer.
+   */
   public SoundNotifier getSound() {
     SoundNotifier sound = this.sound;
     this.sound = null;
     return sound;
-  }
-
-  public enum SoundNotifier {
-    PLAYER_MOVE,
-    WALL_COLLISION,
-    PICKUP_ITEM,
-    PLAYER_DEATH,
-    DOOR_UNLOCK,
-    END_LEVEL,
   }
 
   Actor getActorOnTile(Tile tile) {
@@ -286,5 +289,14 @@ public class Maze {
       }
     }
     return false;
+  }
+
+  public enum SoundNotifier {
+    PLAYER_MOVE,
+    WALL_COLLISION,
+    PICKUP_ITEM,
+    PLAYER_DEATH,
+    DOOR_UNLOCK,
+    END_LEVEL,
   }
 }
