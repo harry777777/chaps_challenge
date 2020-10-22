@@ -16,8 +16,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author Owen
- * Application class, this runs the game loop,creates and manages the GUI
+ * @author Owen Application class, this runs the game loop,creates and manages the GUI
  */
 
 public class Application {
@@ -45,9 +44,8 @@ public class Application {
   private double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
   /**
-   * @author Owen
-   * The main method used to run the game
    * @param args
+   * @author Owen The main method used to run the game
    */
 
   public static void main(String[] args) {
@@ -55,8 +53,7 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * Loads the game/level, creates the gui and begins the run loop
+   * @author Owen Loads the game/level, creates the gui and begins the run loop
    */
   public Application() {
     loadGame(null);
@@ -79,8 +76,7 @@ public class Application {
 
 
   /**
-   * @author Owen
-   * Initialises the Gui
+   * @author Owen Initialises the Gui
    */
   private void initialiseGui() {
     frame = new JFrame("Chaps Challenge");
@@ -88,7 +84,9 @@ public class Application {
     JMenuBar menuBar = new JMenuBar();
     frame.setJMenuBar(menuBar);
 
-    //https://www.tutorialspoint.com/swing/swing_jmenubar_control.htm
+    /**
+     * I followed this tutorial for the JMenuBar https://www.tutorialspoint.com/swing/swing_jmenubar_control.htm
+     */
 
     JMenu File = new JMenu("File");
     JMenu Game = new JMenu("Game");
@@ -224,16 +222,16 @@ public class Application {
     frame.add(drawing, BorderLayout.CENTER);
 
     JLabel newTimer = new JLabel("Time:" + timer);
-    newTimer.setFont(new Font("", Font.BOLD,24));
+    newTimer.setFont(new Font("", Font.BOLD, 24));
     JLabel newLevel = new JLabel("Level:");
-    newLevel.setFont(new Font("", Font.BOLD,24));
+    newLevel.setFont(new Font("", Font.BOLD, 24));
 
     JPanel gameInfo = new JPanel();
     gameInfo.setLayout(new BorderLayout());
 
-    gameInfo.add(newTimer,BorderLayout.PAGE_START);
+    gameInfo.add(newTimer, BorderLayout.PAGE_START);
     timerLabel = newTimer;
-    gameInfo.add(newLevel,BorderLayout.PAGE_END);
+    gameInfo.add(newLevel, BorderLayout.PAGE_END);
     levelLabel = newLevel;
 
     frame.add(gameInfo, BorderLayout.EAST);
@@ -285,9 +283,8 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * Gives the renderer the Graphics2d object
    * @param g the graphics object from the frame used by the renderer
+   * @author Owen Gives the renderer the Graphics2d object
    */
   private void redraw(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
@@ -295,16 +292,14 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * Redraw with no param to redraw the frame
+   * @author Owen Redraw with no param to redraw the frame
    */
   private void redraw() {
     frame.repaint();
   }
 
   /**
-   * @author Owen
-   * Runs the game loop, it runs at 60hz and is created from a tutorial I followed here
+   * @author Owen Runs the game loop, it runs at 60hz and is created from a tutorial I followed here
    * https://www.youtube.com/watch?v=LhUN3EKZiio&list=PLvJM9qNXoUYUDaDo_yfSKgn5dYnMmdN8B&index=2&t=335s
    * It manages when to update and to render and does so at the right speed
    */
@@ -360,20 +355,20 @@ public class Application {
           redraw();
           currentTick++;
           timerFrameCounter++;
-          if (maze.isLevelComplete()) {
-            File file = new File("levels/l1c.txt");
-            try {
-              file.createNewFile();
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-            try {
-              r.saveRecording("level1_Complete");
-            } catch (IOException e) {
-              e.printStackTrace();
-            }
-            loadGame("level2.json");
+        }
+        if (maze.isLevelComplete()) {
+          File file = new File("levels/l1c.txt");
+          try {
+            file.createNewFile();
+          } catch (IOException e) {
+            e.printStackTrace();
           }
+          try {
+            r.saveRecording("level1_Complete");
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+          loadGame("level2.json");
         }
 
         if (timerFrameCounter == 60) {
@@ -381,7 +376,7 @@ public class Application {
             gameOver = true;
             JOptionPane.showMessageDialog(frame, "Game Over, you ran out of time");
           }
-          if(!gameOver){
+          if (!gameOver) {
             timer -= 1;
           }
           timerLabel.setText("Time: " + timer);
@@ -392,7 +387,7 @@ public class Application {
             && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
           Thread.yield();
           try {
-            Thread.sleep(1);
+            Thread.sleep(5);
           } catch (Exception e) {
             System.out.println("yield error: " + e.getMessage());
           }
@@ -403,16 +398,14 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * exits the application
+   * @author Owen exits the application
    */
   private void exit() {
     System.exit(0);
   }
 
   /**
-   * @author Owen
-   * saves the current game state and exits
+   * @author Owen saves the current game state and exits
    */
   private void saveAndExit() {
     try {
@@ -425,8 +418,7 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * saves the recording of player actions and exits
+   * @author Owen saves the recording of player actions and exits
    */
   private void recordAndExit() {
     try {
@@ -439,8 +431,7 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * Loads a user selected save file
+   * @author Owen Loads a user selected save file
    */
   private void loadSave() {
     JFileChooser fc = new JFileChooser();
@@ -456,16 +447,14 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * starts the game again from level 1
+   * @author Owen starts the game again from level 1
    */
   private void startNew() {
     loadGame(null);
   }
 
   /**
-   * @author Owen
-   * starts the game from the last unfinished level
+   * @author Owen starts the game from the last unfinished level
    */
   private void startUnfin() {
     File file = new File("levels/l1c.txt");
@@ -478,8 +467,7 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * pauses the game
+   * @author Owen pauses the game
    */
   private void pause() {
     paused = true;
@@ -487,8 +475,8 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * lets the user choose the type of replay and the replay file then begins the replay
+   * @author Owen lets the user choose the type of replay and the replay file then begins the
+   * replay
    */
   private void replay() {
     try {
@@ -537,9 +525,8 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * loads the game level again or uses fileName to load a user selected save or level
    * @param fileName Name of file selected by user
+   * @author Owen loads the game level again or uses fileName to load a user selected save or level
    */
   private void loadGame(String fileName) {
     Maze m = null;
@@ -581,9 +568,8 @@ public class Application {
   }
 
   /**
-   * @author Owen
-   * Updates every tick to move the player and at the tickEvent to the recording, but only if
-   * something occurred that tick
+   * @author Owen Updates every tick to move the player and at the tickEvent to the recording, but
+   * only if something occurred that tick
    */
   private void update() {
     if (tickEvent != null) {
