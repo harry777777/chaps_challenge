@@ -28,7 +28,11 @@ public class ExitDoor implements Accessible, Tile {
   @Override
   public boolean isAccessibleBy(Actor actor, Maze maze) {
     if (actor instanceof Player) {
-      return true;
+      Player player = (Player) actor;
+      if (player.getTreasure() == maze.computeItemCount()) {
+        return true;
+      }
+      return false;
     } else {
       return false;
     }

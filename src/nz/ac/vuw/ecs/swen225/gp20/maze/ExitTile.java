@@ -26,14 +26,10 @@ public class ExitTile implements Accessible, Tile {
 
   @Override
   public boolean isAccessibleBy(Actor actor, Maze maze) {
-    Tile[][] tiles = maze.getTiles();
-    int count = 0;
+
+
     if (actor instanceof Player) {
-      Player player = (Player) actor;
-      if (player.getTreasure() == maze.computeItemCount()) {
-        return true;
-      }
-      return false;
+      return true;
     } else {
       return false;
     }
