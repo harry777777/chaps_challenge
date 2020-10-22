@@ -74,10 +74,10 @@ public class MazeInterface {
 	 * @return the type of tile
 	 */
 	public TileType getTileType(int x, int y) {
-		if(maze.getTiles()[0].length <= x) {
+		if(maze.getTiles().length <= x) {
 			return null;
 		}
-		if(maze.getTiles().length <= y) {
+		if(maze.getTiles()[0].length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -101,10 +101,10 @@ public class MazeInterface {
 	 * @return the door color
 	 */
 	public Color getDoorColor(int x, int y) {
-		if(maze.getTiles()[0].length <= x) {
+		if(maze.getTiles().length <= x) {
 			return null;
 		}
-		if(maze.getTiles().length <= y) {
+		if(maze.getTiles()[0].length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -123,10 +123,10 @@ public class MazeInterface {
 	 * @return the door color
 	 */
 	public boolean getDoorLocked(int x, int y) {
-		if(maze.getTiles()[0].length <= x) {
+		if(maze.getTiles().length <= x) {
 			return false;
 		}
-		if(maze.getTiles().length <= y) {
+		if(maze.getTiles()[0].length <= y) {
 			return false;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -146,10 +146,10 @@ public class MazeInterface {
 	 * @return the type of item on a tile
 	 */
 	public ItemType getItemType(int x, int y) {
-		if(maze.getTiles()[0].length <= x) {
+		if(maze.getTiles().length <= x) {
 			return null;
 		}
-		if(maze.getTiles().length <= y) {
+		if(maze.getTiles()[0].length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
@@ -173,10 +173,10 @@ public class MazeInterface {
 	 * @return Color of key at specified position
 	 */
 	public Color getKeyColor(int x, int y) {
-		if(maze.getTiles()[0].length <= x) {
+		if(maze.getTiles().length <= x) {
 			return null;
 		}
-		if(maze.getTiles().length <= y) {
+		if(maze.getTiles()[0].length <= y) {
 			return null;
 		}
 		Tile current = maze.getTiles()[x][y];
