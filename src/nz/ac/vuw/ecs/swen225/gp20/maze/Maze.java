@@ -118,10 +118,7 @@ public class Maze {
   }
 
   public String getMessage() {
-
-    String temp = message;
-    message = null;
-    return temp;
+    return message;
   }
 
   public void setMessage(String message) {
@@ -203,19 +200,19 @@ public class Maze {
       if (destination instanceof Accessible) {
         Accessible accessible = (Accessible) destination;
         actor.setLocation(destination.getLocation());
+        if (actor instanceof Player) {
+          message = null;
+        }
         if (anotherActorIsOnTile(actor)) {
           Actor actorOnTile = getOtherActorOnTile(actor, destination);
           if (
               ((actor.equals(player) && actorOnTile instanceof NPC)
                   || !(actor.equals(player) && actorOnTile instanceof Player)
               )) {
-
-            System.out.println(actor + " actor");
-            System.out.println(actorOnTile + " on tile");
-            System.out.println(this);
             isAlive = false;
             isLevelComplete = false;
             sound = SoundNotifier.PLAYER_DEATH;
+
           }
         }
       }
