@@ -169,10 +169,10 @@ public class LevelManager {
     LevelManager lm = new LevelManager();
     lm.saveLevel("levels/testLevel.json", lm.testLevel);
     lm.loadLevel("levels/testLevel.json");
-//    lm.saveLevel("levels/level1.json", lm.level1);
-//    lm.loadLevel("levels/level1.json");
-//    lm.saveLevel("levels/level2.json", lm.level2);
-//    lm.loadLevel("levels/level2.json");
+    lm.saveLevel("levels/level1.json", lm.level1);
+    lm.loadLevel("levels/level1.json");
+    lm.saveLevel("levels/level2.json", lm.level2);
+    lm.loadLevel("levels/level2.json");
   }
 
   // Textual level representations
