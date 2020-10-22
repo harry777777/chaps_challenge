@@ -244,7 +244,7 @@ public class ViewPort {
 		
 		g2.setStroke(new BasicStroke((int)(tileSize/50)));
 		g2.setFont(new Font("Arial", Font.PLAIN, (int)(tileSize/2))); 
-		g2.drawString("?", (float)(x+tileSize/2), (float)(y+tileSize/2));
+		g2.drawString("?", (float)(x+tileSize*0.35), (float)(y+tileSize*0.65));
 	}
 	
 	private void drawX(Graphics2D g2, double x, double y, int tileSize) {
@@ -284,10 +284,17 @@ public class ViewPort {
 	
 	private void drawLava(Graphics2D g2, double x, double y, int tileSize) {
 		//draw a lava (void) tile
-		g2.setColor(SPACE_COLOR);
+		g2.setColor(FLOOR_COLOR);
 		g2.setStroke(new BasicStroke(1));
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		
+		double edgeWidth = tileSize/8;
+		
+		g2.setColor(SPACE_COLOR);
+		g2.setStroke(new BasicStroke(1));
+		g2.fill(new Rectangle2D.Double(x+edgeWidth, y+edgeWidth, tileSize-edgeWidth*2, tileSize-edgeWidth*2));
+		//g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
 		
 	}
 
