@@ -178,9 +178,13 @@ public class ViewPort {
 	    			//draw exit
 	    			drawExit(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}else if(maze.getTileType(row, col).equals(TileType.EXITDOOR)) {
-	    			int amount = maze.getExitDoorAmount(row, col);
+	    			boolean locked = maze.getExitDoorLocked(row, col);
 	    			//draw exit door
-	    			rExitDoor.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, amount);
+	    			if(locked) {
+	    				rExitDoor.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			}else {
+	    				drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			}
 	    		}
 	    	}
 	    }
