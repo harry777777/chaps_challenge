@@ -221,6 +221,15 @@ public class MazeInterface {
 		return null;
 	}
 	
+	/**
+	 * Returns a string for the current hint message
+	 * 
+	 * @return Currently displayed hint message
+	 */
+	public String getHintText() {
+		return maze.getMessage();
+	}
+	
 	//------------Player----------------
 	
 	/**
