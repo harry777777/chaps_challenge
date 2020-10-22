@@ -60,13 +60,15 @@ public class RenderAudio {
 	}
 	
 	private void playSound(String sound) {
+		//loads the sound file and plays it
 		try {
 			File f = new File("./" + sound);
 		    AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f.toURI().toURL());  
 	        Clip clip = AudioSystem.getClip();
 	        clip.open(audioInputStream);
 	        clip.start();
-	        //clip.loop(Clip.LOOP_CONTINUOUSLY); 
+	        //unused commands, didn't have time to create a looping soundtrack or looping movement sound system
+	        //clip.loop(Clip.LOOP_CONTINUOUSLY);
 	        //clip.stop();
 	    } catch (Exception e) {
 	        e.printStackTrace();

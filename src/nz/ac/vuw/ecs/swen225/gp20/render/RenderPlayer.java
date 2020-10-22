@@ -16,6 +16,7 @@ import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.InterfaceDirection;
  *
  */
 public class RenderPlayer {
+	//Useful values for drawing relative to tile
 	private double centerX;
 	private double centerY;
 	private double bottomEdge;
@@ -40,14 +41,16 @@ public class RenderPlayer {
 	private double armLength;
 	private double handSize;
 	
-	private double wheelAngle = 0;
-	private double bodyAngle = 0;
+	//animation values
 	private static final double BODY_ANGLE_MAX = 10;
 	private static final double BODY_ANGLE_LERP = 0.25;
+	private double wheelAngle = 0;
+	private double bodyAngle = 0;
 	private double bodyMovement = 0;
 	private double bodyMovementMax = 10;
 	private double bodyLerp = 0.25;
 	
+	//Colors
 	private static final Color CHAP_BODY_LIGHT = new Color(234, 222, 189);
 	private static final Color CHAP_BODY_MEDIUM = new Color(166,157,134);
 	private static final Color CHAP_BODY = new Color(128, 121, 103);
@@ -73,7 +76,7 @@ public class RenderPlayer {
 		InterfaceDirection direction = maze.getPlayerDirection();
 		int offset = maze.getPlayerOffset();
 		
-		if(offset != 0) { //increment wheel rotation and body angle
+		if(offset != 0) { //increment wheel rotation and body angle/animation
 			wheelAngle -= 10;
 			bodyAngle = lerp(bodyAngle, BODY_ANGLE_MAX, BODY_ANGLE_LERP);
 			bodyMovement = lerp(bodyMovement, bodyMovementMax, bodyLerp);
@@ -85,6 +88,7 @@ public class RenderPlayer {
 		
 		g2.setStroke(new BasicStroke(1));
 		
+		//draw appropriate side of player
 		if(direction != null) {
 			switch (direction) {
 				case LEFT: 
@@ -107,15 +111,17 @@ public class RenderPlayer {
 	}
 	
 	private void drawFront(double x, double y, int tileSize, Graphics2D g2) {
+		//draw the front of the player (uses drawFrontBack to draw the common elements between front and back view)
 		centerX = y+tileSize/2;
 		bottomEdge = y+tileSize;
 		eyeDiam = tileSize/5;
 	
 		Graphics2D gTemp = (Graphics2D) g2.create();
-		drawFrontBack(x, y, tileSize, g2);
+		drawFrontBack(x, y, tileSize, g2); //draws front/back common elements
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 		
+		//draw unique to front elements
 		g2.setColor(CHAP_BODY_LIGHT);
 		g2.fill(new RoundRectangle2D.Double(centerX-bodySize/2, y+tileSize/6, bodySize, bodySize/2, tileSize/10, tileSize/10)); //main body (to block antenna)
 		
@@ -126,18 +132,20 @@ public class RenderPlayer {
 	}
 	
 	private void drawBack(double x, double y, int tileSize, Graphics2D g2) {
-		
+		//draw the back of the player (uses drawFrontBack to draw the common elements between front and back view)
 		Graphics2D gTemp = (Graphics2D) g2.create();
-		drawFrontBack(x, y, tileSize, g2);
+		drawFrontBack(x, y, tileSize, g2); //draws front/back common elements
 		g2.dispose();
 		g2 = (Graphics2D) gTemp.create();
 		
+		//draw unique to back elements
 		g2.setColor(CHAP_BODY_MEDIUM);
 		g2.fill(new RoundRectangle2D.Double(centerX-(bodySize/1.5)/2, centerY-bodySize/2.5+bodyMovement/5, bodySize/1.5, bodySize/2, tileSize/10, tileSize/10));
 		
 	}
 	
 	private void drawLeft(double x, double y, int tileSize, Graphics2D g2) {
+		//draw left view of player
 		centerX = x+tileSize/2;
 		centerY = y+tileSize/2;
 		bottomEdge = y+tileSize;
@@ -209,7 +217,7 @@ public class RenderPlayer {
 	}
 	
 	private void drawRight(double x, double y, int tileSize, Graphics2D g2) {
-
+		//draw right view of player (uses left view with a negative horizontal scale to flip)
 		//push matrix
 		Graphics2D gTemp = (Graphics2D) g2.create();
 		
@@ -224,6 +232,7 @@ public class RenderPlayer {
 	}
 	
 	private void drawFrontBack(double x, double y, int tileSize, Graphics2D g2) {
+		//draw elements used in both front and back
 		centerX = x+tileSize/2;
 		centerY = y+tileSize/2;
 		bottomEdge = y+tileSize;

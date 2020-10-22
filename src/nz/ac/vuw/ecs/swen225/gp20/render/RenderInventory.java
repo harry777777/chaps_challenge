@@ -42,6 +42,7 @@ public class RenderInventory {
 	 * @param tileSize
 	 */
 	public void draw(Graphics2D g2, MazeInterface maze, double x, double y, int tileSize) {
+		//loop through inventory (capped at 7 because there will never be more than a few items)
 		for(int row = 0; row <8; row++) {
 			drawTile(g2, x, y+tileSize*row, tileSize);
 			if(maze.getInventorySize() > row) {
@@ -57,7 +58,7 @@ public class RenderInventory {
 					g2 = (Graphics2D) gTemp.create();
 				}
 			}
-			//draw score
+			//draw score in last slot of inventory
 			if(row == 7) {
 				//get treasure
 				int treasure = maze.getTreasure();
@@ -70,8 +71,7 @@ public class RenderInventory {
 					g2.dispose();
 					g2 = (Graphics2D) gTemp.create();
 				
-				
-				
+					//draw amount counter
 					g2.setFont(new Font("Arial", Font.PLAIN, (int)(tileSize/2))); 
 					g2.setColor(new Color(0,0,0));
 					g2.drawString("x " + treasure, (float)(x+tileSize), (float)(y+tileSize*row-tileSize/9+tileSize*0.7));
@@ -83,6 +83,7 @@ public class RenderInventory {
 	}
 	
 	private void drawTile(Graphics2D g2, double x, double y, int tileSize) {
+		//draw an inventory slot
 		g2.setColor(FLOOR_COLOR);
 		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize-tileSize/5, tileSize-tileSize/5, tileSize/5, tileSize/5));
 	}

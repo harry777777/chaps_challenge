@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.InterfaceDirection;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.ItemType;
@@ -18,14 +19,14 @@ import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.TileType;
  */
 public class ViewPort {
 	
+	//Renderers
 	private RenderPlayer rPlayer = new RenderPlayer();
 	private RenderEnemy rEnemy = new RenderEnemy();
 	private RenderDoor rDoor = new RenderDoor();
 	private RenderTreasure rTreasure;
 	private RenderKey rKey;
 	
-	
-	//Maze
+	//Colors
 	private static final Color FLOOR_COLOR = new Color(150,150,150);
 	private static final Color WALL_COLOR = new Color(120, 120, 120);
 	private static final Color WALL_COLOR_DARK = new Color(100, 100, 100);
@@ -110,11 +111,11 @@ public class ViewPort {
 		//crop the drawing plane for window into level (player view)
 		g2.clip(new RoundRectangle2D.Double(x, y, viewWidth*tileSize+1, viewHeight*tileSize+1, 20, 20));
 		
-		//draw background
+		//draw dark background
 		g2.setColor(SPACE_COLOR);
 	  	g2.fillRect(x, y, viewWidth*tileSize+2, viewHeight*tileSize+2);
 	  	
-	  	//prevent looping through things out of view things out of view
+	  	//prevent looping through things out of view things out of view by calculating where to start and end the nested for loops
 	  	int topEdge = playerY-viewHeight/2-1;
 	  	int bottomEdge = playerY+viewHeight/2+2;
 	  	int leftEdge = playerX-viewWidth/2-1;
@@ -136,7 +137,9 @@ public class ViewPort {
 		for(int row = leftEdge; row < rightEdge; row++) {
 	    	for(int col = topEdge; col < bottomEdge; col++) {
 	    		if(maze.getTileType(row, col).equals(TileType.FREE)) {
+	    			//draw floor tile
 	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			//draw item
 	    			if(maze.getItemType(row, col) != null) {
 	    				//push matrix
 	    				Graphics2D gTemp = (Graphics2D) g2.create();
@@ -152,37 +155,48 @@ public class ViewPort {
 	    				g2 = (Graphics2D) gTemp.create();
 	    			}
 	    		}else if(maze.getTileType(row, col).equals(TileType.WALL)){
+	    			//draw wall tile
 	    			drawWall(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}else if(maze.getTileType(row, col).equals(TileType.DOOR)) {
+	    			//draw floor under door
 	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    			Color doorColor = maze.getDoorColor(row, col);
 	    			boolean locked = maze.getDoorLocked(row, col);
 	    			//push matrix
 	    			Graphics2D gTemp = (Graphics2D) g2.create();
+	    			//draw door
 	    			rDoor.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, doorColor, locked);
 	    			//pop matrix
 	    			g2.dispose();
 	    			g2 = (Graphics2D) gTemp.create();
+	    		}else if(maze.getTileType(row, col).equals(TileType.EXIT)) {
+	    			//draw floor under exit
+	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    			//draw exit
+	    			drawExit(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}
 	    	}
 	    }
 		
-		for(int i = 0; i < maze.getNumberActors(); i++) {
-			int actorX = maze.getActorX(i);
-			int actorY = maze.getActorY(i);
-			rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, maze, i);
+		//draw the enemies
+		if(maze.getNumberActors() > 0) {
+			for(int i = 0; i < maze.getNumberActors(); i++) {
+				int actorX = maze.getActorX(i);
+				int actorY = maze.getActorY(i);
+				rEnemy.draw(g2, centerX-xMapOffset+actorX*tileSize-xOffset, centerY-yMapOffset+actorY*tileSize-yOffset, tileSize, maze, i);
+			}
 		}
 
 		//draw the player
 		rPlayer.draw(g2, centerX, centerY, tileSize, maze);
 		
-		//update item animations
+		//step item animations
 		rTreasure.step();
 		rKey.step();
-		
 	}
 	
 	private void drawFloor(Graphics2D g2, double x, double y, int tileSize) {
+		//draw a floor tile
 		g2.setColor(FLOOR_COLOR);
 		g2.setStroke(new BasicStroke(1));
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
@@ -200,11 +214,13 @@ public class ViewPort {
 	}
 	
 	private void drawX(Graphics2D g2, double x, double y, int tileSize) {
+		//draw an X (used for outside viewport grid effect)
 		g2.draw(new Line2D.Double(x+tileSize/4, y+tileSize/4, x-tileSize/4+tileSize, y-tileSize/4+tileSize));
 		g2.draw(new Line2D.Double(x+tileSize/4, y-tileSize/4+tileSize, x-tileSize/4+tileSize, y+tileSize/4));
 	}
 	
 	private void drawWall(Graphics2D g2, double x, double y, int tileSize) {
+		//draw a wall tile
 		g2.setColor(WALL_COLOR);
 		g2.setStroke(new BasicStroke(1));
 		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
@@ -220,6 +236,12 @@ public class ViewPort {
 		g2.setColor(WALL_COLOR_DARK);
 		g2.draw(new RoundRectangle2D.Double(x+tileSize/6, y+tileSize/6, tileSize/1.5, tileSize/1.5, tileSize/5, tileSize/5));
 		
+	}
+	
+	private void drawExit(Graphics2D g2, double x, double y, int tileSize) {
+		//draw an exit tile
+		g2.setColor(WALL_COLOR_DARK);
+		g2.fill(new Ellipse2D.Double(x, y, tileSize, tileSize));
 	}
 
 }

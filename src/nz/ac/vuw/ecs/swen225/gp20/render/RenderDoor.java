@@ -33,11 +33,14 @@ public class RenderDoor {
 		ballDiam = tileSize/5;
 		lazerDiam = tileSize/8;
 		
+		//draw four squares, one in each corner
 		g2.setColor(WALL_COLOR);
 		g2.fill(new Rectangle2D.Double(x, y, lazerDiam, lazerDiam)); //top left
 		g2.fill(new Rectangle2D.Double(x+tileSize-lazerDiam, y, lazerDiam, lazerDiam)); //top right
 		g2.fill(new Rectangle2D.Double(x, y+tileSize-lazerDiam, lazerDiam, lazerDiam)); //bottom left
 		g2.fill(new Rectangle2D.Double(x+tileSize-lazerDiam, y+tileSize-lazerDiam, lazerDiam, lazerDiam)); //top right
+		
+		//draw the lazer using drawLazer() and rotate it differently each time so they all face inward
 		
 		//push matrix - lazer top left
 		Graphics2D gTemp = (Graphics2D) g2.create();
@@ -77,6 +80,7 @@ public class RenderDoor {
 	}
 	
 	private void drawLazer(Graphics2D g2, int tileSize, Color doorColor, boolean locked) {
+		//draws a single lazer, this gets used four times to make the whole tile
 		if(locked) {
 			g2.setColor(doorColor);
 			g2.fill(new Rectangle2D.Double(ballDiam/2, -lazerDiam/2, tileSize/2, lazerDiam));
