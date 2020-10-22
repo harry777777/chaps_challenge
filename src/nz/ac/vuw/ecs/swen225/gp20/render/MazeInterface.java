@@ -302,6 +302,9 @@ public class MazeInterface {
 	 */
 	public InterfaceDirection getActorDirection(int i) {
 		Direction direction = actors.get(i).getFacing();
+		if(direction == null) {
+			return InterfaceDirection.DOWN;
+		}
 		
 		switch (direction) {
 			case LEFT: 
