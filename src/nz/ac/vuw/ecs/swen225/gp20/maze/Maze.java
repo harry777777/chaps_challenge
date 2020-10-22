@@ -183,6 +183,8 @@ public class Maze {
       if (isActorOnTile(destination)) {
         Actor actorOnTile = getActorOnTile(destination);
         if (actor.equals(player) ^ actorOnTile instanceof Player) {
+          System.out.println(actor+ " actor");
+          System.out.println(actorOnTile+ "on tile");
           isAlive = false;
           isLevelComplete = false;
           sound = SoundNotifier.PLAYER_DEATH;
