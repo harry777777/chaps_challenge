@@ -2,6 +2,7 @@ package nz.ac.vuw.ecs.swen225.gp20.render;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -187,6 +188,8 @@ public class ViewPort {
 	    			}
 	    		}else if(maze.getTileType(row, col).equals(TileType.LAVA)) {
 	    			drawLava(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    		}else if(maze.getTileType(row, col).equals(TileType.HINT)) {
+	    			drawHint(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    		}
 	    	}
 	    }
@@ -224,6 +227,24 @@ public class ViewPort {
 		g2.setStroke(new BasicStroke((int)(tileSize/50)));
 		g2.draw(new Line2D.Double(x+tileSize/2.5, y+tileSize/2, x+tileSize-tileSize/2.5, y+tileSize/2));
 		g2.draw(new Line2D.Double(x+tileSize/2, y+tileSize/2.5, x+tileSize/2, y+tileSize-tileSize/2.5));
+	}
+	
+	private void drawHint(Graphics2D g2, double x, double y, int tileSize) {
+		//draw a hint tile
+		g2.setColor(FLOOR_COLOR);
+		g2.setStroke(new BasicStroke(1));
+		g2.fill(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		g2.draw(new Rectangle2D.Double(x, y, tileSize, tileSize));
+		
+		g2.setColor(WALL_COLOR_DARK);
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize/10, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize/10, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize/10, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
+		g2.fill(new RoundRectangle2D.Double(x+tileSize-tileSize/10-tileSize/20, y+tileSize-tileSize/10-tileSize/20, tileSize/20, tileSize/20, tileSize/5, tileSize/5));
+		
+		g2.setStroke(new BasicStroke((int)(tileSize/50)));
+		g2.setFont(new Font("Arial", Font.PLAIN, (int)(tileSize/2))); 
+		g2.drawString("?", (float)(x+tileSize/2), (float)(y+tileSize/2));
 	}
 	
 	private void drawX(Graphics2D g2, double x, double y, int tileSize) {
