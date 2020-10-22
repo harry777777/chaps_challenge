@@ -160,13 +160,13 @@ public class Maze {
         if (move.isAtThreshold()) {
           executeMove(actor, move.getDirection());
           actor.endMove();
-          if (actor instanceof NPC) {
-            NPC npc = (NPC) actor;
-            Direction nextDirection = npc.getNextDirection();
-            if (isValidMove(getTileAdjacentTo(actor.getLocation(), nextDirection), npc)) {
-              npc.startMove(nextDirection);
-            }
           }
+        }
+      if (actor instanceof NPC) {
+        NPC npc = (NPC) actor;
+        Direction nextDirection = npc.getNextDirection();
+        if (isValidMove(getTileAdjacentTo(actor.getLocation(), nextDirection), npc)) {
+          npc.startMove(nextDirection);
         }
       }
     }
@@ -174,8 +174,7 @@ public class Maze {
 
   private void executeMove(Actor actor, Direction direction) {
     Tile destination = getTileAdjacentTo(actor.getLocation(), direction);
-
-    if (destination != null) { // fixme this is gross
+    if (destination != null) {
       if (destination instanceof Accessible) {
         Accessible accessible = (Accessible) destination;
         actor.setLocation(destination.getLocation());
@@ -185,6 +184,7 @@ public class Maze {
         if (actor.equals(player) ^ actorOnTile instanceof Player) {
           isAlive = false;
           isLevelComplete = false;
+          sound = SoundNotifier.PLAYER_DEATH;
         }
       }
     }

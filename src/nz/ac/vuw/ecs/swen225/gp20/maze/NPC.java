@@ -25,8 +25,6 @@ public class NPC implements Actor {
     this.seed = seed;
     random = new Random();
     random.setSeed(seed);
-    facing = getRandomDirection();
-    startMove(facing);
   }
 
   private Direction getRandomDirection() {
