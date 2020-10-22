@@ -61,7 +61,7 @@ public class LevelManager {
           case "C":
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i,j);
-            actors.add(player);
+//            actors.add(player);
             break;
           case "N":
             tiles[i][j] = new FreeTile(new Location(i, j));
@@ -129,15 +129,12 @@ public class LevelManager {
     LevelManager lm = new LevelManager();
     Level l = null;
 
-//    lm.saveLevel("levels/testLevel.json", lm.testLevel);
+    lm.saveLevel("levels/testLevel.json", lm.testLevel);
     l = lm.loadLevel("levels/testLevel.json");
-    System.out.println(l.getMaze().getPlayer());
-    System.out.println(l.getMaze().getActors());
-//
-//    lm.saveLevel("levels/level1.json", lm.level1);
-//    lm.loadLevel("levels/level1.json");
-//    lm.saveLevel("levels/level2.json", lm.level2);
-//    lm.loadLevel("levels/level2.json");
+    lm.saveLevel("levels/level1.json", lm.level1);
+    lm.loadLevel("levels/level1.json");
+    lm.saveLevel("levels/level2.json", lm.level2);
+    lm.loadLevel("levels/level2.json");
   }
 
   // Textual level representations
@@ -169,11 +166,11 @@ public class LevelManager {
 
   public final String[][] level2 = {
       {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
-      {"W", "T", "F", "T", "W", "T", "F", "T", "K0", "W"},
+      {"W", "F", "C", "T", "W", "T", "F", "T", "K0", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "T", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
-      {"W", "C", "W", "F", "W", "F", "W", "F", "T", "W"},
+      {"W", "F", "W", "F", "W", "F", "W", "F", "T", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "T", "W", "W"},
       {"W", "N", "W", "T", "F", "T", "W", "D0", "E", "W"},

@@ -53,6 +53,8 @@ public class Maze {
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
+    this.actors.removeIf(a -> a instanceof Player);    // Janky fix for duplicate player on loading a maze.
+    this.actors.add(this.player);
   }
 
   /**
