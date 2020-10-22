@@ -32,6 +32,7 @@ public class ViewPort {
 	private static final Color WALL_COLOR_DARK = new Color(100, 100, 100);
 	private static final Color SPACE_COLOR = new Color(50,50,50);
 	private static final Color GRID_COLOR = new Color(0,180,0);
+	private static final Color END_COLOR = new Color(220,220,220);
 	
 	/**
 	 * 
@@ -242,6 +243,10 @@ public class ViewPort {
 		//draw an exit tile
 		g2.setColor(WALL_COLOR_DARK);
 		g2.fill(new Ellipse2D.Double(x, y, tileSize, tileSize));
+		g2.setColor(WALL_COLOR);
+		g2.fill(new Ellipse2D.Double(x+tileSize/6, y+tileSize/6, tileSize-tileSize/3, tileSize-tileSize/3));
+		g2.setColor(END_COLOR);
+		g2.fill(new Ellipse2D.Double(x+tileSize/4, y+tileSize/4, tileSize/2, tileSize/2));
 	}
 
 }
