@@ -1,7 +1,12 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
-public class ExitTile implements Accessible {
+public class ExitTile implements Accessible, Tile {
 
+  public ExitTile(Location location) {
+    this.location = location;
+  }
+
+  private Location location;
 
   @Override
   public void entryOperations(Maze maze, Actor player) {
@@ -16,5 +21,10 @@ public class ExitTile implements Accessible {
   @Override
   public String toString() {
     return "E";
+  }
+
+  @Override
+  public Location getLocation() {
+    return location;
   }
 }
