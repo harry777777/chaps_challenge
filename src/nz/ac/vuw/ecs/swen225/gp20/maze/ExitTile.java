@@ -26,7 +26,11 @@ public class ExitTile implements Accessible, Tile {
 
   @Override
   public boolean isAccessibleBy(Actor actor) {
-    return false;
+    if (actor instanceof Player) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Override
