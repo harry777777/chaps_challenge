@@ -23,6 +23,7 @@ public class ViewPort {
 	private RenderPlayer rPlayer = new RenderPlayer();
 	private RenderEnemy rEnemy = new RenderEnemy();
 	private RenderDoor rDoor = new RenderDoor();
+	private RenderExitDoor rExitDoor = new RenderExitDoor();
 	private RenderTreasure rTreasure;
 	private RenderKey rKey;
 	
@@ -175,6 +176,9 @@ public class ViewPort {
 	    			drawFloor(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
 	    			//draw exit
 	    			drawExit(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize);
+	    		}else if(maze.getTileType(row, col).equals(TileType.EXITDOOR)) {
+	    			boolean locked = maze.getExitDoorLocked(row, col);
+	    			rExitDoor.draw(g2, centerX-xMapOffset+row*tileSize-xOffset, centerY-yMapOffset+col*tileSize-yOffset, tileSize, locked);
 	    		}
 	    	}
 	    }

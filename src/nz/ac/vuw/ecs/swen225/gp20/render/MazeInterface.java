@@ -89,7 +89,10 @@ public class MazeInterface {
 			return TileType.DOOR;
 		}else if(current instanceof ExitTile){
 			return TileType.EXIT;
-		}
+		}//else if(current instanceof ExitDoorTile){
+			//return TileType.EXITDOOR;
+		//}
+		//TODO
 		return null;
 	}
 	
@@ -120,7 +123,7 @@ public class MazeInterface {
 	 * 
 	 * @param x
 	 * @param y
-	 * @return the door color
+	 * @return door locked status
 	 */
 	public boolean getDoorLocked(int x, int y) {
 		if(maze.getTiles().length <= x) {
@@ -136,6 +139,30 @@ public class MazeInterface {
 		}
 		return false;
 		
+	}
+	
+	 
+	/**
+	 * Returns the locked status of an exit door at x and y
+	 * 
+	 * @param x
+	 * @param y
+	 * @return exit door locked status
+	 */
+	public boolean getExitDoorLocked(int x, int y) {
+		if(maze.getTiles().length <= x) {
+			return true;
+		}
+		if(maze.getTiles()[0].length <= y) {
+			return true;
+		}
+		Tile current = maze.getTiles()[x][y];
+		//TODO:
+		//if(current instanceof ExitDoorTile){
+			//ExitDoorTile currentExitDoor = (ExitDoorTile) maze.getTiles()[x][y];
+			//return currentExitDoor.isLocked();
+		//}
+		return true;
 	}
 	
 	/**
@@ -479,7 +506,9 @@ public class MazeInterface {
 		/**
 		 * ExitTile
 		 */
-		EXIT
+		EXIT,
+		EXITDOOR 
+		//TODO
 	}
 	
 	/**
