@@ -11,7 +11,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  *
  * Holds the logic for drawing keys onto the view plane
  *

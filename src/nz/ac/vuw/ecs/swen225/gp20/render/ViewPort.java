@@ -11,7 +11,7 @@ import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.ItemType;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.TileType;
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  * 
  * Draws the viewport into the Maze centered on the Chap
  *

@@ -18,7 +18,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.WallTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Direction;
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  * 
  * The maze interface is in charge of getting any information from the maze module that is required by the renderer
  * This design means there is only one place that needs updating if significant changes are made to the maze module

@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.InterfaceDirection;
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  * 
  * Holds the logic for drawing enemies onto the view plane
  *

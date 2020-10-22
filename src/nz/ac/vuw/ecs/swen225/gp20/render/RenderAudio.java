@@ -4,7 +4,7 @@ import javax.sound.sampled.*;
 
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  * 
  * Holds the logic for playing sound effects
  *

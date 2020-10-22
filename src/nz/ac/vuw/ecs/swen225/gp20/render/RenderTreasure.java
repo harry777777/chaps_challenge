@@ -8,7 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  * 
  * Holds the logic for drawing treasures onto the view plane
  *

@@ -8,7 +8,7 @@ import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  * 
  * Graphics pane class: draws the maze and object locations onto the graphics pane
  *

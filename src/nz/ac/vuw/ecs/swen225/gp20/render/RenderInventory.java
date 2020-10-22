@@ -7,7 +7,7 @@ import java.awt.geom.RoundRectangle2D;
 import nz.ac.vuw.ecs.swen225.gp20.render.MazeInterface.ItemType;
 
 /**
- * @author Marco
+ * @author Marco McGowan-Arnold - 300390611
  * 
  * Draws the items the player has collected in the form of an inventory readout
  *
