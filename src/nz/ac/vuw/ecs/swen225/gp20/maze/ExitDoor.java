@@ -1,12 +1,13 @@
 package nz.ac.vuw.ecs.swen225.gp20.maze;
 
+
 /**
  * A player must move onto the same location as an exit tile
  * in order to complete the current level.
  *
  * @author Arie Bates-Hermans, 300288455.
  */
-public class ExitTile implements Accessible, Tile {
+public class ExitDoor implements Accessible, Tile {
 
   private final Location location;
 
@@ -15,25 +16,19 @@ public class ExitTile implements Accessible, Tile {
    *
    * @param location location of the exit tile
    */
-  public ExitTile(Location location) {
+  public ExitDoor(Location location) {
     this.location = location;
   }
 
   @Override
   public void entryOperations(Maze maze, Actor player) {
-    maze.setLevelComplete(true);
+
   }
 
   @Override
   public boolean isAccessibleBy(Actor actor, Maze maze) {
-    Tile[][] tiles = maze.getTiles();
-    int count = 0;
     if (actor instanceof Player) {
-      Player player = (Player) actor;
-      if (player.getTreasure() == maze.computeItemCount()) {
-        return true;
-      }
-      return false;
+      return true;
     } else {
       return false;
     }
@@ -41,7 +36,7 @@ public class ExitTile implements Accessible, Tile {
 
   @Override
   public String toString() {
-    return "E";
+    return "X";
   }
 
   @Override

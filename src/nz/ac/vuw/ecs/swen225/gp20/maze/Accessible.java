@@ -20,6 +20,6 @@ public interface Accessible {
    * @param actor
    * @return
    */
-  boolean isAccessibleBy(Actor actor);
+  boolean isAccessibleBy(Actor actor, Maze maze);
 
 }

@@ -42,7 +42,7 @@ public class DoorTile implements Tile, Accessible {
   }
 
   @Override
-  public boolean isAccessibleBy(Actor actor) {
+  public boolean isAccessibleBy(Actor actor, Maze maze) {
     return !isLocked || hasKey(actor);
   }
 

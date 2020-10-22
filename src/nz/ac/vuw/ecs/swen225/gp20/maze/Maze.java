@@ -215,7 +215,7 @@ public class Maze {
   private boolean isValidMove(Tile destination, Actor actor) {
     if (actor.isStationary() && destination instanceof Accessible) {
       Accessible accessible = (Accessible) destination;
-      return accessible.isAccessibleBy(actor);
+      return accessible.isAccessibleBy(actor, this);
     }
     return false;
   }
@@ -298,5 +298,21 @@ public class Maze {
     PLAYER_DEATH,
     DOOR_UNLOCK,
     END_LEVEL,
+  }
+
+  protected int computeItemCount() {
+    int count = 0;
+    for (int i = 0; i < tiles.length; i++) {
+      for (int j = 0; j < tiles[1].length; j++) {
+        Tile tile = tiles[i][j];
+        if (tile instanceof FreeTile) {
+          FreeTile freeTile = (FreeTile) tile;
+          if (freeTile.getItem() != null && freeTile.getItem() instanceof Treasure ) {
+            count++;
+          }
+        }
+      }
+    }
+    return count;
   }
 }

@@ -8,7 +8,7 @@ package nz.ac.vuw.ecs.swen225.gp20.maze;
  */
 public class Move {
 
-  public static final int THRESHOLD = 25;
+  public static final int THRESHOLD = 5;
   private final Direction direction;
   private int distance;
   private final int speed = 1;
