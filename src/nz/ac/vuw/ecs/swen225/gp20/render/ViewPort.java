@@ -24,6 +24,7 @@ public class ViewPort {
 	private RenderEnemy rEnemy = new RenderEnemy();
 	private RenderDoor rDoor = new RenderDoor();
 	private RenderExitDoor rExitDoor = new RenderExitDoor();
+	private RenderHint rHint = new RenderHint();
 	private RenderTreasure rTreasure;
 	private RenderKey rKey;
 	
