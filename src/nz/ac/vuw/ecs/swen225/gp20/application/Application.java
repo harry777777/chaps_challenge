@@ -28,8 +28,7 @@ public class Application {
   private TickEvent tickEvent;
   private int timer;
   private int currentTick = 0;
-  private boolean running = true;
-  private boolean paused = false;
+  private boolean paused;
   private Replay replay;
   private boolean replaying = false;
   private boolean ctrlPressed = false;
@@ -38,13 +37,12 @@ public class Application {
   private boolean gameOver = false;
   private boolean stepByStepReplay = false;
   private LevelManager manager;
-  private Level level;
 
   private double GAME_HERTZ = 60;
   private double TBU = 1000000000 / GAME_HERTZ; // Time before update
 
   /**
-   * @param args
+   * @param args default argument
    * @author Owen The main method used to run the game
    */
 
@@ -84,9 +82,7 @@ public class Application {
     JMenuBar menuBar = new JMenuBar();
     frame.setJMenuBar(menuBar);
 
-    /**
-     * I followed this tutorial for the JMenuBar https://www.tutorialspoint.com/swing/swing_jmenubar_control.htm
-     */
+     //I followed this tutorial for the JMenuBar https://www.tutorialspoint.com/swing/swing_jmenubar_control.htm
 
     JMenu File = new JMenu("File");
     JMenu Game = new JMenu("Game");
@@ -112,22 +108,31 @@ public class Application {
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Exit")) {
-          exit();
-        } else if (e.getActionCommand().equals("Save and Exit")) {
-          saveAndExit();
-        } else if (e.getActionCommand().equals("Record and Exit")) {
-          recordAndExit();
-        } else if (e.getActionCommand().equals("Load Save")) {
-          loadSave();
-        } else if (e.getActionCommand().equals("Start New Game")) {
-          startNew();
-        } else if (e.getActionCommand().equals("Start at last unfinished level")) {
-          startUnfin();
-        } else if (e.getActionCommand().equals("Pause")) {
-          pause();
-        } else if (e.getActionCommand().equals("Replay")) {
-          replay();
+        switch (e.getActionCommand()) {
+          case "Exit":
+            exit();
+            break;
+          case "Save and Exit":
+            saveAndExit();
+            break;
+          case "Record and Exit":
+            recordAndExit();
+            break;
+          case "Load Save":
+            loadSave();
+            break;
+          case "Start New Game":
+            startNew();
+            break;
+          case "Start at last unfinished level":
+            startUnfin();
+            break;
+          case "Pause":
+            pause();
+            break;
+          case "Replay":
+            replay();
+            break;
         }
       }
     }
@@ -238,39 +243,19 @@ public class Application {
 
     JPanel buttons = new JPanel();
     JButton exitButton = new JButton("Exit");
-    exitButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        recordAndExit();
-      }
-    });
+    exitButton.addActionListener(e -> recordAndExit());
     exitButton.setFocusable(false);
 
     JButton pauseButton = new JButton("Pause");
-    pauseButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        pause();
-      }
-    });
+    pauseButton.addActionListener(e -> pause());
     pauseButton.setFocusable(false);
 
     JButton unPauseButton = new JButton("UnPause");
-    unPauseButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        paused = false;
-      }
-    });
+    unPauseButton.addActionListener(e -> paused = false);
     unPauseButton.setFocusable(false);
 
     JButton replayButton = new JButton("Replay");
-    replayButton.addActionListener(new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        replay();
-      }
-    });
+    replayButton.addActionListener(e -> replay());
     replayButton.setFocusable(false);
 
     buttons.add(replayButton);
@@ -314,6 +299,7 @@ public class Application {
     final double TARGET_FPS = 60;
     final double TTBR = 1000000000 / TARGET_FPS; // Total time before render
 
+    boolean running = true;
     while (running) {
       while (!paused && !gameOver) {
         double now = System.nanoTime();
@@ -371,8 +357,7 @@ public class Application {
           loadGame("level2.json");
         }
         if(!maze.isAlive()){
-          System.out.println("on god");
-          loadGame("level1.json");
+          loadGame("level2.json");
         }
 
         if (timerFrameCounter == 60) {
@@ -391,7 +376,7 @@ public class Application {
             && now - lastUpdateTime < TBU) {  // Sleep the thread to let the cpu rest
           Thread.yield();
           try {
-            Thread.sleep(5);
+            Thread.sleep(2);
           } catch (Exception e) {
             System.out.println("yield error: " + e.getMessage());
           }
@@ -480,8 +465,9 @@ public class Application {
   }
 
   /**
-   * @author Owen lets the user choose the type of replay and the replay file then begins the
-   * replay
+   * @author Owen, Harry
+   * lets the user choose the type of replay and the replay file then begins the replay
+   *
    */
   private void replay() {
     try {
@@ -543,6 +529,7 @@ public class Application {
     if (gameOver) {
       gameOver = false;
     }
+    Level level;
     if (fileName != null) {
       try {
         level = manager.loadLevel("levels/" + fileName);
