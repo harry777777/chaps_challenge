@@ -47,12 +47,12 @@ public class Maze {
    * @param actors the actors (i.e player and NPCS)
    */
   public Maze(Tile[][] tiles, Player player, List<Actor> actors) {
+    System.out.println("constructor called");
     this.HEIGHT = tiles.length;
     this.WIDTH = tiles[0].length;
     this.tiles = Arrays.copyOf(tiles, tiles.length); // fixme: look at error on spotBugs
     this.player = player; // fixme: look at error on spotBugs
     this.actors = actors;
-    this.actors.add(this.player);
   }
 
   /**

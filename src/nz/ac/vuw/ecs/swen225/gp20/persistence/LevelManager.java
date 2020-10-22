@@ -102,6 +102,7 @@ public class LevelManager {
           case "C":
             tiles[i][j] = new FreeTile(new Location(i, j));
             player = new Player(i,j);
+            actors.add(player);
             break;
           case "N":
             tiles[i][j] = new FreeTile(new Location(i, j));
@@ -167,12 +168,17 @@ public class LevelManager {
 
   public static void main(String[] args) throws IOException {
     LevelManager lm = new LevelManager();
-    lm.saveLevel("levels/testLevel.json", lm.testLevel);
-    lm.loadLevel("levels/testLevel.json");
-    lm.saveLevel("levels/level1.json", lm.level1);
-    lm.loadLevel("levels/level1.json");
-    lm.saveLevel("levels/level2.json", lm.level2);
-    lm.loadLevel("levels/level2.json");
+    Level l = null;
+
+//    lm.saveLevel("levels/testLevel.json", lm.testLevel);
+    l = lm.loadLevel("levels/testLevel.json");
+    System.out.println(l.getMaze().getPlayer());
+    System.out.println(l.getMaze().getActors());
+//
+//    lm.saveLevel("levels/level1.json", lm.level1);
+//    lm.loadLevel("levels/level1.json");
+//    lm.saveLevel("levels/level2.json", lm.level2);
+//    lm.loadLevel("levels/level2.json");
   }
 
   // Textual level representations
