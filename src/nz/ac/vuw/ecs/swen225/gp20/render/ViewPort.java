@@ -39,7 +39,7 @@ public class ViewPort {
 	 * Initializes the view port renderer passing it the object renderers
 	 * @param rTreasure 
 	 * @param rKey 
-	 * @param actors 
+	 * @param
 	 * 
 	 */
 	public ViewPort(RenderTreasure rTreasure, RenderKey rKey) {
