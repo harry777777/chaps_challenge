@@ -370,6 +370,10 @@ public class Application {
           }
           loadGame("level2.json");
         }
+        if(!maze.isAlive()){
+          System.out.println("on god");
+          loadGame("level1.json");
+        }
 
         if (timerFrameCounter == 60) {
           if (timer == 0) {
@@ -438,6 +442,7 @@ public class Application {
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
     fc.setFileFilter(filter);
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+    fc.setCurrentDirectory(new File("."));
     int returnVal = fc.showOpenDialog(frame);
     if (returnVal == JFileChooser.APPROVE_OPTION) {
       File file = fc.getSelectedFile();
@@ -484,6 +489,7 @@ public class Application {
       FileNameExtensionFilter filter = new FileNameExtensionFilter("Json File", "json");
       fc.setFileFilter(filter);
       fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+      fc.setCurrentDirectory(new File("."));
       int returnVal = fc.showOpenDialog(frame);
 
       if (returnVal == JFileChooser.APPROVE_OPTION) {
