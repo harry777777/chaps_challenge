@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Actor;
 import nz.ac.vuw.ecs.swen225.gp20.maze.ExitTile;
+import nz.ac.vuw.ecs.swen225.gp20.maze.HintTile;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Key;
 import nz.ac.vuw.ecs.swen225.gp20.maze.Maze;
 import nz.ac.vuw.ecs.swen225.gp20.maze.NPC;
@@ -84,6 +85,9 @@ public class LevelManager {
           case "E":
             tiles[i][j] = new ExitTile(new Location(i,j));
             break;
+          case "H":
+            tiles[i][j] = new HintTile("You must collect all treasure before exiting the level!", new Location(i,j));
+            break;
           default:
             throw new IllegalStateException("Unexpected value: " + s);
         }
@@ -159,7 +163,7 @@ public class LevelManager {
       {"W", "F", "W", "W", "W", "W", "F", "T", "F", "W"},
       {"W", "F", "W", "W", "K1", "D0", "T", "F", "T", "W"},
       {"W", "F", "W", "W", "W", "W", "F", "T", "F", "W"},
-      {"W", "T", "F", "F", "T", "W", "T", "F", "T", "W"},
+      {"W", "T", "F", "F", "T", "H", "T", "F", "T", "W"},
       {"W", "W", "W", "W", "F", "C", "F", "T", "F", "W"},
       {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
   };
@@ -167,12 +171,12 @@ public class LevelManager {
   public final String[][] level2 = {
       {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
       {"W", "F", "C", "T", "W", "T", "F", "T", "K0", "W"},
-      {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
+      {"W", "F", "F", "F", "W", "F", "W", "F", "W", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "T", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "T", "W"},
       {"W", "F", "W", "F", "W", "F", "W", "F", "W", "W"},
-      {"W", "F", "W", "F", "W", "F", "W", "T", "W", "W"},
+      {"W", "F", "W", "F", "H", "F", "W", "T", "W", "W"},
       {"W", "N", "W", "T", "F", "T", "W", "D0", "E", "W"},
       {"W", "W", "W", "W", "W", "W", "W", "W", "W", "W"},
   };
