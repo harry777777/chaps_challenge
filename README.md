@@ -1,3 +1,4 @@
+# My contributions to this project are all parts involved in recording previous games and replaying them. 
 Start the game by running Application Main from the application package in src/nz.vuw.ecs.swen225.gp20
 
 press OK on the popup to begin the level
